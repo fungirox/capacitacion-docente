@@ -1,0 +1,82 @@
+* {
+	font-family: 'Montserrat', sans-serif;
+}
+
+html {
+	width: 100% !important;
+	min-width: 320px !important;
+	height: 100% !important;
+}
+
+.text-itesca {
+	color: #A694EA;
+}
+
+.bg-itesca {
+	background:#A694EA;
+}
+
+.btn-itesca {
+	background: #A694EA;
+	color:#fff;
+}
+
+.btn-itesca:hover {
+	opacity: 0.9;
+	color: #CCC;
+}
+
+.border-itesca {
+	border-color:#A694EA !important;
+}
+
+.btn-outline-itesca {
+	border: solid 1px #A694EA;
+	color: #1B396A;
+}
+
+.btn-outline-itesca:hover {
+	background: #A694EA;
+	color: #fff;
+}
+
+.text-tec {
+	color: #1B396A;
+}
+
+.bg-tec {
+	background:#1B396A;
+}
+
+.btn-tec {
+	background: #1B396A;
+	color:#fff;
+}
+
+.btn-tec:hover {
+	opacity: 0.9;
+	color: #CCC;
+}
+
+.border-tec {
+	border-color:#1B396A !important;
+}
+
+.btn-outline-tec {
+	border: solid 1px #1B396A;
+	color: #1B396A;
+}
+
+.btn-outline-tec:hover {
+	background: #1B396A;
+	color: #fff;
+}
+
+.link-tec {
+	color: #1B396A !important;
+	text-decoration:none;
+}
+
+.link-tec:hover {
+	font-weight:bold;
+}
