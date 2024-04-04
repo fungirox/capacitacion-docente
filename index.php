@@ -28,7 +28,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav nav-underline me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a href="#" class="nav-link" id="oferta" aria-current="page">Oferta</a>
+                            <a href="#" class="nav-link" id="oferta">Oferta</a>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link" id="inscritos">Inscritos</a>
@@ -44,9 +44,9 @@
                         </li>
                     </ul>
                     <div class="dropdown">
-                        <button class="w-100 btn btn-outline-secondary d-flex align-items-center justify-content-end" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="w-100 btn btn-light py-0 d-flex align-items-center justify-content-end" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <span class="fs-6 me-2">User</span>
-                            <i class="bi bi-person-circle" style="font-size: 1rem;"></i>
+                            <i class="bi bi-person-circle" style="font-size: 1.5rem;"></i>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li>
