@@ -1,10 +1,17 @@
+<?php
+require_once "app-code/config.php";
+if (!$_SESSION["loggedIn"]) {
+    header("Location: login.php");
+    die();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Capacitación Docente - ITESCA</title>
+    <title>Capacitación Docente ITESCA</title>
     <link rel="icon" href="assets/images/icono-itesca.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -50,7 +57,7 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li>
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="modules/logOut.php">
                                     <i class="bi bi-box-arrow-left"></i>
                                     <span class="ms-2">Cerrar Sesión</span>
                                 </a>
