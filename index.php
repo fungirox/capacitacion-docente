@@ -1,5 +1,5 @@
 <?php
-require_once "app-code/config.php";
+require_once "config/config.php";
 if (!$_SESSION["loggedIn"]) {
     header("Location: login.php");
     die();

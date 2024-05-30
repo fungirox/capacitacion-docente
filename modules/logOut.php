@@ -1,5 +1,5 @@
 <?php
-require_once "../app-code/config.php";
+require_once "../config/config.php";
 
 session_unset();
 session_destroy();

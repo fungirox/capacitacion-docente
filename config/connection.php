@@ -1,8 +1,5 @@
 <?php
-$server = "DESKTOP-KAQULH7\SQLEXPRESS";
-$database = "test";
-$userName = "sa";
-$password = "sa";
+require_once "env.php";
 
 try {
     $connection = new PDO("sqlsrv:Server=$server;Database=$database", $userName, $password);
