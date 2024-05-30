@@ -1,4 +1,32 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <h1>Oferta de Cursos</h1>
+<div class="row row-cols-auto justify-content-end pt-4 g-2">
+    <div class="col-12 col-md-auto">
+        <div class="input-group flex-nowrap">
+            <span class="input-group-text" id="addon-wrapping"><i class="bi bi-search"></i></span>
+            <input type="text" class="form-control" placeholder="Buscar curso..." aria-label="Username" aria-describedby="addon-wrapping">
+        </div>
+    </div>
+    <div class="col-12 col-md-auto">
+        <div class="input-group flex-nowrap">
+            <span class="input-group-text" id="addon-wrapping"><i class="bi bi-filter"></i></span>
+            <select class="form-select" aria-label="Default select example">
+                <option selected>Filtrar</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-12 col-md-auto">
+        <select class="form-select" aria-label="Default select example">
+            <option selected>Ordenar por</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+        </select>
+    </div>
+</div>
 <div class="my-2 row row-cols-1 row-cols-md-3 g-4">
     <div class="col">
         <div class="card h-100">
