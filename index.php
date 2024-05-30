@@ -15,7 +15,7 @@ if (!$_SESSION["loggedIn"]) {
     <link rel="icon" href="assets/images/icono-itesca.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="assets/css/custom.css">
+    <link rel="stylesheet" href="assets/style/custom.css">
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script defer src="assets/js/routing.js"></script>
@@ -23,7 +23,7 @@ if (!$_SESSION["loggedIn"]) {
 
 <body>
     <header>
-        <nav class="navbar fixed-top navbar-expand-lg bg-body-tertiary shadow-sm user-select-none">
+        <nav class="navbar fixed-top navbar-expand-lg shadow-sm user-select-none">
             <div class="container-fluid">
                 <div class="navbar-brand">
                     <img src="assets/images/icono-itesca.png" alt="Logo de ITESCA" width="29" class="d-inline-block align-text-top">
@@ -51,7 +51,7 @@ if (!$_SESSION["loggedIn"]) {
                         </li>
                     </ul>
                     <div class="dropdown">
-                        <button class="w-100 btn btn-light py-0 d-flex align-items-center justify-content-end" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn btn-light w-100 py-0 d-flex align-items-center justify-content-end" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <span class="fs-6 me-2">User</span>
                             <i class="bi bi-person-circle" style="font-size: 1.5rem;"></i>
                         </button>
