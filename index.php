@@ -23,7 +23,7 @@ if (!$_SESSION["loggedIn"]) {
 
 <body>
     <header>
-        <nav class="navbar fixed-top navbar-expand-lg shadow-sm user-select-none">
+        <nav class="navbar bg-light fixed-top navbar-expand-lg shadow-sm user-select-none">
             <div class="container-fluid">
                 <div class="navbar-brand">
                     <img src="assets/images/icono-itesca.png" alt="Logo de ITESCA" width="29" class="d-inline-block align-text-top">
