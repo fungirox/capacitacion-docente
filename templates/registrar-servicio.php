@@ -1,5 +1,6 @@
 <?php
-include '../config/connection.php';
+# TODO añadir el validar sesión
+require_once '../config/connection.php';
 
 $teachersQuery = "SELECT u.USERID, d.DOCENTEID, u.USER_Nombre, u.USER_Apellido FROM dbo.tblUsuario as u INNER JOIN dbo.tblDocente as d ON u.USERID = d.USERID;";
 $areaQuery = "SELECT * FROM dbo.tblArea;";
@@ -35,7 +36,7 @@ $weekdays = [
 
 <body>
     <h1>Registrar servicio</h1>
-    <form>
+    <form action="../modules/addService.php" method="post">
         <!--- Nombre del servicio --->
         <label for="service-name">Nombre de servicio</label>
         <input type="text" required placeholder="Nombre del curso" id="service-name" name="service-name" />
@@ -82,7 +83,8 @@ $weekdays = [
             $areaSiglas = htmlspecialchars($row['AREA_Siglas'], ENT_QUOTES, 'UTF-8');
             $areaID = htmlspecialchars($row['AREAID'], ENT_QUOTES, 'UTF-8');
             ?>
-            <input type="checkbox" name="areas" value="<?= $areaID ?>"><?= $areaSiglas ?><br />
+            <input type="checkbox" name="areas[]" value="<?= $areaID ?>" id="<?= $areaID ?>">
+            <label for="<?= $areaID ?>"><?= $areaSiglas ?></label><br />
         <?php endforeach; ?>
 
         <br />
@@ -105,10 +107,12 @@ $weekdays = [
         <!--- Días de la semana -->
         <label for="week">Días de la semana</label> <br />
         <?php foreach ($weekdays as $id => $name) : ?>
-            <input type="checkbox" id="<?= $id ?>" name="weekday[]" value="<?= $id ?>">
+            <input type="checkbox" id="<?= $id ?>" name="weekdays[]" value="<?= $id ?>">
             <label for="<?= $id ?>"><?= $name ?></label><br />
         <?php endforeach; ?>
         <br />
+        <!-- El horario por día va quedar pendiente -->
+        <button type="submit">Añadir</button>
     </form>
 </body>
 
