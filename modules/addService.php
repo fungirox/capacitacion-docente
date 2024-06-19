@@ -1,9 +1,10 @@
 <?php
 # TODO añadir el validar sesión
 require_once '../config/connection.php';
+require_once "../config/config.php";
 
-function insertService($connection, $serviceName, $serviceType, $totalHours, $startDate, $finishDate, $serviceCategory, $serviceModality, $serviceActive, $serviceInProgress, $serviceProfile)
-{
+function insertService($connection, $serviceName, $serviceType, $totalHours, $startDate, $finishDate, 
+$serviceCategory, $serviceModality, $serviceActive, $serviceInProgress, $serviceProfile){
     # INSERT CURSO
     # El único campo que se llenará después es CURSO_Descripcion
     try {
@@ -52,9 +53,7 @@ function insertService($connection, $serviceName, $serviceType, $totalHours, $st
         return false;
     }
 }
-
-function insertServiceArea($connection, $serviceId, $areaId)
-{
+function insertServiceArea($connection, $serviceId, $areaId){
     try {
         $query = "INSERT INTO 
         tblCursoArea (
@@ -75,12 +74,40 @@ function insertServiceArea($connection, $serviceId, $areaId)
         return false;
     }
 }
+function insertInstructors($connection,$serviceId,$instructors){
+    try {
+        $query = "INSERT INTO 
+        tblCursoInstructor (
+        CURSOID, 
+        USERID) 
+        VALUES (
+        :serviceId, 
+        :userId)";
+
+        $stmt = $connection->prepare($query);
+
+        $stmt->bindParam(':serviceId', $serviceId);
+        $stmt->bindParam(':userId', $instructors);
+
+        $stmt->execute();
+    } catch (PDOException $e) {
+        error_log("Error inserting service: " . $e->getMessage());
+        return false;
+    }
+}
+
+if (!$_SESSION["loggedIn"]) {
+    header("Location: ../login.php");
+    die();
+}
 
 # falta verificar que todos los datos requeridos no sean None / Null
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    # LECTURA DE DATOS
     $serviceName = htmlspecialchars($_POST["service-name"]);
     $serviceType = htmlspecialchars($_POST["service-type"]);
     $serviceCategory = htmlspecialchars($_POST["service-category"]);
+    # por ahora solo es un instructor... luego pondré más de uno
     $instructors = htmlspecialchars($_POST["teachers"]);
     $physicalHours = htmlspecialchars($_POST["physical-hours"]);
     $virtualHours = htmlspecialchars($_POST["virtual-hours"]);
@@ -101,20 +128,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $serviceModality = ($virtualHours > 0) ? "Hibrido" : "Presencial";
     }
 
+    # Añade a la base de datos el registro de curso
     $serviceId = insertService($connection, $serviceName, $serviceType, $totalHours, $startDate, $finishDate, $serviceCategory, $serviceModality, '1', '0', '0');
 
-    #insert curso-area
+    # Clasifica el curso por areas
     if ($serviceId != false) {
         foreach ($selectedAreas as $areaId) {
             insertServiceArea($connection, $serviceId, $areaId);
         }
     }
 
-    #insert curso-instructor
-    # Es necesario cambiar el diseño de la base de datos para los instructores y docentes 
-    # parece ser que se añadirá una columna de activo a la tabla instructor para indicar si este está 
-    # relacionado a un curso "activo". La consulta de "registrar-servicio" puede cambiar al INNER JOIN con 
-    # instructores. 
-
+    # Relaciona un instructor con un curso
+    if ($serviceId != false) {
+        insertInstructors($connection, $serviceId, $instructors);
+    }
+    header("Location: ../templates/oferta.php");
 }
 # else mandar al index...
+else {
+    header("Location: ../login.php");
+    die();
+}

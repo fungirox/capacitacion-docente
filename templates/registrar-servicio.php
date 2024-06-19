@@ -1,8 +1,14 @@
 <?php
 # TODO añadir el validar sesión
 require_once '../config/connection.php';
+require_once "../config/config.php";
 
-$teachersQuery = "SELECT u.USERID, d.DOCENTEID, u.USER_Nombre, u.USER_Apellido FROM dbo.tblUsuario as u INNER JOIN dbo.tblDocente as d ON u.USERID = d.USERID;";
+if (!$_SESSION["loggedIn"]) {
+    header("Location: ../login.php");
+    die();
+}
+
+$teachersQuery = "SELECT u.USERID, u.USER_Nombre, u.USER_Apellido FROM tblUsuario u JOIN tblUsuarioRoles ur ON u.USERID = ur.USERID JOIN tblRol r ON ur.ROLID = r.ROLID WHERE r.ROL_Nombre = 'Instructor'";
 $areaQuery = "SELECT * FROM dbo.tblArea;";
 $stnt = $connection->prepare($teachersQuery);
 $stnt->execute();
