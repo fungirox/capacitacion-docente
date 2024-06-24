@@ -1,6 +1,4 @@
 <?php
-require_once "../config/config.php";
-
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $user = $_POST["user"];
     $password = $_POST["password"];
@@ -8,16 +6,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     try {
         if ($user === 'sa' && $password === 'sa') {
             $_SESSION["loggedIn"] = true;
-            header("Location: ../");
+            header("Location: {$baseUrl}/");
             die();
         } else {
-            header("Location: ../login.php");
+            header("Location: {$baseUrl}/login");
             die();
         }
     } catch (exception) {
         die("Query failed");
     }
 } else {
-    header("Location: ../login.php");
+    header("Location: {$baseUrl}/login");
     die();
 }
