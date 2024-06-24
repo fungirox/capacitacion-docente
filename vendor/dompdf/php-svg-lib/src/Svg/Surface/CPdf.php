@@ -1,7 +1,7 @@
 <?php
 /**
  * A PHP class to provide the basic functionality to create a pdf document without
- * any requirement for additional modules.
+ * any requirement for additional controllers.
  *
  * @author  Wayne Munro
  * @license Public Domain http://creativecommons.org/licenses/publicdomain/
