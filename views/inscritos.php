@@ -1,1 +1,0 @@
-<h1>Cursos Inscritos</h1>
