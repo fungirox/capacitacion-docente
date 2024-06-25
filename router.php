@@ -4,8 +4,8 @@ $uri = parse_url($_SERVER["REQUEST_URI"])["path"];
 
 $routes = [
     "/login" => "views/login.php",
-    "/authenticate" => "controllers/authenticate.php",
-    "/logout" => "controllers/logOut.php",
+    "/authenticate" => "controllers/auth/authenticate.php",
+    "/logout" => "controllers/auth/logOut.php",
     "/" => "controllers/oferta.php",
     "/oferta" => "controllers/oferta.php",
     "/curso" => "controllers/curso.php",
