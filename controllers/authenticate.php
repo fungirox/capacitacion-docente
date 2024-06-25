@@ -4,18 +4,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $password = $_POST["password"];
 
     try {
-        if ($user === 'sa' && $password === 'sa') {
+        if ($user === "sa" && $password === "sa") {
             $_SESSION["loggedIn"] = true;
-            header("Location: {$baseUrl}/");
+            header("Location: /");
             die();
         } else {
-            header("Location: {$baseUrl}/login");
+            header("Location: /login");
             die();
         }
     } catch (exception) {
         die("Query failed");
     }
 } else {
-    header("Location: {$baseUrl}/login");
+    header("Location: $baseUrl/login");
     die();
 }
