@@ -2,7 +2,7 @@
     <nav class="navbar bg-light fixed-top navbar-expand-lg shadow-sm user-select-none">
         <div class="container-fluid">
             <div class="navbar-brand">
-                <img src="<?= $baseUrl ?>/assets/images/icono-itesca.png" alt="Logo de ITESCA" width="29" class="d-inline-block align-text-top">
+                <img src="__DIR__../../assets/images/icono-itesca.png" alt="Logo de ITESCA" width="24">
                 <span>Capacitación Docente</span>
             </div>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -11,19 +11,19 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav nav-underline me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a href="<?= $baseUrl ?>/" class="nav-link <?= urlIs('/') ? 'active' : null ?>" aria-current="<?= urlIs('/') ? 'page' : null ?>" id="oferta">Oferta</a>
+                        <a href="<?= $baseUrl ?>/oferta" class="nav-link <?= urlIs("/oferta") || urlIs("/curso") ? "active" : null ?>" aria-current="<?= urlIs("/oferta")  || urlIs("/curso") ? "page" : null ?>" id="oferta">Oferta</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link" id="inscritos">Inscritos</a>
+                        <a href="<?= $baseUrl ?>/inscritos" class="nav-link <?= urlIs("/inscritos") ? "active" : null ?>" aria-current="<?= urlIs("/inscritos") ? "page" : null ?>" id="inscritos">Inscritos</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link" id="instruyendo">Instruyendo</a>
+                        <a href="<?= $baseUrl ?>/instruyendo" class="nav-link <?= urlIs("/instruyendo") ? "active" : null ?>" aria-current="<?= urlIs("/instruyendo") ? "page" : null ?>" id="instruyendo">Instruyendo</a>
                     </li>
                     <li class="nav-item">
-                        <a href="<?= $baseUrl ?>/horario" class="nav-link" id="horario">Horario</a>
+                        <a href="<?= $baseUrl ?>/horario" class="nav-link <?= urlIs("/horario") ? "active" : null ?>" aria-current="<?= urlIs("/horario") ? "page" : null ?>" id="horario">Horario</a>
                     </li>
                     <li class="nav-item">
-                        <a href="<?= $baseUrl ?>/historial" class="nav-link" id="historial">Historial</a>
+                        <a href="<?= $baseUrl ?>/historial" class="nav-link <?= urlIs("/historial") ? "active" : null ?>" aria-current="<?= urlIs("/historial") ? "page" : null ?>" id="historial">Historial</a>
                     </li>
                 </ul>
                 <div class="dropdown">
