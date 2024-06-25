@@ -1,14 +1,5 @@
-<?php
-require 'components/header.php';
-require 'components/navbar.php';
-?>
-<main class="main-container">
-    <div id="page" class="container py-4">
-        <h1><?= $nombre ?></h1>
-    </div>
+<?php require "components/styledHeader.php"; ?>
+<main role="main" class="container pt-4" style="margin-top: 56px">
+    <h1><?= $nombre ?></h1>
 </main>
-<hr class="container">
-<footer class="py-4">
-    <p class="text-center text-body-secondary">© Copyright 2024 ITESCA - Todos los Derechos Reservados</p>
-</footer>
-<?php require 'components/footer.php'; ?>
+<?php require "components/styledFooter.php"; ?>
