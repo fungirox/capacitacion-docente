@@ -1,16 +1,18 @@
 <?php
-$baseUrl = 'http://localhost';
-$uri = parse_url($_SERVER['REQUEST_URI'])['path'];
+$baseUrl = "http://localhost";
+$uri = parse_url($_SERVER["REQUEST_URI"])["path"];
 
 $routes = [
-    '/login' => "views/login.php",
-    '/authenticate' => "controllers/authenticate.php",
-    '/logout' => "controllers/logOut.php",
-    '/' => "controllers/oferta.php",
-    '/oferta' => "controllers/oferta.php",
-    '/curso' => "controllers/curso.php",
-    '/horario' => "views/horario.php",
-    '/historial' => "views/historial.php",
+    "/login" => "views/login.php",
+    "/authenticate" => "controllers/authenticate.php",
+    "/logout" => "controllers/logOut.php",
+    "/" => "controllers/oferta.php",
+    "/oferta" => "controllers/oferta.php",
+    "/curso" => "controllers/curso.php",
+    "/inscritos" => "controllers/inscritos.php",
+    "/instruyendo" => "controllers/instruyendo.php",
+    "/horario" => "controllers/horario.php",
+    "/historial" => "controllers/historial.php",
 ];
 
 $abort = function ($code = 404) use ($baseUrl) {
@@ -21,6 +23,10 @@ $abort = function ($code = 404) use ($baseUrl) {
 
 $routeToController = function ($uri, $routes) use ($baseUrl, $abort) {
     if (array_key_exists($uri, $routes)) {
+        if ($uri === "/") {
+            header("Location: /oferta");
+            die();
+        }
         require $routes[$uri];
     } else {
         $abort();
