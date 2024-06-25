@@ -1,5 +1,4 @@
 <?php
-
 class Database {
     public $connection;
 
@@ -11,7 +10,6 @@ class Database {
         $this->connection = new PDO($dsn, $userName, $password, [
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
         ]);
-        // $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
     public function query($query, $params = []) {
