@@ -3,7 +3,7 @@ $baseUrl = "http://localhost";
 $uri = parse_url($_SERVER["REQUEST_URI"])["path"];
 
 $routes = [
-    "/login" => "views/login.php",
+    "/login" => "views/login.view.php",
     "/authenticate" => "controllers/auth/authenticate.php",
     "/logout" => "controllers/auth/logOut.php",
     "/" => "controllers/oferta.php",
