@@ -11,6 +11,7 @@ $routes = [
     "/curso" => "controllers/curso.php",
     "/inscritos" => "controllers/inscritos.php",
     "/instruyendo" => "controllers/instruyendo.php",
+    "/docentes" => "controllers/docentes.php",
     "/horario" => "controllers/horario.php",
     "/historial" => "controllers/historial.php",
 ];
