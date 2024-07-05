@@ -6,7 +6,6 @@ $course = $db->query("SELECT * FROM tblCurso where CURSOID = ?", [$id])->fetch()
 if (!$course) {
     $abort();
 }
-
 // if ($course['idUsuario' !== $idUsuarioActual]) {
 //     abort(Response::FORBIDDEN);
 // }
