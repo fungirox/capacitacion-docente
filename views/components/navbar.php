@@ -20,6 +20,9 @@
                         <a href="<?= $baseUrl ?>/instruyendo" class="nav-link <?= urlIs("/instruyendo") ? "active" : null ?>" aria-current="<?= urlIs("/instruyendo") ? "page" : null ?>" id="instruyendo">Instruyendo</a>
                     </li>
                     <li class="nav-item">
+                        <a href="<?= $baseUrl ?>/docentes" class="nav-link <?= urlIs("/docentes") ? "active" : null ?>" aria-current="<?= urlIs("/docentes") ? "page" : null ?>" id="docentes">Docentes</a>
+                    </li>
+                    <li class="nav-item">
                         <a href="<?= $baseUrl ?>/horario" class="nav-link <?= urlIs("/horario") ? "active" : null ?>" aria-current="<?= urlIs("/horario") ? "page" : null ?>" id="horario">Horario</a>
                     </li>
                     <li class="nav-item">
