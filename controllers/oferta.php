@@ -1,6 +1,6 @@
 <?php
 $db = new Database();
-$allCourses = $db->query("SELECT * FROM tblCurso")->fetchAll();
+$allCourses = $db->query("SELECT * FROM tblCurso")->getAll();
 
 $title = "Oferta";
 
