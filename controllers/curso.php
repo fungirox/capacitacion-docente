@@ -1,15 +1,9 @@
 <?php
 $db = new Database();
 $id = $_GET["id"];
-$course = $db->query("SELECT * FROM tblCurso where CURSOID = ?", [$id])->fetch();
+$course = $db->query("SELECT * FROM tblCurso where CURSOID = ?", [$id])->getOrFail();
 
-if (!$course) {
-    $abort();
-}
-
-// if ($course['idUsuario' !== $idUsuarioActual]) {
-//     abort(Response::FORBIDDEN);
-// }
+// authorize($course['idUsuario' === $idUsuarioActual]);
 
 $id = $course["CURSOID"];
 $nombre = htmlspecialchars($course["CURSO_Nombre"], ENT_QUOTES, "UTF-8");
