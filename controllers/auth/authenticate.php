@@ -16,6 +16,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         die("Query failed");
     }
 } else {
-    header("Location: $baseUrl/login");
+    header("Location: /login");
     die();
 }
