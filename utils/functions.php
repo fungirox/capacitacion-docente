@@ -9,3 +9,9 @@ function dd($value) {
 function urlIs($value) {
     return parse_url($_SERVER["REQUEST_URI"])["path"] === $value;
 }
+
+function authorize($condition, $status = Response::FORBIDDEN) {
+    if (!$condition) {
+        abort($status);
+    }
+}
