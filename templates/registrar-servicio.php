@@ -11,10 +11,10 @@ if (!$_SESSION["loggedIn"]) {
 $teachersQuery = "SELECT u.USERID, u.USER_Nombre, u.USER_Apellido FROM tblUsuario u JOIN tblUsuarioRoles ur ON u.USERID = ur.USERID JOIN tblRol r ON ur.ROLID = r.ROLID WHERE r.ROL_Nombre = 'Instructor'";
 $areaQuery = "SELECT * FROM dbo.tblArea;";
 $stnt = $connection->prepare($teachersQuery);
-$stnt->execute();
+$stnt -> execute();
 $teachersData = $stnt->fetchAll();
 $stnt = $connection->prepare($areaQuery);
-$stnt->execute();
+$stnt -> execute();
 $areaData = $stnt->fetchAll();
 
 $todayDate = new DateTime();
