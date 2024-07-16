@@ -1,5 +1,5 @@
 <?php require "components/styledHeader.php"; ?>
-<main role="main" class="container pt-4" style="margin-top: 56px">
+<main role="main" class="container py-4" style="margin-top: 56px">
     <h1>Oferta de Cursos</h1>
     <div class="row row-cols-auto justify-content-end pt-4 g-2">
         <div class="col-12 col-md-auto">
