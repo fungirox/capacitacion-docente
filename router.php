@@ -1,27 +1,6 @@
 <?php
-$uri = parse_url($_SERVER["REQUEST_URI"])["path"];
 
-$routes = [
-
-    # Auth
-    "/login" => "views/login.view.php",
-    "/authenticate" => "controllers/auth/authenticate.php",
-    "/logout" => "controllers/auth/logOut.php",
-    "/" => "controllers/oferta.php",
-
-    # Oferta
-    "/oferta" => "controllers/oferta.php",
-    "/curso" => "controllers/curso.php",
-    "/inscritos" => "controllers/inscritos.php",
-    "/instruyendo" => "controllers/instruyendo.php",
-
-    # Docentes
-    "/docentes" => "controllers/docentes.php",
-    "/nuevo-docente" => "views/nuevoDocente.view.php",
-
-    "/horario" => "controllers/horario.php",
-    "/historial" => "controllers/historial.php",
-];
+$routes = require("routes.php");
 
 function abort($code = 404) {
     http_response_code($code);
@@ -40,5 +19,7 @@ function routeToController($uri, $routes) {
         abort();
     }
 };
+
+$uri = parse_url($_SERVER["REQUEST_URI"])["path"];
 
 routeToController($uri, $routes);
