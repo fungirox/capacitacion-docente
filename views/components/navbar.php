@@ -2,7 +2,7 @@
     <nav class="navbar bg-light fixed-top navbar-expand-lg shadow-sm user-select-none">
         <div class="container-fluid">
             <div class="navbar-brand">
-                <img src="__DIR__../../assets/images/icono-itesca.png" alt="Logo de ITESCA" width="24">
+                <img src="../../assets/images/icono-itesca.png" alt="Logo de ITESCA" width="24">
                 <span>Capacitación Docente</span>
             </div>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,7 +20,7 @@
                         <a href="/instruyendo" class="nav-link <?= urlIs("/instruyendo") ? "active" : null ?>" aria-current="<?= urlIs("/instruyendo") ? "page" : null ?>" id="instruyendo">Instruyendo</a>
                     </li>
                     <li class="nav-item">
-                        <a href="/docentes" class="nav-link <?= urlIs("/docentes") ? "active" : null ?>" aria-current="<?= urlIs("/docentes") ? "page" : null ?>" id="docentes">Docentes</a>
+                        <a href="/docentes" class="nav-link <?= urlIs("/docentes") || urlIs("/docentes/nuevo") ? "active" : null ?>" aria-current="<?= urlIs("/docentes") || urlIs("/docentes/nuevo") ? "page" : null ?>" id="docentes">Docentes</a>
                     </li>
                     <li class="nav-item">
                         <a href="/horario" class="nav-link <?= urlIs("/horario") ? "active" : null ?>" aria-current="<?= urlIs("/horario") ? "page" : null ?>" id="horario">Horario</a>

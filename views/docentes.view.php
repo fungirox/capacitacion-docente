@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="order-1 order-md-2 d-grid col-12 col-md-auto">
-            <a href="/nuevo-docente" type="button" class="btn btn-primary">
+            <a href="/docentes/nuevo" type="button" class="btn btn-primary">
                 <i class="bi bi-plus-lg"></i>
                 <span>Nuevo Docente</span>
             </a>
