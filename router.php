@@ -17,7 +17,8 @@ $routes = [
 
     # Docentes
     "/docentes" => "controllers/docentes.php",
-    "/nuevo-docente" => "controllers/nuevoDocente.php",
+    "/nuevo-docente" => "views/nuevoDocente.view.php",
+
     "/horario" => "controllers/horario.php",
     "/historial" => "controllers/historial.php",
 ];
