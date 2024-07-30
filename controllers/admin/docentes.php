@@ -1,4 +1,5 @@
 <?php
-$title = "Horario";
+
+$title = "Docentes";
 
 require "views/docentes.view.php";
