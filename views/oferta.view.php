@@ -1,4 +1,4 @@
-<?php require "components/styledHeader.php"; ?>
+<?php require $_SERVER['DOCUMENT_ROOT'] . "/views/components/styledHeader.php"; ?>
 <main role="main" class="container py-4" style="margin-top: 56px">
     <h1>Oferta de Cursos</h1>
     <div class="row row-cols-auto justify-content-end pt-4 g-2">
@@ -50,4 +50,4 @@
         <?php endforeach; ?>
     </div>
 </main>
-<?php require "components/styledFooter.php"; ?>
+<?php require $_SERVER['DOCUMENT_ROOT'] . "/views/components/styledFooter.php"; ?>

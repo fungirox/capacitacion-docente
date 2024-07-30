@@ -1,4 +1,4 @@
-<? require "views/components/header.php"; ?>
+<? require $_SERVER['DOCUMENT_ROOT'] . "/views/components/header.php"; ?>
 <header class="text-center">
     <h1>Capacitación Docente</h1>
 </header>
@@ -13,4 +13,4 @@
         </form>
     </div>
 </main>
-<? require "views/components/footer.php"; ?>
+<? require $_SERVER['DOCUMENT_ROOT'] . "/views/components/footer.php"; ?>
