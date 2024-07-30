@@ -11,7 +11,7 @@ function abort($code = 404) {
 function routeToController($uri, $routes) {
     if (array_key_exists($uri, $routes)) {
         if ($uri === "/") {
-            header("Location: /oferta");
+            header("Location: /admin/cursos");
             die();
         }
         require $routes[$uri];
