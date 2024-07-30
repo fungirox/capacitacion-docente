@@ -1,4 +1,5 @@
 <?php
+
 $db = new Database();
 $allCourses = $db->query("SELECT * FROM tblCurso")->getAll();
 
