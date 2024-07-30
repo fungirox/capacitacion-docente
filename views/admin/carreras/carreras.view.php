@@ -40,9 +40,9 @@
             <tbody>
                 <?php foreach ($allCareers as $career) : ?>
                     <?php
-                    $id = $career['CARRERAID'];
-                    $name = $career['CARRERA_Nombre'];
-                    $acronym = $career['CARRERA_Siglas'];
+                    $id = htmlspecialchars($career['CARRERAID']);
+                    $name = htmlspecialchars($career['CARRERA_Nombre']);
+                    $acronym = htmlspecialchars($career['CARRERA_Siglas']);
                     ?>
                     <tr>
                         <td scope="row"><?= $id ?></td>
