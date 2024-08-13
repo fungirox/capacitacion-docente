@@ -1,8 +1,8 @@
 <?php
-# TODO añadir el validar sesión
 require_once '../config/connection.php';
 require_once "../config/config.php";
 
+# TODO añadir el validar sesión
 if (!$_SESSION["loggedIn"]) {
     header("Location: ../login.php");
     die();
@@ -72,16 +72,16 @@ $weekdays = [
         <select name="teachers" id="teachers">
             <?php foreach ($teachersData as $row) : ?>
                 <?php
-                $userID = htmlspecialchars($row['USERID'], ENT_QUOTES, 'UTF-8');
-                $userFirstName = htmlspecialchars($row['USER_Nombre'], ENT_QUOTES, 'UTF-8');
-                $userLastName = htmlspecialchars($row['USER_Apellido'], ENT_QUOTES, 'UTF-8');
+                $userID = htmlspecialchars($row["USERID"], ENT_QUOTES, "UTF-8");
+                $userFirstName = htmlspecialchars($row["USER_Nombre"], ENT_QUOTES, "UTF-8");
+                $userLastName = htmlspecialchars($row["USER_Apellido"], ENT_QUOTES, "UTF-8");
                 ?>
                 <option value="<?= $userID ?>"><?= $userFirstName ?> <?= $userLastName ?></option>
             <?php endforeach; ?>
         </select>
         <button>Agregar instructor</button>
         <br />
-        <!-- Aquí falta lo de areas, aun no sé como hacerlo -->
+        <!-- Aquí falta lo de areas, aun no sé como hacerlo like frontend -->
         <label for="areas">Areas</label>
         <br />
         <?php foreach ($areaData as $row) : ?>
