@@ -8,7 +8,7 @@ ob_start();
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>F04PSA19.02</title>
+  <title><?= $nombreEncuesta['ENCUESTA_Nombre'] ?></title>
   <style>
     body {
       font-family: Helvetica, sans-serif;
@@ -21,8 +21,8 @@ ob_start();
     <div class="document_description">
       <div><img src="http://localhost/capacitacion-docente/capacitacion-docente/assets/images/icono-itesca-texto.png" alt="Logo de ITESCA" width="124" /></div>
       <div>
-        <h2>F04PSA19.02</h2>
-        <h1>EVALUACIÓN DE EVENTOS DE CAPACITACIÓN</h1>
+        <h2><?= $nombreEncuesta['ENCUESTA_Nombre'] ?></h2>
+        <h1><?= $nombreEncuesta['ENCUESTA_Descripcion'] ?></h1>
       </div>
     </div>
 
@@ -99,28 +99,29 @@ ob_start();
         }
       </style>
       <table class="tg">
-        <thead>
-          <tr>
-            <th class="tg-2xhg">Nombre del evento</th>
-            <th class="tg-w1ee" colspan="3">Lorem ipsum dolor sit</th>
-          </tr>
-        </thead>
         <tbody>
+          <!-- <thead> -->
+          <tr>
+            <td class="tg-2xhg">Nombre del evento</th>
+            <td class="tg-w1ee" colspan="3"><?= $serviceName['CURSO_Nombre'] ?></th>
+          </tr>
+          <!-- </thead> -->
+          <!-- <tbody> -->
           <tr>
             <td class="tg-2xhg">Fecha</td>
-            <td class="tg-w1ee">Lorem ipsum</td>
+            <td class="tg-w1ee"><?= $formattedToday ?></td>
             <td class="tg-2xhg">Horario</td>
-            <td class="tg-w1ee">Lorem ipsum dolor</td>
+            <td class="tg-w1ee"><?= $horario ?></td>
           </tr>
           <tr>
             <td class="tg-2xhg">Instructor o instructora</td>
-            <td class="tg-w1ee" colspan="3">Lorem ipsum dolor sit</td>
+            <td class="tg-w1ee" colspan="3"><?= $instructorName['USER_Nombre'] ?></td>
           </tr>
           <tr>
             <td class="tg-9ck0">No. de Participantes</td>
-            <td class="tg-0pky">Lorem ipsum</td>
+            <td class="tg-0pky"><?= $numeroParticipantes['CantidadDocentes'] ?></td>
             <td class="tg-9ck0">No. de Evaluaciones</td>
-            <td class="tg-0pky">Lorem ipsum dolor</td>
+            <td class="tg-0pky"><?= $numeroEvaluaciones['CantidadRespuestas'] ?></td>
           </tr>
           <tr>
             <td class="tg-v0hj" colspan="4">
@@ -137,81 +138,49 @@ ob_start();
             <td class="tg-v0hj">Rasgo a evaluar</td>
             <td class="tg-v0hj">Eval.</td>
           </tr>
-          <tr>
-            <td class="tg-0pky">
-              La o el instructor inició en los primeros 10 minutos
-            </td>
-            <td class="tg-0pky"></td>
-            <td class="tg-0pky">La organización del evento fue</td>
-            <td class="tg-0pky"></td>
-          </tr>
-          <tr>
-            <td class="tg-0pky">Se presentó el objetivo y programa</td>
-            <td class="tg-0pky"></td>
-            <td class="tg-0pky">El lugar fue adecuado y confortable</td>
-            <td class="tg-0pky"></td>
-          </tr>
-          <tr>
-            <td class="tg-0pky">La explicación fue clara y completa</td>
-            <td class="tg-0pky"></td>
-            <td class="tg-0pky">
-              Las condiciones de iluminación, ruido y temperatura fueron
-              apropiadas
-            </td>
-            <td class="tg-0pky"></td>
-          </tr>
-          <tr>
-            <td class="tg-0pky">La o el instructor domina el tema</td>
-            <td class="tg-0pky"></td>
-            <td class="tg-0pky">Si hubo servicio de cafetería, este fue</td>
-            <td class="tg-0pky"></td>
-          </tr>
-          <tr>
-            <td class="tg-0pky">La o el instructor solucionó las dudas</td>
-            <td class="tg-0pky"></td>
-            <td class="tg-0pky">
-              El horario y la duración de las sesiones fueron apropiadas
-            </td>
-            <td class="tg-0pky"></td>
-          </tr>
-          <tr>
-            <td class="tg-0pky">La exposición fue interesante y amena</td>
-            <td class="tg-0pky"></td>
-            <td class="tg-0pky"></td>
-            <td class="tg-0pky"></td>
-          </tr>
-          <tr>
-            <td class="tg-0pky">
-              Se brindo el material adecuado a los participantes
-            </td>
-            <td class="tg-0pky"></td>
-            <td class="tg-0pky"></td>
-            <td class="tg-0pky"></td>
-          </tr>
-          <tr>
-            <td class="tg-0pky">La presentación y apoyos fueron adecuados</td>
-            <td class="tg-0pky"></td>
-            <td class="tg-0pky"></td>
-            <td class="tg-0pky"></td>
-          </tr>
-          <tr>
-            <td class="tg-0pky">
-              Los conocimientos y habilidades desarrollados tiene aplicación
-              inmediata o a corto plazo en mi trabajo
-            </td>
-            <td class="tg-0pky"></td>
-            <td class="tg-0pky"></td>
-            <td class="tg-0pky"></td>
-          </tr>
+          <?php
+          // Contadores para separar las preguntas en dos columnas
+          $columna1 = array_slice($questions, 0, 9); // Preguntas 1 a 9
+          $columna2 = array_slice($questions, 9, 5); // Preguntas 10 a 14
+
+          // Calcular el número de filas necesarias (máximo entre ambas columnas)
+          $totalRows = max(count($columna1), count($columna2));
+          ?>
+
+          <?php for ($i = 0; $i < $totalRows; $i++): ?>
+            <tr>
+              <?php if (isset($columna1[$i])): 
+                $summatoryInstructor += $columna1[$i]["Promedio"]; ?>
+                <td class="tg-0pky">
+                  <?= $columna1[$i]["PREGUNTA_Texto"] ?>
+                </td>
+                <td class="tg-0pky">
+                  <?= $columna1[$i]["Promedio"] ?>
+                </td>
+              <?php endif; ?>
+              <?php if (isset($columna2[$i])): 
+                $summatoryOrganizacion += $columna2[$i]["Promedio"]; ?>
+                  <td class="tg-0pky">
+                  <?= $columna2[$i]["PREGUNTA_Texto"] ?>
+                  </td>
+                  <td class="tg-0pky">
+                    <?= $columna2[$i]["Promedio"] ?>
+                  </td>
+              <?php else: ?>
+                <td class="tg-0pky"></td>
+                <td class="tg-0pky"></td>
+              <?php endif; ?>
+            </tr>
+          <?php endfor; ?>
           <tr>
             <td class="tg-9ck0">Evaluación promedio</td>
-            <td class="tg-0pky"></td>
+            <td class="tg-0pky"><?php $evaluacionInstructor = $summatoryInstructor/count($columna1);  ?><?= $evaluacionInstructor ?></td>
             <td class="tg-9ck0">Evaluación promedio</td>
-            <td class="tg-0pky"></td>
+            <td class="tg-0pky"><?php $evaluacionOrganizacion = $summatoryOrganizacion/count($columna2); ?><?= $evaluacionOrganizacion ?></td>
           </tr>
           <tr>
             <td class="tg-9ck0" colspan="3">Evaluación general</td>
-            <td class="tg-0pky"></td>
+            <td class="tg-0pky"><?= ($evaluacionInstructor + $evaluacionOrganizacion) / 2 ?></td>
           </tr>
           <tr>
             <td class="tg-0pky" colspan="4">
