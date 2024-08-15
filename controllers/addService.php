@@ -1,6 +1,6 @@
 <?php
 # TODO añadir el validar sesión
-require_once '../config/connection.php';
+require_once "../config/connection.php";
 require_once "../config/config.php";
 
 function insertService($connection, $serviceName, $serviceType, $totalHours, $startDate, $finishDate, 
