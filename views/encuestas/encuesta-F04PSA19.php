@@ -1,6 +1,6 @@
 <?php
-require_once '../config/connection.php';
-require_once "../config/config.php";
+#require_once '../config/connection.php';
+#require_once "../config/config.php";
 # Esta query no es la definitiva es temporal mientras hacemos un login con todos los users y roles
 $teachersQuery = "SELECT u.USERID, u.USER_Nombre, u.USER_Apellido FROM tblUsuario u JOIN tblUsuarioRoles ur ON u.USERID = ur.USERID JOIN tblRol r ON ur.ROLID = r.ROLID WHERE r.ROL_Nombre = 'Docente'";
 

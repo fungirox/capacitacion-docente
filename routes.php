@@ -40,4 +40,11 @@ return [
 
     "/horario" => "controllers/horario.php",
     "/historial" => "controllers/historial.php",
+
+
+    # Encuesta TODO
+    "/evaluarCurso" => "views/encuestas/encuesta-F04PSA19.php",
+
+    # Generar Reporte
+    "/generarReporte" => "controllers/generarReporte.php",
 ];

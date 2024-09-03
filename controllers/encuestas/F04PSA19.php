@@ -1,12 +1,9 @@
 <?php
-# TODO añadir el validar sesión
-require_once '../config/connection.php';
-require_once "../config/config.php";
 
-if (!$_SESSION["loggedIn"]) {
-    header("Location: ../login.php");
-    die();
-}
+#if (!$_SESSION["loggedIn"]) {
+#    header("Location: ../login.php");
+#    die();
+#}
 
 # falta verificar que todos los datos requeridos no sean None / Null
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
