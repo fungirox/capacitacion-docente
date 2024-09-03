@@ -2,6 +2,12 @@
 <main role="main" class="container py-4" style="margin-top: 56px">
     <h1>Cursos</h1>
     <div class="row row-cols-auto justify-content-end pt-4 g-2">
+        <div class="order-1 order-md-2 d-grid col-12 col-md-auto">
+            <a href="" type="button" class="btn btn-primary">
+                <i class="bi bi-plus-lg"></i>
+                <span>Nuevo curso</span>
+            </a>
+        </div>
         <div class="col-12 col-md-auto">
             <div class="input-group flex-nowrap">
                 <span class="input-group-text" id="addon-wrapping"><i class="bi bi-search"></i></span>
@@ -29,15 +35,6 @@
         </div>
     </div>
     <div class="my-2 row row-cols-1 row-cols-md-3 g-4">
-        <div class="col">
-            <div class="card h-100 d-flex flex-column justify-content-center align-items-center">
-                <a class="link-dark link-offset-2 link-underline link-underline-opacity-0 d-flex flex-column h-100 justify-content-center align-items-center" href="/curso?id=<?= $id ?>">
-                    <div class="card-body flex-grow-1 d-flex justify-content-center align-items-center">
-                        <i class="bi bi-plus-lg" style="font-size: 3rem;"></i>
-                    </div>
-                </a>
-            </div>
-        </div>
         <?php foreach ($allCourses as $course) : ?>
             <?php
             $id = $course["CURSOID"];
