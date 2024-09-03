@@ -1,23 +1,18 @@
 <?php
-#require_once '../config/connection.php';
-#require_once "../config/config.php";
 # Esta query no es la definitiva es temporal mientras hacemos un login con todos los users y roles
 $teachersQuery = "SELECT u.USERID, u.USER_Nombre, u.USER_Apellido FROM tblUsuario u JOIN tblUsuarioRoles ur ON u.USERID = ur.USERID JOIN tblRol r ON ur.ROLID = r.ROLID WHERE r.ROL_Nombre = 'Docente'";
 
 # Aquí necesitamos el id del curso que elegimos desde la interfaz de "historial" por ahora dejaré cursoid = 1
 $questionsQuery = "SELECT * FROM tblPregunta where ENCUESTAID = '1';";
 
-$stnt = $connection->prepare($teachersQuery);
-$stnt->execute();
-$teachersData = $stnt->fetchAll();
+$db = new Database();
+$teachersData = $db->query($teachersQuery)->getAll();
 
-$stnt = $connection->prepare($questionsQuery);
-$stnt->execute();
-$questions = $stnt->fetchAll();
+$db = new Database();
+$questions = $db->query($questionsQuery)->getAll();
 
 $curso_name = "Taller de construcción para principantes en Fortnite: Battle Royale";
 $instructor_name = "José Diego Rascón Amador";
-
 ?>
 
 <!DOCTYPE html>
@@ -43,9 +38,9 @@ $instructor_name = "José Diego Rascón Amador";
         <select name="teachers" id="teachers">
             <?php foreach ($teachersData as $row) : ?>
                 <?php
-                    $userID = htmlspecialchars($row['USERID'], ENT_QUOTES, 'UTF-8');
-                    $userFirstName = htmlspecialchars($row['USER_Nombre'], ENT_QUOTES, 'UTF-8');
-                    $userLastName = htmlspecialchars($row['USER_Apellido'], ENT_QUOTES, 'UTF-8');
+                $userID = htmlspecialchars($row['USERID'], ENT_QUOTES, 'UTF-8');
+                $userFirstName = htmlspecialchars($row['USER_Nombre'], ENT_QUOTES, 'UTF-8');
+                $userLastName = htmlspecialchars($row['USER_Apellido'], ENT_QUOTES, 'UTF-8');
                 ?>
                 <option value="<?= $userID ?>"><?= $userFirstName ?> <?= $userLastName ?></option>
             <?php endforeach; ?>
@@ -53,10 +48,10 @@ $instructor_name = "José Diego Rascón Amador";
         <div>
             <?php foreach ($questions as $row): ?>
                 <div>
-                    <?php 
-                        $questionID = htmlspecialchars($row['PREGUNTAID'], ENT_QUOTES, 'UTF-8');
-                        $questionText = htmlspecialchars($row['PREGUNTA_Texto'], ENT_QUOTES, 'UTF-8');
-                        $options = range(1,5);
+                    <?php
+                    $questionID = htmlspecialchars($row['PREGUNTAID'], ENT_QUOTES, 'UTF-8');
+                    $questionText = htmlspecialchars($row['PREGUNTA_Texto'], ENT_QUOTES, 'UTF-8');
+                    $options = range(1, 5);
                     ?>
                     <label for="<?= $questionID ?>"><?= $questionText ?></label>
                     <div>
@@ -69,7 +64,7 @@ $instructor_name = "José Diego Rascón Amador";
             <?php endforeach; ?>
         </div>
         <!-- Queda pendiente el comentarios (textarea) -->
-        <!-- Queda pendiente frontend y separar por categorias las preguntas :D -->                            
+        <!-- Queda pendiente frontend y separar por categorias las preguntas :D -->
         <button type="submit">Evaluar</button>
     </form>
 </body>

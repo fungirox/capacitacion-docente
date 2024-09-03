@@ -197,7 +197,7 @@ ob_start();
 <?php
 $html_code = ob_get_clean();
 
-require_once '../vendor/autoload.php';
+require_once 'vendor/autoload.php';
 
 use Dompdf\Dompdf;
 use Dompdf\Options;
