@@ -29,22 +29,54 @@
         </div>
     </div>
     <div class="my-2 row row-cols-1 row-cols-md-3 g-4">
+        <div class="col">
+            <div class="card h-100 d-flex flex-column justify-content-center align-items-center">
+                <a class="link-dark link-offset-2 link-underline link-underline-opacity-0 d-flex flex-column h-100 justify-content-center align-items-center" href="/curso?id=<?= $id ?>">
+                    <div class="card-body flex-grow-1 d-flex justify-content-center align-items-center">
+                        <i class="bi bi-plus-lg" style="font-size: 3rem;"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
         <?php foreach ($allCourses as $course) : ?>
             <?php
             $id = $course["CURSOID"];
             $nombre = htmlspecialchars($course["CURSO_Nombre"], ENT_QUOTES, "UTF-8");
+
+            $instructorQuery = $db->query("SELECT tblUsuario.USER_Nombre, tblUsuario.USER_Apellido  
+            FROM tblUsuario 
+            INNER JOIN tblInstructor ON tblUsuario.USERID = tblInstructor.USERID 
+            INNER JOIN tblCursoInstructor ON tblCursoInstructor.INSTRUCTORID = tblInstructor.INSTRUCTORID
+            INNER JOIN tblCurso ON tblCurso.CURSOID = tblCursoInstructor.CURSOID
+            WHERE tblCurso.CURSOID = ?", [$id])->get();
+
+            if ($instructorQuery) {
+                $nombreInstructor = htmlspecialchars($instructorQuery['USER_Nombre'], ENT_QUOTES, "UTF-8");
+                $apellidoInstructor = htmlspecialchars($instructorQuery['USER_Apellido'], ENT_QUOTES, "UTF-8");
+            } else {
+                $nombreInstructor = "Instructor";
+                $apellidoInstructor = "no encontrado";
+            }
+
+            $tipo = htmlspecialchars($course["CURSO_Tipo"], ENT_QUOTES, "UTF-8");
+
+            $modalidad = htmlspecialchars($course["CURSO_Modalidad"], ENT_QUOTES, "UTF-8");
+
             ?>
             <div class="col">
-                <div class="card h-100">
-                    <img src="https://plus.unsplash.com/premium_photo-1682125773446-259ce64f9dd7?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img-top" alt="..." height="150px" style="object-fit:cover;">
-                    <div class="card-body">
-                        <h5 class="card-title"><?= $nombre ?></h5>
-                        <p class="card-text">sadasdsadsaaaaaaaaaaa</p>
-                        <a href="/curso?id=<?= $id ?>" class="btn btn-primary">Detalles</a>
-                    </div>
-                    <div class="card-footer">
-                        Card footer
-                    </div>
+                <div class="card h-100 d-flex flex-column">
+                    <a class="link-dark link-offset-2 link-underline link-underline-opacity-0 d-flex flex-column h-100" href="/curso?id=<?= $id ?>">
+                        <img src="https://plus.unsplash.com/premium_photo-1682125773446-259ce64f9dd7?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img-top" alt="..." height="150px" style="object-fit:cover;">
+                        <div class="card-body flex-grow-1 d-flex flex-column">
+                            <h5 class="card-title"><?= $nombre ?></h5>
+                            <p class="card-text"><?= $nombreInstructor ?> <?= $apellidoInstructor ?> </p>
+                        </div>
+
+                        <div class="card-footer mt-auto">
+                            <span class="list-inline-item text-capitalize badge text-bg-primary"> <?= $tipo ?> </span>
+                            <p class="list-inline-item text-capitalize badge text-bg-primary"> <?= $modalidad ?></p>
+                        </div>
+                    </a>
                 </div>
             </div>
         <?php endforeach; ?>
