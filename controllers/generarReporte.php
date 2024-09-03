@@ -3,13 +3,17 @@
 #    header("Location: ../login.php");
 #    die();
 #}
+# require_once '../config/connection.php';
+# require_once "../config/config.php";
 
-require_once '../config/connection.php';
-require_once "../config/config.php";
-
+$db = new Database();
 $idCurso = 1;
+$surveyId = 1;
 
-$idEncuesta = 1;
+$surveyData = $db -> query("SELECT ENCUESTA_Nombre, ENCUESTA_Descripcion FROM tblEncuesta WHERE ENCUESTAID = ?;", [$surveyId]) -> getOrFail();
+
+
+
 $encuestaQuery = "SELECT ENCUESTA_Nombre, ENCUESTA_Descripcion FROM tblEncuesta WHERE ENCUESTAID = :idEncuesta;";
 $stnt = $connection->prepare($encuestaQuery);
 $stnt->bindParam(':idEncuesta', $idEncuesta, PDO::PARAM_INT);
@@ -76,4 +80,4 @@ $questions = $stnt->fetchAll(PDO::FETCH_ASSOC);
 $summatoryInstructor = 0;
 $summatoryOrganizacion = 0;
 
-require "../templates/reporte.php";
+require "../views/reporte.view.php";
