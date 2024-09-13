@@ -1,7 +1,5 @@
 <?php
 
-require 'Validator.php';
-
 $db = new Database();
 
 $title = "Nueva Área";
