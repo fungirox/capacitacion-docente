@@ -2,4 +2,4 @@
 
 $title = "Áreas";
 
-require  "views/admin/areas.view.php";
+require  "views/admin/areas/areas.view.php";
