@@ -1,21 +1,11 @@
 <?php
-require_once '../config/connection.php';
-require_once "../config/config.php";
+$db = new Database();
 
-# TODO añadir el validar sesión
-if (!$_SESSION["loggedIn"]) {
-    header("Location: ../login.php");
-    die();
-}
+$teachers = $db->query("SELECT u.USERID, u.USER_Nombre, u.USER_Apellido FROM tblUsuario u JOIN tblUsuarioRoles ur ON u.USERID = ur.USERID JOIN tblRol r ON ur.ROLID = r.ROLID WHERE r.ROL_Nombre = 'Instructor'")->getAll();
 
-$teachersQuery = "SELECT u.USERID, u.USER_Nombre, u.USER_Apellido FROM tblUsuario u JOIN tblUsuarioRoles ur ON u.USERID = ur.USERID JOIN tblRol r ON ur.ROLID = r.ROLID WHERE r.ROL_Nombre = 'Instructor'";
 $areaQuery = "SELECT * FROM dbo.tblArea;";
-$stnt = $connection->prepare($teachersQuery);
-$stnt -> execute();
-$teachersData = $stnt->fetchAll();
-$stnt = $connection->prepare($areaQuery);
-$stnt -> execute();
-$areaData = $stnt->fetchAll();
+$areas = $db->query($areaQuery)->getAll();
+
 
 $todayDate = new DateTime();
 $formattedToday = $todayDate->format('Y-m-d');
@@ -29,8 +19,8 @@ $weekdays = [
     'jueves' => 'Jueves',
     'viernes' => 'Viernes'
 ];
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -70,7 +60,7 @@ $weekdays = [
             estos no son instructores hasta que sean asignados a un curso --->
         <label for="teachers">Instructores</label>
         <select name="teachers" id="teachers">
-            <?php foreach ($teachersData as $row) : ?>
+            <?php foreach ($teachers as $row) : ?>
                 <?php
                 $userID = htmlspecialchars($row["USERID"], ENT_QUOTES, "UTF-8");
                 $userFirstName = htmlspecialchars($row["USER_Nombre"], ENT_QUOTES, "UTF-8");
@@ -84,7 +74,7 @@ $weekdays = [
         <!-- Aquí falta lo de areas, aun no sé como hacerlo like frontend -->
         <label for="areas">Areas</label>
         <br />
-        <?php foreach ($areaData as $row) : ?>
+        <?php foreach ($areas as $row) : ?>
             <?php
             $areaSiglas = htmlspecialchars($row['AREA_Siglas'], ENT_QUOTES, 'UTF-8');
             $areaID = htmlspecialchars($row['AREAID'], ENT_QUOTES, 'UTF-8');

@@ -31,7 +31,7 @@
         <table class="table table-striped table-hover align-middle">
             <thead>
                 <tr>
-                    <th scope="col">ID</th>
+                    <!-- <th scope="col">ID</th> -->
                     <th scope="col">Nombre</th>
                     <th scope="col">Siglas</th>
                     <th scope="col"></th>
@@ -45,7 +45,7 @@
                     $acronym = htmlspecialchars($career['CARRERA_Siglas']);
                     ?>
                     <tr>
-                        <td scope="row"><?= $id ?></td>
+                        <!-- <td scope="row"><?= $id ?></td> -->
                         <td><?= $name ?></td>
                         <td><?= $acronym ?></td>
                         <td class="text-end">

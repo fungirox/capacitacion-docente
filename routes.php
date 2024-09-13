@@ -10,7 +10,9 @@ return [
 
     # Administradores
 
+    # Cursos
     "/admin/cursos" => "controllers/admin/cursos.php",
+    "/admin/cursos/nuevo" => "views/registrar-servicio.php",
     "/admin/historial" => "controllers/admin/historial.php",
 
     # Personal

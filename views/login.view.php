@@ -1,4 +1,4 @@
-<? require $_SERVER['DOCUMENT_ROOT'] . "/views/components/header.php"; ?>
+<?php require $_SERVER['DOCUMENT_ROOT'] . "/views/components/header.php"; ?>
 <main>
     <div class="container-fluid px-0">
         <div class="row g-0">
@@ -27,4 +27,4 @@
         </div>
     </div>
 </main>
-<? require $_SERVER['DOCUMENT_ROOT'] . "/views/components/footer.php"; ?>
+<?php require $_SERVER['DOCUMENT_ROOT'] . "/views/components/footer.php"; ?>

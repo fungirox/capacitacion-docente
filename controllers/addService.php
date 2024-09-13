@@ -3,8 +3,19 @@
 require_once "../config/connection.php";
 require_once "../config/config.php";
 
-function insertService($connection, $serviceName, $serviceType, $totalHours, $startDate, $finishDate, 
-$serviceCategory, $serviceModality, $serviceActive, $serviceInProgress, $serviceProfile){
+function insertService(
+    $connection,
+    $serviceName,
+    $serviceType,
+    $totalHours,
+    $startDate,
+    $finishDate,
+    $serviceCategory,
+    $serviceModality,
+    $serviceActive,
+    $serviceInProgress,
+    $serviceProfile
+) {
     # INSERT CURSO
     # El único campo que se llenará después es CURSO_Descripcion
     try {
@@ -53,7 +64,7 @@ $serviceCategory, $serviceModality, $serviceActive, $serviceInProgress, $service
         return false;
     }
 }
-function insertServiceArea($connection, $serviceId, $areaId){
+function insertServiceArea($connection, $serviceId, $areaId) {
     try {
         $query = "INSERT INTO 
         tblCursoArea (
@@ -74,7 +85,7 @@ function insertServiceArea($connection, $serviceId, $areaId){
         return false;
     }
 }
-function insertInstructors($connection,$serviceId,$instructors){
+function insertInstructors($connection, $serviceId, $instructors) {
     try {
         $query = "INSERT INTO 
         tblCursoInstructor (
