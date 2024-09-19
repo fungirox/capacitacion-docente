@@ -1,4 +1,4 @@
-<?php require $_SERVER['DOCUMENT_ROOT'] . "/views/components/styledHeader.php"; ?>
+<?php require view("components/styledHeader.php"); ?>
 <script defer>
     $(document).ready(function() {
         $("#search-docente").on("keyup", function() {
@@ -31,7 +31,6 @@
         <table class="table table-striped table-hover align-middle">
             <thead>
                 <tr>
-                    <!-- <th scope="col">ID</th> -->
                     <th scope="col">Nombre</th>
                     <th scope="col">Siglas</th>
                     <th scope="col"></th>
@@ -45,7 +44,6 @@
                     $acronym = htmlspecialchars($career['CARRERA_Siglas']);
                     ?>
                     <tr>
-                        <!-- <td scope="row"><?= $id ?></td> -->
                         <td><?= $name ?></td>
                         <td><?= $acronym ?></td>
                         <td class="text-end">
@@ -61,18 +59,38 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="#">
+                                        <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal<?= $id ?>">
                                             <i class="bi bi-trash"></i>
-                                            <span class="ms-2">Borrar</span>
-                                        </a>
+                                            <span class="ms-2">Eliminar</span>
+                                        </button>
                                     </li>
                                 </ul>
                             </div>
                         </td>
                     </tr>
+                    <form method="POST">
+                        <div class="modal fade" id="deleteModal<?= $id ?>" tabindex="-1" aria-labelledby="deleteModalLabel<?= $id ?>" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="deleteModalLabel<?= $id ?>">Eliminar Carrera</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>¿Seguro de que desea eliminar esta carrera?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input type="hidden" name="id" value="<?= $id ?>" />
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 <?php endforeach; ?>
             </tbody>
         </table>
     </div>
 </main>
-<?php require $_SERVER['DOCUMENT_ROOT'] . "/views/components/styledFooter.php"; ?>
+<?php require view("components/styledFooter.php"); ?>

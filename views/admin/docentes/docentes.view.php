@@ -1,4 +1,4 @@
-<?php require $_SERVER['DOCUMENT_ROOT'] . "/views/components/styledHeader.php"; ?>
+<?php require view("components/styledHeader.php"); ?>
 <script defer>
     $(document).ready(function() {
         $("#search-docente").on("keyup", function() {
@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="order-1 order-md-2 d-grid col-12 col-md-auto">
-            <a href="/docentes/nuevo" type="button" class="btn btn-primary">
+            <a href="docentes/nuevo" type="button" class="btn btn-primary">
                 <i class="bi bi-plus-lg"></i>
                 <span>Nuevo Docente</span>
             </a>
@@ -109,4 +109,4 @@
         </table>
     </div>
 </main>
-<?php require $_SERVER['DOCUMENT_ROOT'] . "/views/components/styledFooter.php"; ?>
+<?php require view("components/styledFooter.php"); ?>

@@ -11,12 +11,18 @@ return [
     # Administradores
 
     # Cursos
-    "/admin/cursos" => "controllers/admin/cursos.php",
-    "/admin/cursos/nuevo" => "views/registrar-servicio.php",
-    "/admin/historial" => "controllers/admin/historial.php",
+    "/admin/cursos" => "controllers/admin/cursos/cursos.php",
+    "/admin/cursos/nuevo" => "controllers/admin/cursos/curso-nuevo.php",
+    "/admin/curso" => "controllers/admin/cursos/curso.php",
 
-    # Personal
-    "/admin/docentes" => "controllers/admin/docentes.php",
+    # Historial
+    "/admin/historial" => "controllers/admin/historial/historial.php",
+
+    # Docentes
+    "/admin/docentes" => "controllers/admin/docentes/docentes.php",
+    "/admin/docentes/nuevo" => "controllers/admin/docentes/docentes-nuevo.php",
+
+    # Instructores
     "/admin/instructores" => "controllers/admin/instructores.php",
 
     # Documentación
@@ -36,7 +42,6 @@ return [
 
     # Oferta
     "/oferta" => "controllers/oferta.php",
-    "/curso" => "controllers/curso.php",
     "/inscritos" => "controllers/inscritos.php",
     "/instruyendo" => "controllers/instruyendo.php",
 

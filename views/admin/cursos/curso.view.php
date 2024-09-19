@@ -1,7 +1,7 @@
 <div>
     <img src="https://www.ketchum.edu/sites/default/files/2022-08/First%20%28Top%29%20Image%20.jpeg" class="img-fluid" alt="Imagen" style="width: 100%; height: 300px; object-fit: cover;">
 </div>
-<?php require $_SERVER['DOCUMENT_ROOT'] . "/views/components/styledHeader.php"; ?>
+<?php require view("components/styledHeader.php"); ?>
 <main role="main" class="container pt-5">
     <div class="d-flex justify-content-between align-items-start">
         <div class="w-75 fs-4 mx-5">
@@ -41,4 +41,4 @@
         </div>
     </div>
 </main>
-<?php require $_SERVER['DOCUMENT_ROOT'] . "/views/components/styledFooter.php"; ?>
+<?php require view("components/styledFooter.php"); ?>

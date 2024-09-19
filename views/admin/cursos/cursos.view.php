@@ -1,9 +1,9 @@
-<?php require $_SERVER['DOCUMENT_ROOT'] . "/views/components/styledHeader.php"; ?>
+<?php require view("components/styledHeader.php"); ?>
 <main role="main" class="container py-4" style="margin-top: 56px">
     <h1>Cursos</h1>
     <div class="row row-cols-auto justify-content-end pt-4 g-2">
         <div class="order-1 order-md-2 d-grid col-12 col-md-auto">
-            <a href="" type="button" class="btn btn-primary">
+            <a href="/admin/cursos/nuevo" type="button" class="btn btn-primary">
                 <i class="bi bi-plus-lg"></i>
                 <span>Nuevo curso</span>
             </a>
@@ -62,7 +62,7 @@
             ?>
             <div class="col">
                 <div class="card h-100 d-flex flex-column">
-                    <a class="link-dark link-offset-2 link-underline link-underline-opacity-0 d-flex flex-column h-100" href="/curso?id=<?= $id ?>">
+                    <a class="link-dark link-offset-2 link-underline link-underline-opacity-0 d-flex flex-column h-100" href="curso?id=<?= $id ?>">
                         <img src="https://plus.unsplash.com/premium_photo-1682125773446-259ce64f9dd7?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img-top" alt="..." height="150px" style="object-fit:cover;">
                         <div class="card-body flex-grow-1 d-flex flex-column">
                             <h5 class="card-title"><?= $nombre ?></h5>
@@ -79,4 +79,4 @@
         <?php endforeach; ?>
     </div>
 </main>
-<?php require $_SERVER['DOCUMENT_ROOT'] . "/views/components/styledFooter.php"; ?>
+<?php require view("components/styledFooter.php"); ?>

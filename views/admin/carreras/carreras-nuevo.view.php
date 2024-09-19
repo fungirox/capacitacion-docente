@@ -1,4 +1,4 @@
-<?php require $_SERVER['DOCUMENT_ROOT'] . "/views/components/styledHeader.php"; ?>
+<?php require view("components/styledHeader.php"); ?>
 <script defer>
     $(document).ready(function() {
         $('input').on('input', function() {
@@ -29,4 +29,4 @@
         </div>
     </form>
 </main>
-<?php require $_SERVER['DOCUMENT_ROOT'] . "/views/components/styledFooter.php"; ?>
+<?php require view("components/styledFooter.php"); ?>

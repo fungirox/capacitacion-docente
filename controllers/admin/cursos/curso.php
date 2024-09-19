@@ -1,5 +1,9 @@
 <?php
+
+use Core\Database;
+
 $db = new Database();
+
 $id = $_GET["id"];
 $course = $db->query("SELECT * FROM tblCurso where CURSOID = ?", [$id])->getOrFail();
 
@@ -38,8 +42,6 @@ $activo = htmlspecialchars($course["CURSO_Activo"], ENT_QUOTES, "UTF-8");
 $enProgreso = htmlspecialchars($course["CURSO_En_Progreso"], ENT_QUOTES, "UTF-8");
 $perfil = htmlspecialchars($course["CURSO_Perfil"], ENT_QUOTES, "UTF-8");
 
-
-
 $title = $nombreCurso;
 
-require  "views/curso.view.php";
+require view("admin/cursos/curso.view.php");
