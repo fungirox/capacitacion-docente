@@ -13,6 +13,12 @@ function urlIs($value) {
     return parse_url($_SERVER["REQUEST_URI"])["path"] === $value;
 }
 
+function abort($status = 404) {
+    http_response_code($status);
+    require view("errors/{$status}.php");
+    die();
+}
+
 function authorize($condition, $status = Response::FORBIDDEN) {
     if (!$condition) {
         abort($status);

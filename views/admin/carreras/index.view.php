@@ -53,7 +53,7 @@
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end">
                                     <li>
-                                        <a class="dropdown-item" href="#">
+                                        <a class="dropdown-item" href="/admin/carreras/editar?id=<?= $id ?>">
                                             <i class="bi bi-pencil"></i>
                                             <span class="ms-2">Editar</span>
                                         </a>
@@ -80,6 +80,7 @@
                                         <p>¿Seguro de que desea eliminar esta carrera?</p>
                                     </div>
                                     <div class="modal-footer">
+                                        <input type="hidden" name="_method" value="DELETE" />
                                         <input type="hidden" name="id" value="<?= $id ?>" />
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                                         <button type="submit" class="btn btn-danger">Eliminar</button>
