@@ -66,3 +66,6 @@ $router->get("/admin/carreras/editar", "controllers/admin/carreras/edit.php");
 $router->patch("/admin/carreras", "controllers/admin/carreras/update.php");
 $router->get("/admin/carreras/nuevo", "controllers/admin/carreras/create.php");
 $router->post("/admin/carreras", "controllers/admin/carreras/store.php");
+
+$router->get("/admin/registro", "controllers/admin/registro/create.php");
+$router->post("/admin/registro", "controllers/admin/registro/store.php");

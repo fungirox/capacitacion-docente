@@ -11,4 +11,14 @@ class Validator {
     public static function email($value) {
         filter_var($value, FILTER_VALIDATE_EMAIL);
     }
+
+    public static function nomina($value) {
+        $value = trim($value);
+        return strlen($value) === 8;
+    }
+
+    public static function cip($value) {
+        $value = trim($value);
+        return strlen($value) === 5 && ctype_alpha($value);
+    }
 }
