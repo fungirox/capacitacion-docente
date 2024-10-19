@@ -4,15 +4,15 @@
     <form action="../modules/addService.php" method="post" class="row g-3 my-4">
         <!--- Nombre del Curso --->
         <div class="form-group">
-            <label for="service-name" class="form-label">Nombre del Curso</label>
+            <label for="service-name" class="form-label fw-bold">Nombre del Curso</label>
             <input type="text" class="form-control" required placeholder="Nombre del curso" id="service-name" name="service-name" />
 
-            <label for="service-description" class="form-label mt-2">Descripción del curso</label>
+            <label for="service-description" class="form-label mt-2 fw-bold">Descripción del curso</label>
             <textarea class="form-control" required placeholder="Descripción del curso" id="service-description" name="service-description"> </textarea>
         </div>
         <!--- Tipo de Curso: curso, taller y diplomado --->
         <div class="form-group">
-            <label class="form-label">Tipo de servicio</label>
+            <label class="form-label fw-bold">Tipo de servicio</label>
             <div class="form-check">
                 <input type="radio" class="form-check-input" required name="service-type" id="curso" value="curso" checked="checked" />
                 <label class="form-check-label" for="curso">Curso</label>
@@ -28,7 +28,7 @@
         </div>
         <!--- Tipo de servicio: interno, externo --->
         <div class="form-group">
-            <label class="form-label">Categoría de servicio</label>
+            <label class="form-label fw-bold">Categoría de servicio</label>
             <div class="form-check">
                 <input type="radio" class="form-check-input" required name="service-category" id="interno" value="0" checked="checked" />
                 <label class="form-check-label" for="interno" class="form-label">Interno</label>
@@ -40,7 +40,7 @@
         </div>
         <!--- Seleccionar instructor --->
         <div class="form-group">
-            <label for="teachers" class="form-label">Instructores</label>
+            <label for="teachers" class="form-label fw-bold">Instructores</label>
             <select class="form-control" name="teachers" id="teachers">
                 <?php foreach ($teachers as $row) : ?>
                     <?php
@@ -51,11 +51,13 @@
                     <option value="<?= $userID ?>"><?= $userFirstName ?> <?= $userLastName ?></option>
                 <?php endforeach; ?>
             </select>
-            <button type="button" class="btn btn-primary mt-2">Agregar instructor</button>
+            <div class="text-end">
+                <button type="button" class="btn btn-link mt-2">Registrar instructor...</button>
+            </div>
         </div>
         <!--- Áreas --->
         <div class="form-group">
-            <label class="form-label">Áreas</label>
+            <label class="form-label fw-bold">Áreas</label>
             <?php foreach ($areas as $row) : ?>
                 <?php
                 $areaSiglas = htmlspecialchars($row['AREA_Siglas'], ENT_QUOTES, 'UTF-8');
@@ -69,26 +71,26 @@
         </div>
         <!-- Horario -->
         <div class="form-group">
-            <label for="physical-hours" class="form-label">Horas presenciales</label>
+            <label for="physical-hours" class="form-label fw-bold">Horas presenciales</label>
             <input type="number" class="form-control" min="0" required value="0" id="physical-hours" name="physical-hours" />
             <label for="virtual-hours" class="mt-2" class="form-label">Horas virtuales</label>
             <input type="number" class="form-control" min="0" required value="0" id="virtual-hours" name="virtual-hours" />
         </div>
         <!-- Fechas -->
         <div class="form-group">
-            <label for="start-date" class="form-label">Fecha de inicio</label>
+            <label for="start-date" class="form-label fw-bold">Fecha de inicio</label>
             <input type="date" class="form-control" id="start-date" name="start-date" min="<?= $formattedToday; ?>" value="<?= $formattedToday; ?>">
             <label for="finish-date" class="mt-2" class="form-label">Fecha de finalización</label>
             <input type="date" class="form-control" id="finish-date" name="finish-date" min="<?= $formattedToday; ?>" value="<?= $formattedTomorrow; ?>">
         </div>
         <!--- Aula -->
         <div class="form-group">
-            <label for="classroom" class="form-label">Aula</label>
+            <label for="classroom" class="form-label fw-bold">Aula</label>
             <input type="number" class="form-control" min="0" id="classroom" name="classroom" />
         </div>
         <!--- Días de la semana -->
         <div class="form-group">
-            <label for="week" class="form-label">Días de la semana</label>
+            <label for="week" class="form-label fw-bold">Días de la semana</label>
             <?php foreach ($weekdays as $id => $name) : ?>
                 <div class="form-check">
                     <input type="checkbox" class="form-check-input" id="<?= $id ?>" name="weekdays[]" value="<?= $id ?>">

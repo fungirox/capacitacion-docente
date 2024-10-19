@@ -3,4 +3,4 @@
 $title = "Nueva Carrera";
 $errors = [];
 
-require view("admin/carreras/create.view.php");
+require view("/admin/areas/create.view.php");

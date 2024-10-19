@@ -54,9 +54,22 @@
 //     # Generar Reporte
 //     "/generarReporte" => "controllers/generarReporte.php",
 // ];
+
+
+
 # Administradores
 
+# Áreas
+
+$router->get("/admin/areas", "controllers/admin/areas/index.php");
+$router->get("/admin/areas/nuevo", "controllers/admin/areas/create.php");
+$router->post("/admin/areas", "controllers/admin/areas/store.php");
+
 # Cursos
+
+$router->get("/admin/cursos", "controllers/admin/cursos/index.php");
+$router->get("/admin/cursos/nuevo", "controllers/admin/cursos/create.php");
+$router->get("/admin/curso", "controllers/admin/cursos/show.php");
 
 # Carreras
 
@@ -69,3 +82,5 @@ $router->post("/admin/carreras", "controllers/admin/carreras/store.php");
 
 $router->get("/admin/registro", "controllers/admin/registro/create.php");
 $router->post("/admin/registro", "controllers/admin/registro/store.php");
+
+

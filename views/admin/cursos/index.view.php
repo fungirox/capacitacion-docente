@@ -3,7 +3,7 @@
     <h1>Cursos</h1>
     <div class="row row-cols-auto justify-content-end pt-4 g-2">
         <div class="order-1 order-md-2 d-grid col-12 col-md-auto">
-            <a href="/admin/cursos/nuevo" type="button" class="btn btn-primary">
+            <a href="cursos/nuevo" type="button" class="btn btn-primary">
                 <i class="bi bi-plus-lg"></i>
                 <span>Nuevo curso</span>
             </a>

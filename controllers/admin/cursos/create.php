@@ -1,8 +1,9 @@
 <?php
 
+use Core\App;
 use Core\Database;
 
-$db = new Database();
+$db = App::resolve(Database::class);
 
 $teachers = $db->query(
     "SELECT u.USERID, u.USER_Nombre, u.USER_Apellido
@@ -28,4 +29,4 @@ $weekdays = [
 
 $title = "Registrar Curso";
 
-require view("admin/cursos/curso-nuevo.view.php");
+require view("admin/cursos/create.view.php");
