@@ -8,7 +8,7 @@ ob_start();
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><?= $nombreEncuesta['ENCUESTA_Nombre'] ?></title>
+  <title><?= $surveyData['ENCUESTA_Nombre'] ?></title>
   <style>
     body {
       font-family: Helvetica, sans-serif;
@@ -19,10 +19,10 @@ ob_start();
 <body>
   <div class="document_header">
     <div class="document_description">
-      <div><img src="../../public/assets/images/icono-itesca-texto.png" alt="Logo de ITESCA" width="124" /></div>
+      <div><img src="C:\xampp\htdocs\capacitacion-docente\public\assets\images\icono-itesca-texto.png" alt="Logo de ITESCA" width="124" /></div>
       <div>
-        <h2><?= $nombreEncuesta['ENCUESTA_Nombre'] ?></h2>
-        <h1><?= $nombreEncuesta['ENCUESTA_Descripcion'] ?></h1>
+        <h2><?= $surveyData['ENCUESTA_Nombre'] ?></h2>
+        <h1><?= $surveyData['ENCUESTA_Descripcion'] ?></h1>
       </div>
     </div>
 
@@ -197,24 +197,10 @@ ob_start();
 <?php
 $html_code = ob_get_clean();
 
-require_once __DIR__ . '../../vendor/autoload.php';
+require_once __DIR__ . '../../../../vendor/autoload.php';
 
 $mpdf = new \Mpdf\Mpdf();
 
 $mpdf -> WriteHTML($html_code);
 $mpdf -> Output();
-
-// use Dompdf\Dompdf;
-// use Dompdf\Options;
-
-// $options = new Options();
-// $options->set('chroot', realpath(''));
-// $options->set('isRemoteEnabled', true);
-// $dompdf = new Dompdf($options);
-
-// $dompdf->loadHtml($html_code);
-// $dompdf->setPaper('A4', 'portrait');
-// $dompdf->render();
-// $dompdf->stream('Reporte.pdf');
-
 ?>

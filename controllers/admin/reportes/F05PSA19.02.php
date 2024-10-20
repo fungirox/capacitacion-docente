@@ -4,6 +4,7 @@ use Core\App;
 use Core\Database;
 
 $db = App::resolve(Database::class);
+
 $title = "F05PSA19.02";
 
 $idCurso = 1; // Estos deberán mandarse al hacer request por ahora están así 
@@ -21,17 +22,11 @@ $instructorName = $db->query("SELECT u.USER_Nombre
 
 $numeroParticipantes = $db->query( "SELECT COUNT(*) AS CantidadDocentes 
                       FROM tblCursoDocente 
-                      WHERE CURSOID = ?" , [$idCurso]) -> getAll();
+                      WHERE CURSOID = ?" , [$idCurso]) -> getOrFail();
 
 $numeroEvaluaciones = $db->query( "SELECT COUNT(*) AS CantidadRespuestas 
                         FROM tblRespuesta 
-                        WHERE CURSOID = ? AND ENCUESTAID = ?" , [$idCurso, $surveyId]) -> getAll();
-
-date_default_timezone_set('America/Hermosillo');
-
-$todayDate = new DateTime();
-$formattedToday = $todayDate->format('d-m-Y');
-$horario = date("H:i A");
+                        WHERE CURSOID = ? AND ENCUESTAID = ?" , [$idCurso, $surveyId]) -> getOrFail();
 
 $questionsQuery = "SELECT CAST(p.PREGUNTA_Texto AS VARCHAR(MAX)) AS PREGUNTA_Texto, 
        AVG(CAST(rp.RESPUESTAPREGUNTA_Texto AS FLOAT)) AS Promedio
@@ -46,11 +41,11 @@ $questionsQuery = "SELECT CAST(p.PREGUNTA_Texto AS VARCHAR(MAX)) AS PREGUNTA_Tex
 
 $questions = $db -> query($questionsQuery, [$surveyId, $idCurso]) -> getAll();
 
+date_default_timezone_set('America/Hermosillo');
+$todayDate = new DateTime();
+$formattedToday = $todayDate->format('d-m-Y');
+$horario = date("H:i A");
 $summatoryInstructor = 0;
 $summatoryOrganizacion = 0;
 
-// require "views/reporte.view.php";
 require view("admin/reportes/F05PSA19.02.view.php");
-
-// require view("admin/carreras/index.view.php");
- 
