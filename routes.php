@@ -59,9 +59,20 @@
 
 # Administradores
 
+# Docentes
+
+$router->get("/admin/docentes", "controllers/admin/docentes/index.php");
+$router->get("/admin/docentes/nuevo", "controllers/admin/docentes/create.php");
+$router->post("/admin/docentes", "controllers/admin/areas/store.php");
+
+
+
 # Áreas
 
 $router->get("/admin/areas", "controllers/admin/areas/index.php");
+$router->delete("/admin/areas", "controllers/admin/areas/destroy.php");
+$router->get("/admin/areas/editar", "controllers/admin/areas/edit.php");
+$router->patch("/admin/areas", "controllers/admin/areas/update.php");
 $router->get("/admin/areas/nuevo", "controllers/admin/areas/create.php");
 $router->post("/admin/areas", "controllers/admin/areas/store.php");
 
