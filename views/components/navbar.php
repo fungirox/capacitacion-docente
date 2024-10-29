@@ -54,9 +54,6 @@
                         <a href="/instruyendo" class="nav-link <?= urlIs("/instruyendo") ? "active" : null ?>" aria-current="<?= urlIs("/instruyendo") ? "page" : null ?>" id="instruyendo">Instruyendo</a>
                     </li>
                     <li class="nav-item">
-                        <a href="/docentes" class="nav-link <?= urlIs("/docentes") || urlIs("/docentes/nuevo") ? "active" : null ?>" aria-current="<?= urlIs("/docentes") || urlIs("/docentes/nuevo") ? "page" : null ?>" id="docentes">Docentes</a>
-                    </li>
-                    <li class="nav-item">
                         <a href="/horario" class="nav-link <?= urlIs("/horario") ? "active" : null ?>" aria-current="<?= urlIs("/horario") ? "page" : null ?>" id="horario">Horario</a>
                     </li>
                     <li class="nav-item">
