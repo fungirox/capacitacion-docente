@@ -1,6 +1,6 @@
 <?php
 
-$title = "Nueva Área";
+$title = "Nueva Carrera";
 $errors = [];
 
 require view("admin/carreras/create.view.php");

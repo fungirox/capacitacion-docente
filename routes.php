@@ -54,18 +54,24 @@
 //     # Generar Reporte
 //     "/generarReporte" => "controllers/generarReporte.php",
 // ];
-# Administradores
 
 # Cursos
 
-# Carreras
 
+# Usuarios
+$router->get("/admin/usuarios", "controllers/admin/usuarios/index.php");
+$router->get("/admin/usuarios/nuevo", "controllers/admin/usuarios/create.php");
+
+$router->post("/admin/usuarios", "controllers/admin/usuarios/store.php");
+
+# Carreras
 $router->get("/admin/carreras", "controllers/admin/carreras/index.php");
-$router->delete("/admin/carreras", "controllers/admin/carreras/destroy.php");
 $router->get("/admin/carreras/editar", "controllers/admin/carreras/edit.php");
-$router->patch("/admin/carreras", "controllers/admin/carreras/update.php");
 $router->get("/admin/carreras/nuevo", "controllers/admin/carreras/create.php");
+$router->get("/admin/registro", "controllers/admin/registro/create.php");
+
 $router->post("/admin/carreras", "controllers/admin/carreras/store.php");
 
-$router->get("/admin/registro", "controllers/admin/registro/create.php");
-$router->post("/admin/registro", "controllers/admin/registro/store.php");
+$router->delete("/admin/carreras", "controllers/admin/carreras/destroy.php");
+
+$router->patch("/admin/carreras", "controllers/admin/carreras/update.php");

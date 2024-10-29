@@ -10,7 +10,7 @@
     });
 </script>
 <main role="main" class="container py-4" style="margin-top: 56px">
-    <h1>Carreras</h1>
+    <h1>Usuarios</h1>
     <div class="row row-cols-auto justify-content-end py-4 g-2">
         <div class="order-2 order-md-1 col-12 col-md-4">
             <div class="input-group flex-nowrap">
@@ -21,9 +21,9 @@
             </div>
         </div>
         <div class="order-1 order-md-2 d-grid col-12 col-md-auto">
-            <a href="carreras/nuevo" type="button" class="btn btn-primary">
+            <a href="usuarios/nuevo" type="button" class="btn btn-primary">
                 <i class="bi bi-plus-lg"></i>
-                <span>Nueva carrera</span>
+                <span>Nuevo usuario</span>
             </a>
         </div>
     </div>
@@ -31,21 +31,24 @@
         <table class="table table-striped table-hover align-middle">
             <thead>
                 <tr>
+                    <th scope="col">Nómina</th>
                     <th scope="col">Nombre</th>
-                    <th scope="col">Siglas</th>
-                    <th scope="col"></th>
+                    <th scope="col">Email</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($allCareers as $career) : ?>
                     <?php
-                    $id = $career['CARRERAID'];
-                    $name = htmlspecialchars($career['CARRERA_Nombre']);
-                    $acronym = htmlspecialchars($career['CARRERA_Siglas']);
+                    $id = $career['USERID'];
+                    $name = htmlspecialchars($career["USER_Nombre"]);
+                    $lastName = htmlspecialchars($career["USER_Apellido"]);
+                    $fullName = $name . " " . $lastName;
+                    $email = htmlspecialchars($career["USER_Email"]);
                     ?>
                     <tr>
-                        <td><?= $name ?></td>
-                        <td><?= $acronym ?></td>
+                        <td></td>
+                        <td><?= $fullName ?></td>
+                        <td><?= $email ?></td>
                         <td class="text-end">
                             <div class="dropdown">
                                 <button class="btn btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">

@@ -21,6 +21,7 @@
                             Personal
                         </a>
                         <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/admin/usuarios">Usuarios</a></li>
                             <li><a class="dropdown-item" href="/admin/docentes">Docentes</a></li>
                             <li><a class="dropdown-item" href="/admin/instructores">Instructores</a></li>
                         </ul>
