@@ -21,14 +21,12 @@ if (!Validator::string($siglas, 1, 8)) {
 
 if (!empty($errors)) {
     return require view("admin/carreras/create.view.php");
+} else {
+    $db->query(
+        "INSERT INTO tblCarrera (CARRERA_Nombre, CARRERA_Siglas) VALUES (?, ?)",
+        [$nombre, $siglas]
+    );
+
+    header("location: /admin/carreras");
+    die();
 }
-
-# AUTORIZAR QUE SEA ADMIN
-
-$db->query(
-    "INSERT INTO tblCarrera (CARRERA_Nombre, CARRERA_Siglas) VALUES (?, ?)",
-    [$nombre, $siglas]
-);
-
-header("location: /admin/carreras");
-die();
