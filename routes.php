@@ -63,7 +63,7 @@ $router->get("/admin/cursos", "controllers/admin/cursos/index.php");
 $router->get("/admin/curso", "controllers/admin/cursos/show.php");
 $router->get("/admin/cursos/nuevo", "controllers/admin/cursos/create.php");
 
-# Personal
+# Usuarios
 
 $router->get("/admin/usuarios", "controllers/admin/usuarios/index.php");
 $router->get("/admin/usuarios/nuevo", "controllers/admin/usuarios/create.php");
