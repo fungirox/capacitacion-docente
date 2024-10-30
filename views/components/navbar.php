@@ -16,15 +16,8 @@
                     <li class="nav-item">
                         <a href="/admin/historial" class="nav-link <?= urlIs("/admin/historial") ? "active" : null ?>" aria-current="<?= urlIs("/admin/historial") ? "page" : null ?>" id="historial">Historial</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Personal
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/admin/usuarios">Usuarios</a></li>
-                            <li><a class="dropdown-item" href="/admin/docentes">Docentes</a></li>
-                            <li><a class="dropdown-item" href="/admin/instructores">Instructores</a></li>
-                        </ul>
+                    <li class="nav-item">
+                        <a href="/admin/usuarios" class="nav-link <?= urlIs("/admin/usuarios") ? "active" : null ?>" aria-current="<?= urlIs("/admin/usuarios") ? "page" : null ?>" id="usuarios">Usuarios</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
