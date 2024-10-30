@@ -1,5 +1,8 @@
+
+
 <?php require view("components/styledHeader.php"); ?>
 <main role="main" class="container py-4" style="margin-top: 56px">
+
     <h1 class="mb-4">Registrar Curso</h1>
     <form action="../modules/addService.php" method="post" class="row g-3 my-4">
         <!--- Nombre del Curso --->
@@ -52,7 +55,7 @@
                 <?php endforeach; ?>
             </select>
             <div class="text-end">
-                <button type="button" class="btn btn-link mt-2">Registrar instructor...</button>
+                <button type="button" class="btn btn-link mt-2">Registrar instructor</button>
             </div>
         </div>
         <!--- Áreas --->
@@ -72,21 +75,34 @@
         <!-- Horario -->
         <div class="form-group">
             <label for="physical-hours" class="form-label fw-bold">Horas presenciales</label>
-            <input type="number" class="form-control" min="0" required value="0" id="physical-hours" name="physical-hours" />
-            <label for="virtual-hours" class="mt-2" class="form-label">Horas virtuales</label>
-            <input type="number" class="form-control" min="0" required value="0" id="virtual-hours" name="virtual-hours" />
+            <input type="number" class="form-control" min="0" required value="" id="physical-hours" name="physical-hours" />
+            <label for="virtual-hours" class="form-label fw-bold mt-2"">Horas virtuales</label>
+            <input type=" number" class="form-control" min="0" required value="" id="virtual-hours" name="virtual-hours" />
         </div>
         <!-- Fechas -->
         <div class="form-group">
             <label for="start-date" class="form-label fw-bold">Fecha de inicio</label>
             <input type="date" class="form-control" id="start-date" name="start-date" min="<?= $formattedToday; ?>" value="<?= $formattedToday; ?>">
-            <label for="finish-date" class="mt-2" class="form-label">Fecha de finalización</label>
+            <label for="finish-date" class="mt-2  fw-bold" class="form-label">Fecha de finalización</label>
             <input type="date" class="form-control" id="finish-date" name="finish-date" min="<?= $formattedToday; ?>" value="<?= $formattedTomorrow; ?>">
         </div>
         <!--- Aula -->
         <div class="form-group">
             <label for="classroom" class="form-label fw-bold">Aula</label>
             <input type="number" class="form-control" min="0" id="classroom" name="classroom" />
+        </div>
+
+        <!--- Modalidad de servicio: presencial, virtual --->
+        <div class="form-group">
+            <label class="form-label fw-bold">Modalidad</label>
+            <div class="form-check">
+                <input type="radio" class="form-check-input" required name="service-category" id="presencial" value="0" checked="checked" />
+                <label class="form-check-label" for="presencial" class="form-label">Presencial</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" class="form-check-input" required name="service-category" id="virtual" value="1" />
+                <label class="form-check-label" for="virtual" class="form-label">Virtual</label>
+            </div>
         </div>
         <!--- Días de la semana -->
         <div class="form-group">
@@ -97,10 +113,22 @@
                     <label class="form-check-label" for="<?= $id ?>"><?= $name ?></label>
                 </div>
             <?php endforeach; ?>
+
+            <div>Hora inicio: </div>
+            <div>Hora final: </div>
         </div>
         <div class="form-group">
             <button type="submit" class="btn btn-success">Añadir</button>
         </div>
     </form>
+
+    <script>
+        $(document).ready(function() {
+            $('#teachers').select2({
+                placeholder: "Selecciona un instructor",
+                allowClear: true
+            });
+        });
+    </script>
 </main>
 <?php require view("components/styledFooter.php"); ?>
