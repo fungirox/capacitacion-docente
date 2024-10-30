@@ -34,6 +34,7 @@
                     <th scope="col">Nómina</th>
                     <th scope="col">Nombre</th>
                     <th scope="col">Email</th>
+                    <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
