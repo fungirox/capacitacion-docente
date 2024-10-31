@@ -55,6 +55,10 @@
 //     "/generarReporte" => "controllers/generarReporte.php",
 // ];
 
+# Auth
+
+$router->get("/login", "controllers/auth/login.php")->only("guest");
+
 # Administradores
 
 # Cursos
@@ -65,7 +69,7 @@ $router->get("/admin/cursos/nuevo", "controllers/admin/cursos/create.php");
 
 # Usuarios
 
-$router->get("/admin/usuarios", "controllers/admin/usuarios/index.php");
+$router->get("/admin/usuarios", "controllers/admin/usuarios/index.php")->only("admin");
 $router->get("/admin/usuarios/nuevo", "controllers/admin/usuarios/create.php");
 
 $router->post("/admin/usuarios", "controllers/admin/usuarios/store.php");
