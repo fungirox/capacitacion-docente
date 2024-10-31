@@ -55,7 +55,7 @@ if (!empty($errors)) {
 } else {
     $db->query(
         "INSERT INTO tblUsuario (USER_NombreUsuario, USER_Password, USER_Nombre, USER_Apellido, USER_Email, USER_Genero) VALUES (?, ?, ?, ?, ?, ?)",
-        [$nomina, $contraseña, $nombre, $apellido, $email, $genero]
+        [$nomina, password_hash($contraseña, PASSWORD_BCRYPT), $nombre, $apellido, $email, $genero]
     );
 
     $_SESSION["user"] = [
