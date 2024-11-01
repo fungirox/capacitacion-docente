@@ -48,13 +48,14 @@ class Router {
     }
 
     public function route($uri, $method) {
+        if ($uri === "/") {
+            header("Location: /admin/cursos");
+            exit();
+        }
+        
         foreach ($this->routes as $route) {
             if ($route["uri"] === $uri && $route["method"] === strtoupper($method)) {
                 Middleware::resolve($route["middleware"]);
-
-                if ($uri === "/") {
-                    header("Location: /admin/cursos");
-                }
 
                 return require base_path($route["controller"]);
             }
