@@ -49,6 +49,7 @@ class Router {
 
     public function route($uri, $method) {
         if ($uri === "/") {
+            # Redireccionar a la vista principal de cada rol, si no hay una sesión, ir al login.
             header("Location: /admin/cursos");
             exit();
         }
