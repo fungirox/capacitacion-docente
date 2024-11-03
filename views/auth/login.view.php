@@ -11,15 +11,16 @@
                     <h1>Log-in</h1>
                 </header>
                 <div class="d-flex justify-content-center">
-                    <form action="modules/authenticate.php" method="post">
+                    <form action="/login" method="POST">
                         <div class="mb-4">
-                            <label for="user" class="form-label">Usuario</label>
-                            <input type="text" class="form-control" id="user" name="user" placeholder="" value="">
+                            <label for="username" class="form-label">Usuario</label>
+                            <input type="text" class="form-control" id="username" name="username" placeholder="" value="">
                         </div>
                         <div class="mb-5">
                             <label for="password" class="form-label">Contraseña</label>
                             <input type="password" class="form-control" id="password" name="password" placeholder="" value="">
                         </div>
+                        <input type="hidden" name="rol" value="admin" />
                         <button type="submit" class="btn btn-primary w-100">Iniciar Sesión</button>
                     </form>
                 </div>
