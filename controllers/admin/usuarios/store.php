@@ -16,7 +16,7 @@ $email = $_POST["email"];
 $contraseña = $_POST["contraseña"];
 $confirmarContraseña = $_POST["confirmarContraseña"];
 
-if (!Validator::nomina($nomina)) {
+if (!Validator::string($nomina)) {
     $errors['nomina'] = "Favor de introducir una nómina válida.";
 }
 
@@ -36,7 +36,7 @@ if (!Validator::email($email)) {
     $errors['email'] = "Favor de introducir un email válido.";
 }
 
-if (!Validator::string($contraseña, 8, 32)) {
+if (!Validator::string($contraseña, 4, 32)) {
     $errors['contraseña'] = "Favor de introducir una contraseña válida.";
 }
 
@@ -44,7 +44,7 @@ if (strcmp($contraseña, $confirmarContraseña) !== 0) {
     $errors['confirmarContraseña'] = "Las contraseñas no coinciden.";
 }
 
-$user = $db->query("SELECT * FROM tblUsuario WHERE USERID = ?", [$nomina])->get();
+$user = $db->query("SELECT * FROM tblUsuario WHERE USER_NombreUsuario = ?", [$nomina])->get();
 
 if ($user) {
     $errors['nomina'] = "Un usuario con esa nómina ya existe.";
