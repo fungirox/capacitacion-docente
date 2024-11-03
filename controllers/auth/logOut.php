@@ -1,6 +1,6 @@
 <?php
-session_unset();
-session_destroy();
+
+logout();
 
 header("Location: /login");
 die();
