@@ -55,15 +55,18 @@
                 </ul>
                 <div class="dropdown">
                     <button class="btn btn-light w-100 py-0 d-flex align-items-center justify-content-end" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="fs-6 me-2">User</span>
+                        <span class="fs-6 me-2"><?= $_SESSION["user"]["username"] ?></span>
                         <i class="bi bi-person-circle" style="font-size: 1.5rem;"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li>
-                            <a class="dropdown-item" href="/logout">
-                                <i class="bi bi-box-arrow-left"></i>
-                                <span class="ms-2">Cerrar Sesión</span>
-                            </a>
+                            <form action="/logout" method="POST">
+                                <input type="hidden" name="_method" value="DELETE" />
+                                <button class="dropdown-item">
+                                    <i class="bi bi-box-arrow-left"></i>
+                                    <span class="ms-2">Cerrar Sesión</span>
+                                </button>
+                            </form>
                         </li>
                     </ul>
                 </div>
