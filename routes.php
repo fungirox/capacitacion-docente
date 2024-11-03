@@ -59,6 +59,10 @@
 
 $router->get("/login", "controllers/auth/login.php")->only("guest");
 
+$router->post("/login", "controllers/auth/authenticate.php")->only("guest");
+
+$router->delete("/logout", "controllers/auth/logout.php")->only("admin");
+
 # Administradores
 
 # Cursos
