@@ -14,7 +14,7 @@
     <form class="row py-4 g-3" method="POST" action="/admin/usuarios">
         <div class="col-md-4">
             <label for="nomina" class="form-label">Nómina</label>
-            <input type="number" class="form-control <?= isset($errors['nomina']) ? 'is-invalid' : '' ?>" id="nomina" name="nomina" value="<?= isset($_POST['nomina']) ? htmlspecialchars($_POST['nomina']) : '' ?>">
+            <input type="text" class="form-control <?= isset($errors['nomina']) ? 'is-invalid' : '' ?>" id="nomina" name="nomina" value="<?= isset($_POST['nomina']) ? htmlspecialchars($_POST['nomina']) : '' ?>">
             <div class="invalid-feedback">
                 <?= $errors['nomina'] ?>
             </div>
