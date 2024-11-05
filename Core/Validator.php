@@ -21,4 +21,19 @@ class Validator {
         $value = trim($value);
         return strlen($value) === 5 && ctype_alpha($value);
     }
+
+    public static function inArray($value, $array)
+    {
+        return in_array($value, $array);
+    }
+
+    public static function numeric($value)
+    {
+        return is_numeric($value);
+    }
+
+    public static function date($value)
+    {
+        return (bool)strtotime($value);
+    }
 }

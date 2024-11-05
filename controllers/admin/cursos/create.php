@@ -6,12 +6,12 @@ use Core\Database;
 $db = App::resolve(Database::class);
 
 $teachers = $db->query(
-    "SELECT u.USERID, u.USER_Nombre, u.USER_Apellido
+    "SELECT i.INSTRUCTORID, u.USERID, u.USER_Nombre, u.USER_Apellido
     FROM tblUsuario u
-    JOIN tblUsuarioRoles ur ON u.USERID = ur.USERID
-    JOIN tblRol r ON ur.ROLID = r.ROLID
-    WHERE r.ROL_Nombre = 'Instructor'"
+    JOIN tblInstructor i ON u.USERID = i.USERID;
+    "
 )->getAll();
+
 $areas = $db->query("SELECT * FROM dbo.tblArea")->getAll();
 
 $todayDate = new DateTime();

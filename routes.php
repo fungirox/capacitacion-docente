@@ -63,6 +63,12 @@ $router->get("/admin/cursos", "controllers/admin/cursos/index.php");
 $router->get("/admin/curso", "controllers/admin/cursos/show.php");
 $router->get("/admin/cursos/nuevo", "controllers/admin/cursos/create.php");
 
+$router->post("/admin/cursos", "controllers/admin/cursos/store.php");
+
+$router->delete("/admin/cursos", "controllers/admin/cursos/destroy.php");
+
+$router->patch("/admin/cursos", "controllers/admin/cursos/update.php");
+
 # Usuarios
 
 $router->get("/admin/usuarios", "controllers/admin/usuarios/index.php");
