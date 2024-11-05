@@ -20,11 +20,11 @@ $router->get("/admin/cursos", "controllers/admin/cursos/index.php")->only("admin
 $router->get("/admin/curso", "controllers/admin/cursos/show.php")->only("admins");
 $router->get("/admin/cursos/nuevo", "controllers/admin/cursos/create.php")->only("admins");
 
-$router->post("/admin/cursos", "controllers/admin/cursos/store.php");
+$router->post("/admin/cursos", "controllers/admin/cursos/store.php")->only("admins");
 
-$router->delete("/admin/cursos", "controllers/admin/cursos/destroy.php");
+$router->delete("/admin/cursos", "controllers/admin/cursos/destroy.php")->only("admins");
 
-$router->patch("/admin/cursos", "controllers/admin/cursos/update.php");
+$router->patch("/admin/cursos", "controllers/admin/cursos/update.php")->only("admins");
 
 # Usuarios
 

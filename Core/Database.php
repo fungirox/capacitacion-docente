@@ -1,6 +1,7 @@
 <?php
 
 namespace Core;
+
 use PDO;
 
 class Database {
@@ -35,7 +36,7 @@ class Database {
     public function getOrFail() {
         $result = $this->get();
 
-        if(!$result) {
+        if (!$result) {
             abort();
         }
 
