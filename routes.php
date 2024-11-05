@@ -20,6 +20,12 @@ $router->get("/admin/cursos", "controllers/admin/cursos/index.php")->only("admin
 $router->get("/admin/curso", "controllers/admin/cursos/show.php")->only("admins");
 $router->get("/admin/cursos/nuevo", "controllers/admin/cursos/create.php")->only("admins");
 
+$router->post("/admin/cursos", "controllers/admin/cursos/store.php");
+
+$router->delete("/admin/cursos", "controllers/admin/cursos/destroy.php");
+
+$router->patch("/admin/cursos", "controllers/admin/cursos/update.php");
+
 # Usuarios
 
 $router->get("/admin/usuarios", "controllers/admin/usuarios/index.php")->only("admins");

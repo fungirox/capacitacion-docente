@@ -1,10 +1,8 @@
-
-
 <?php require view("components/styledHeader.php"); ?>
 <main role="main" class="container py-4" style="margin-top: 56px">
 
     <h1 class="mb-4">Registrar Curso</h1>
-    <form action="../modules/addService.php" method="post" class="row g-3 my-4">
+    <form action="/admin/cursos" method="POST" class="row g-3 my-4">
         <!--- Nombre del Curso --->
         <div class="form-group">
             <label for="service-name" class="form-label fw-bold">Nombre del Curso</label>
@@ -47,11 +45,12 @@
             <select class="form-control" name="teachers" id="teachers">
                 <?php foreach ($teachers as $row) : ?>
                     <?php
+                    $instructorID = htmlspecialchars($row["INSTRUCTORID"], ENT_QUOTES, "UTF-8");
                     $userID = htmlspecialchars($row["USERID"], ENT_QUOTES, "UTF-8");
                     $userFirstName = htmlspecialchars($row["USER_Nombre"], ENT_QUOTES, "UTF-8");
                     $userLastName = htmlspecialchars($row["USER_Apellido"], ENT_QUOTES, "UTF-8");
                     ?>
-                    <option value="<?= $userID ?>"><?= $userFirstName ?> <?= $userLastName ?></option>
+                    <option value="<?= $instructorID ?>"><?= $userFirstName ?> <?= $userLastName ?></option>
                 <?php endforeach; ?>
             </select>
             <div class="text-end">
