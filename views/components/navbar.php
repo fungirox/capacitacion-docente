@@ -1,3 +1,7 @@
+<?php
+
+use Core\Roles\Roles; ?>
+
 <header>
     <nav class="navbar bg-light fixed-top navbar-expand-lg shadow-sm user-select-none">
         <div class="container-fluid">
@@ -10,7 +14,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav nav-underline me-auto mb-2 mb-lg-0">
-                    <?php if ($_SESSION["user"]["rol"] === "admin"): ?>
+                    <?php if ($_SESSION["user"]["rol"] === Roles::ADMIN): ?>
                         <?php require base_path("views/components/adminNavItems.php"); ?>
                     <?php else: ?>
                         <?php require base_path("views/components/standardNavItems.php"); ?>
