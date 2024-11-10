@@ -2,12 +2,11 @@
 
 namespace Core\Middleware;
 
-class Any {
+class Any extends MiddlewareTemplate {
 
     public function handle() {
-        if (! $_SESSION["user"] ?? false) {
-            header("location: /login");
-            exit();
+        if (!$this->isAuthenticated()) {
+            $this->redirect("/login");
         }
     }
 }

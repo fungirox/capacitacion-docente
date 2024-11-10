@@ -2,12 +2,15 @@
 
 namespace Core\Middleware;
 
-class Admin {
+use Core\Roles\Roles;
+
+class Admin extends MiddlewareTemplate {
 
     public function handle() {
-        if (! $_SESSION["user"] ?? false) {
-            header("location: /login");
-            exit();
+        if (!$this->isAuthenticated()) {
+            $this->redirect("/login");
+        } elseif ($_SESSION["user"]["rol"] !== Roles::ADMIN) {
+            $this->redirect("/");
         }
     }
 }
