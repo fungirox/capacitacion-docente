@@ -2,14 +2,17 @@
 
 namespace Core\Middleware;
 
+use Core\Roles\Roles;
+
 class Middleware {
 
     public const MAP = [
-        "guest" => Guest::class,
-        "admin" => Admin::class,
-        "docente" => Docente::class,
-        "instructor" => Instructor::class,
-        "docenteInstructor" => DocenteInstructor::class
+        Roles::GUEST => Guest::class,
+        Roles::ADMIN => Admin::class,
+        Roles::DOCENTE => Docente::class,
+        Roles::INSTRUCTOR => Instructor::class,
+        Roles::DOCENTE_INSTRUCTOR => DocenteInstructor::class,
+        Roles::ANY => Any::class
     ];
 
     public static function resolve($key) {
