@@ -2,9 +2,8 @@
 
 namespace Core;
 
-use Core\Middleware\Guest;
-use Core\Middleware\Admin;
 use Core\Middleware\Middleware;
+use Core\Roles\Roles;
 
 class Router {
 
@@ -49,11 +48,24 @@ class Router {
 
     public function route($uri, $method) {
         if ($uri === "/") {
-            # Redireccionar a la vista principal de cada rol, si no hay una sesión, ir al login.
-            header("Location: /admin/cursos");
+            $destination = "";
+
+            if (! $_SESSION["user"] ?? false) {
+                $destination = "/login";
+            } else {
+                $destination = match ($_SESSION["user"]["rol"]) {
+                    Roles::ADMIN => "/admin/cursos",
+                    Roles::DOCENTE,
+                    Roles::DOCENTE_INSTRUCTOR => "/inscritos",
+                    Roles::INSTRUCTOR => "/instruyendo",
+                    default => "/login"
+                };
+            }
+
+            header("Location: $destination");
             exit();
         }
-        
+
         foreach ($this->routes as $route) {
             if ($route["uri"] === $uri && $route["method"] === strtoupper($method)) {
                 Middleware::resolve($route["middleware"]);
