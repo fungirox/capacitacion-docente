@@ -8,7 +8,6 @@ $db = App::resolve(Database::class);
 
 $username = $_POST["username"];
 $password = $_POST["password"];
-$rol = $_POST["rol"];
 
 $errors = [];
 
@@ -24,13 +23,31 @@ if (!empty($errors)) {
     return require view("auth/login.view.php");
 }
 
-$user = $db->query("SELECT * FROM tblUsuario WHERE USER_NombreUsuario = ?", [$username])->get();
+$user = $db->query(
+    "SELECT
+	    *,
+	    CASE
+            WHEN admin.ADMINID IS NOT NULL THEN 'admin'
+            WHEN docente.DOCENTEID IS NOT NULL AND instructor.INSTRUCTORID IS NOT NULL THEN 'docenteInstructor'
+            WHEN docente.DOCENTEID IS NOT NULL THEN 'docente'
+            WHEN instructor.INSTRUCTORID IS NOT NULL THEN 'instructor'
+            ELSE 'guest'
+        END AS rol
+    FROM
+        [tblUsuario] usuario
+        LEFT JOIN tblAdmin admin on usuario.USERID = admin.USERID
+        LEFT JOIN tblDocente docente on usuario.USERID = docente.USERID
+        LEFT JOIN tblInstructor instructor on usuario.USERID = instructor.USERID
+    WHERE USER_NombreUsuario = ?
+    ",
+    [$username]
+)->get();
 
 if ($user) {
     if (password_verify($password, $user["USER_Password"])) {
         login([
             "username" => $username,
-            "rol" => $rol
+            "rol" => $user["rol"]
         ]);
         header("location: /");
         exit();
