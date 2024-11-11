@@ -8,7 +8,7 @@ $db = App::resolve(Database::class);
 
 $errors = [];
 
-$nomina = $_POST["nomina"];
+$username = $_POST["username"];
 $genero = $_POST["genero"];
 $nombre = $_POST["nombre"];
 $apellido = $_POST["apellido"];
@@ -16,8 +16,8 @@ $email = $_POST["email"];
 $contraseña = $_POST["contraseña"];
 $confirmarContraseña = $_POST["confirmarContraseña"];
 
-if (!Validator::string($nomina)) {
-    $errors['nomina'] = "Favor de introducir una nómina válida.";
+if (!Validator::string($username)) {
+    $errors['username'] = "Favor de introducir un nómbre de usuario válido.";
 }
 
 if ($genero === 0 || $genero === 1) {
@@ -44,10 +44,10 @@ if (strcmp($contraseña, $confirmarContraseña) !== 0) {
     $errors['confirmarContraseña'] = "Las contraseñas no coinciden.";
 }
 
-$user = $db->query("SELECT * FROM tblUsuario WHERE USER_NombreUsuario = ?", [$nomina])->get();
+$user = $db->query("SELECT * FROM tblUsuario WHERE USER_NombreUsuario = ?", [$username])->get();
 
 if ($user) {
-    $errors['nomina'] = "Un usuario con esa nómina ya existe.";
+    $errors['username'] = "Un usuario con esa nómina ya existe.";
 }
 
 if (!empty($errors)) {
@@ -55,11 +55,11 @@ if (!empty($errors)) {
 } else {
     $db->query(
         "INSERT INTO tblUsuario (USER_NombreUsuario, USER_Password, USER_Nombre, USER_Apellido, USER_Email, USER_Genero) VALUES (?, ?, ?, ?, ?, ?)",
-        [$nomina, password_hash($contraseña, PASSWORD_BCRYPT), $nombre, $apellido, $email, $genero]
+        [$username, password_hash($contraseña, PASSWORD_BCRYPT), $nombre, $apellido, $email, $genero]
     );
 
     $_SESSION["user"] = [
-        "userName" => $nomina
+        "userName" => $username
     ];
 
     header("location: /admin/usuarios");
