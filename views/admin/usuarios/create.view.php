@@ -1,9 +1,42 @@
 <?php require view("components/styledHeader.php"); ?>
 <script defer>
     $(document).ready(function() {
+        const rolDocente = $('#rol-docente');
+        const rolInstructor = $('#rol-instructor');
+        const rolAdministrador = $('#rol-administrador');
+        const adminWarning = $('#admin-warning');
+        const usernameLabel = $('label[for="username"]');
+        const instructorSwitch = $('#docente-instructor-switch');
+
         $('input').on('input', function() {
             $(this).removeClass('is-invalid');
         });
+
+        const toggleAdminWarning = () => {
+            if (rolAdministrador.prop('checked')) {
+                adminWarning.show();
+            } else {
+                adminWarning.hide();
+            }
+        }
+
+        const updateUsernameLabel = () => {
+            if (rolDocente.prop('checked')) {
+                usernameLabel.text('Nómina');
+                instructorSwitch.show();
+            } else {
+                usernameLabel.text('Nombre de usuario')
+                instructorSwitch.hide();
+            }
+        }
+
+        $('input[name="rol"]').on('change', () => {
+            toggleAdminWarning();
+            updateUsernameLabel();
+        });
+
+        toggleAdminWarning();
+        updateUsernameLabel();
     });
 </script>
 <main role="main" class="container py-4" style="margin-top: 56px">
@@ -12,14 +45,29 @@
         <h1 class="col">Nuevo Usuario</h1>
     </div>
     <form class="row py-4 g-3" method="POST" action="/admin/usuarios">
-        <div class="col-md-4">
-            <label for="nomina" class="form-label">Nómina</label>
-            <input type="text" class="form-control <?= isset($errors['nomina']) ? 'is-invalid' : '' ?>" id="nomina" name="nomina" value="<?= isset($_POST['nomina']) ? htmlspecialchars($_POST['nomina']) : '' ?>">
-            <div class="invalid-feedback">
-                <?= $errors['nomina'] ?>
+        <div class="btn-group pb-4" name="rol" role="group">
+            <input type="radio" class="btn-check" name="rol" id="rol-docente" autocomplete="off" checked>
+            <label class="btn btn-outline-primary" for="rol-docente">Docente</label>
+
+            <input type="radio" class="btn-check" name="rol" id="rol-instructor" autocomplete="off">
+            <label class="btn btn-outline-primary" for="rol-instructor">Instructor Externo</label>
+
+            <input type="radio" class="btn-check" name="rol" id="rol-administrador" autocomplete="off">
+            <label class="btn btn-outline-primary" for="rol-administrador">Administrador</label>
+        </div>
+        <div id="admin-warning">
+            <div class="alert alert-danger" role="alert">
+                <strong>Precaución</strong>, al agregar un usuario administrador, este tendrá acceso a toda la información del sistema y será capáz de agregar a más usuarios.
             </div>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-6">
+            <label for="username" class="form-label">Nómbre de usuario</label>
+            <input type="text" class="form-control <?= isset($errors['username']) ? 'is-invalid' : '' ?>" id="username" name="username" value="<?= isset($_POST['username']) ? htmlspecialchars($_POST['username']) : '' ?>">
+            <div class="invalid-feedback">
+                <?= $errors['username'] ?>
+            </div>
+        </div>
+        <div class="col-md-6">
             <label for="genero" class="form-label">Género</label>
             <select class="form-select <?= isset($errors['genero']) ? 'is-invalid' : '' ?>" id="genero" name="genero">
                 <option value="0">Masculino</option>
@@ -62,6 +110,12 @@
             <input type="password" class="form-control <?= isset($errors['confirmarContraseña']) ? 'is-invalid' : '' ?>" id="confirmarContraseña" name="confirmarContraseña" value="<?= isset($_POST['confirmarContraseña']) ? htmlspecialchars($_POST['confirmarContraseña']) : '' ?>">
             <div class="invalid-feedback">
                 <?= $errors['confirmarContraseña'] ?>
+            </div>
+        </div>
+        <div id="docente-instructor-switch">
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="docente-instructor">
+                <label class="form-check-label" for="docente-instructor">El docente es instructor</label>
             </div>
         </div>
         <div class="row row-cols-auto justify-content-end pt-4 g-2">
