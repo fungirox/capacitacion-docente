@@ -63,6 +63,10 @@ class Router {
                 };
             }
 
+            if ($destination === "/logout") {
+                logout();
+            }
+
             header("Location: $destination");
             exit();
         }

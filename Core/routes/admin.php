@@ -2,39 +2,7 @@
 
 use Core\Roles\Roles;
 
-const GUEST = Roles::GUEST;
 const ADMIN = Roles::ADMIN;
-const DOCENTE = Roles::DOCENTE;
-const INSTRUCTOR = Roles::INSTRUCTOR;
-Const DOCENTE_OR_INSTRUCTOR = Roles::DOCENTE_OR_INSTRUCTOR;
-const ANY = Roles::ANY;
-
-## Auth
-
-$router->get("/login", "controllers/auth/login.php")->only(GUEST);
-
-$router->post("/login", "controllers/auth/authenticate.php")->only(GUEST);
-
-$router->get("/logout", "controllers/auth/logout.php")->only(ANY);
-$router->delete("/logout", "controllers/auth/logout.php")->only(ANY);
-
-## Docente
-
-# Inscritos
-
-$router->get("/inscritos", "controllers/docente/inscritos/index.php")->only(DOCENTE);
-
-# Oferta
-
-$router->get("/oferta", "controllers/docente/oferta/index.php")->only(DOCENTE);
-
-## Instructor
-
-# Instruyendo
-
-$router->get("/instruyendo", "/controllers/instructor/instruyendo/index.php")->only(INSTRUCTOR);
-
-## Administrador
 
 # Cursos
 
