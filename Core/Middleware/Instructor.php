@@ -9,7 +9,7 @@ class Instructor extends MiddlewareTemplate {
     public function handle() {
         if (!$this->isAuthenticated()) {
             $this->redirect("/login");
-        } elseif ($_SESSION["user"]["rol"] !== Roles::INSTRUCTOR) {
+        } elseif ($_SESSION["user"]["rol"] !== Roles::INSTRUCTOR && $_SESSION["user"]["rol"] !== Roles::DOCENTE_AND_INSTRUCTOR) {
             $this->redirect("/");
         }
     }
