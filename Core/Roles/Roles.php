@@ -7,6 +7,7 @@ class Roles {
     public const ADMIN = "admin";
     public const DOCENTE = "docente";
     public const INSTRUCTOR = "instructor";
-    public const DOCENTE_INSTRUCTOR = "docenteInstructor";
+    public const DOCENTE_AND_INSTRUCTOR = "docenteAndInstructor";
+    public const DOCENTE_OR_INSTRUCTOR = "docenteOrInstructor";
     public const ANY = "any";
 }
