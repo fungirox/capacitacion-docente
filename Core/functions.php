@@ -10,7 +10,7 @@ function dd($value) {
 }
 
 function urlIs($value) {
-    return parse_url($_SERVER["REQUEST_URI"])["path"] === $value;
+    return str_contains(parse_url($_SERVER["REQUEST_URI"])["path"], $value);
 }
 
 function abort($status = 404) {
