@@ -28,7 +28,7 @@ $user = $db->query(
 	    *,
 	    CASE
             WHEN admin.ADMINID IS NOT NULL THEN 'admin'
-            WHEN docente.DOCENTEID IS NOT NULL AND instructor.INSTRUCTORID IS NOT NULL THEN 'docenteInstructor'
+            WHEN docente.DOCENTEID IS NOT NULL AND instructor.INSTRUCTORID IS NOT NULL THEN 'docenteAndInstructor'
             WHEN docente.DOCENTEID IS NOT NULL THEN 'docente'
             WHEN instructor.INSTRUCTORID IS NOT NULL THEN 'instructor'
             ELSE 'guest'

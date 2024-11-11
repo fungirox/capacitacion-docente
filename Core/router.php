@@ -56,9 +56,10 @@ class Router {
                 $destination = match ($_SESSION["user"]["rol"]) {
                     Roles::ADMIN => "/admin/cursos",
                     Roles::DOCENTE,
-                    Roles::DOCENTE_INSTRUCTOR => "/inscritos",
+                    Roles::DOCENTE_AND_INSTRUCTOR,
+                    Roles::DOCENTE_OR_INSTRUCTOR => "/inscritos",
                     Roles::INSTRUCTOR => "/instruyendo",
-                    default => "/login"
+                    default => "/logout"
                 };
             }
 

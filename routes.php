@@ -5,8 +5,8 @@ use Core\Roles\Roles;
 const GUEST = Roles::GUEST;
 const ADMIN = Roles::ADMIN;
 const DOCENTE = Roles::DOCENTE;
-const DOCENTE_INSTRUCTOR = Roles::DOCENTE_INSTRUCTOR;
 const INSTRUCTOR = Roles::INSTRUCTOR;
+Const DOCENTE_OR_INSTRUCTOR = Roles::DOCENTE_OR_INSTRUCTOR;
 const ANY = Roles::ANY;
 
 ## Auth
@@ -15,6 +15,7 @@ $router->get("/login", "controllers/auth/login.php")->only(GUEST);
 
 $router->post("/login", "controllers/auth/authenticate.php")->only(GUEST);
 
+$router->get("/logout", "controllers/auth/logout.php")->only(ANY);
 $router->delete("/logout", "controllers/auth/logout.php")->only(ANY);
 
 ## Docente
@@ -27,9 +28,11 @@ $router->get("/inscritos", "controllers/docente/inscritos/index.php")->only(DOCE
 
 $router->get("/oferta", "controllers/docente/oferta/index.php")->only(DOCENTE);
 
-## Inscritos
+## Instructor
 
-$router->get("/instruyendo", "");
+# Instruyendo
+
+$router->get("/instruyendo", "/controllers/instructor/instruyendo/index.php")->only(INSTRUCTOR);
 
 ## Administrador
 

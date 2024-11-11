@@ -11,7 +11,8 @@ class Middleware {
         Roles::ADMIN => Admin::class,
         Roles::DOCENTE => Docente::class,
         Roles::INSTRUCTOR => Instructor::class,
-        Roles::DOCENTE_INSTRUCTOR => DocenteInstructor::class,
+        Roles::DOCENTE_AND_INSTRUCTOR => DocenteAndInstructor::class,
+        Roles::DOCENTE_OR_INSTRUCTOR => DocenteOrInstructor::class,
         Roles::ANY => Any::class
     ];
 
