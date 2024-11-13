@@ -70,4 +70,6 @@ $router->post("/admin/carreras", "controllers/admin/carreras/store.php");
 $router->get("/admin/registro", "controllers/admin/registro/create.php");
 $router->post("/admin/registro", "controllers/admin/registro/store.php");
 
-$router->get("/admin/generarReporte/F05PSA19.02", "controllers/admin/reportes/F05PSA19.02.php");
+$router-> get("/admin/generarReporte/F05PSA19.02", "controllers/admin/reportes/F05PSA19.02.php");
+
+$router -> get("/admin/historial", "controllers/admin/historial/historial.php");
