@@ -1,21 +1,27 @@
 <?php
+
+use Core\App;
+use Core\Database;
+
+$db = App::resolve(Database::class);
+$title = "Evaluar curso";
+
 # Esta query no es la definitiva es temporal mientras hacemos un login con todos los users y roles
 $teachersQuery = "SELECT u.USERID, u.USER_Nombre, u.USER_Apellido FROM tblUsuario u JOIN tblUsuarioRoles ur ON u.USERID = ur.USERID JOIN tblRol r ON ur.ROLID = r.ROLID WHERE r.ROL_Nombre = 'Docente'";
 
 # Aquí necesitamos el id del curso que elegimos desde la interfaz de "historial" por ahora dejaré cursoid = 1
 $questionsQuery = "SELECT * FROM tblPregunta where ENCUESTAID = '1';";
 
-$db = new Database();
 $teachersData = $db->query($teachersQuery)->getAll();
 
-$db = new Database();
 $questions = $db->query($questionsQuery)->getAll();
 
 $curso_name = "Taller de construcción para principantes en Fortnite: Battle Royale";
 $instructor_name = "José Diego Rascón Amador";
-?>
 
-<?php require $_SERVER['DOCUMENT_ROOT'] . "/views/components/styledHeader.php"; ?>
+require view("components/styledHeader.php");
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
