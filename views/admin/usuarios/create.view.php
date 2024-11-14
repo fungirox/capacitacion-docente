@@ -45,15 +45,15 @@
         <h1 class="col">Nuevo Usuario</h1>
     </div>
     <form class="row py-4 g-3" method="POST" action="/admin/usuarios">
-        <div class="btn-group pb-4" name="rol" role="group">
-            <input type="radio" class="btn-check" name="rol" id="rol-docente" autocomplete="off" checked>
-            <label class="btn btn-outline-primary" for="rol-docente">Docente</label>
-
-            <input type="radio" class="btn-check" name="rol" id="rol-instructor" autocomplete="off">
-            <label class="btn btn-outline-primary" for="rol-instructor">Instructor Externo</label>
-
-            <input type="radio" class="btn-check" name="rol" id="rol-administrador" autocomplete="off">
-            <label class="btn btn-outline-primary" for="rol-administrador">Administrador</label>
+        <div class="d-flex justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6 btn-group pb-4" name="rol" role="group">
+                <input type="radio" class="btn-check" name="rol" id="rol-docente" autocomplete="off" checked>
+                <label class="btn btn-outline-primary" for="rol-docente">Docente</label>
+                <input type="radio" class="btn-check" name="rol" id="rol-instructor" autocomplete="off">
+                <label class="btn btn-outline-primary" for="rol-instructor">Instructor Externo</label>
+                <input type="radio" class="btn-check" name="rol" id="rol-administrador" autocomplete="off">
+                <label class="btn btn-outline-primary" for="rol-administrador">Administrador</label>
+            </div>
         </div>
         <div id="admin-warning">
             <div class="alert alert-danger" role="alert">
