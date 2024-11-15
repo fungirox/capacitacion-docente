@@ -47,7 +47,7 @@ if ($user) {
     if (password_verify($password, $user["USER_Password"])) {
         login([
             "username" => $username,
-            "rol" => $user["rol"]
+            "rol" => $user["rol"],
         ]);
         header("location: /");
         exit();

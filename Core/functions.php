@@ -36,9 +36,9 @@ function view($path) {
 function login($user) {
     $_SESSION["user"] = [
         "username" => $user["username"],
-        "rol" => $user["rol"]
+        "rol" => $user["rol"],
     ];
-    session_regenerate_id(true);
+    session_regenerate_id(true);   
 }
 
 function logout() {

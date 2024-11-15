@@ -11,7 +11,7 @@
         <a href="/admin/areas"><i class="col bi bi-arrow-left-circle" style="font-size: 1.5rem;"></i></a>
         <h1 class="col">Editar Área</h1>
     </div>
-    <form class="row py-4 g-3" method="POST" action="/admin/aeras">
+    <form class="row py-4 g-3" method="POST" action="/admin/areas">
         <input type="hidden" name="_method" value="PATCH">
         <input type="hidden" name="id" value="<?= isset($career["AREAID"]) ? $career["AREAID"] : $id ?>">
         <div class="col-md-8">
