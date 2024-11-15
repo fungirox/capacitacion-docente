@@ -17,7 +17,7 @@
                 <span class="input-group-text" id="addon-wrapping">
                     <i class="bi bi-search"></i>
                 </span>
-                <input type="text" id="search-docente" class="form-control" placeholder="Buscar carrera..." aria-label="BuscarDocente" aria-describedby="buscar-docente">
+                <input type="text" id="search-docente" class="form-control" placeholder="Buscar usuario..." aria-label="BuscarDocente" aria-describedby="buscar-docente">
             </div>
         </div>
         <div class="order-1 order-md-2 d-grid col-12 col-md-auto">
@@ -31,25 +31,55 @@
         <table class="table table-striped table-hover align-middle">
             <thead>
                 <tr>
-                    <th scope="col">Nómina</th>
+                    <th scope="col">Usuario/Nómina</th>
                     <th scope="col">Nombre</th>
                     <th scope="col">Email</th>
+                    <th scope="col">Rol</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($allCareers as $career) : ?>
+                <?php foreach ($allUsers as $user) : ?>
                     <?php
-                    $id = $career['USERID'];
-                    $name = htmlspecialchars($career["USER_Nombre"]);
-                    $lastName = htmlspecialchars($career["USER_Apellido"]);
+                    $id = $user["USERID"];
+                    $userName = htmlspecialchars($user["USER_NombreUsuario"]);
+                    $name = htmlspecialchars($user["USER_Nombre"]);
+                    $lastName = htmlspecialchars($user["USER_Apellido"]);
                     $fullName = $name . " " . $lastName;
-                    $email = htmlspecialchars($career["USER_Email"]);
+                    $email = htmlspecialchars($user["USER_Email"]);
+                    $rol = htmlspecialchars($user["rol"]);
+
+                    $formattedRol = "";
+                    $variant = "";
+
+                    switch ($rol) {
+                        case $admin:
+                            $formattedRol = "Administrador";
+                            $variant = "danger";
+                            break;
+                        case $docente:
+                            $formattedRol = "Docente";
+                            $variant = "success";
+                            break;
+                        case $instructor:
+                            $formattedRol = "Instructor";
+                            $variant = "secondary";
+                            break;
+                        case $docenteAndInstructor:
+                            $formattedRol = "Docente/Instructor";
+                            $variant = "warning";
+                            break;
+                        case $guest:
+                            $formattedRol = "";
+                            break;
+                    }
+
                     ?>
                     <tr>
-                        <td></td>
+                        <td><?= $userName ?></td>
                         <td><?= $fullName ?></td>
                         <td><?= $email ?></td>
+                        <td><span class="badge rounded-pill text-bg-<?= $variant ?>"><?= $formattedRol ?></span></td>
                         <td class="text-end">
                             <div class="dropdown">
                                 <button class="btn btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
