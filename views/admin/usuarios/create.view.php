@@ -7,6 +7,9 @@
         const adminWarning = $('#admin-warning');
         const usernameLabel = $('label[for="username"]');
         const instructorSwitch = $('#docente-instructor-switch');
+        const docenteBaseCheckContainer = $('#hora-base-check-container');
+        const docenteBaseCheck = $('#base-check');
+        const horasBaseInput = $('#horas-base-container');
 
         $('input').on('input', function() {
             $(this).removeClass('is-invalid');
@@ -24,9 +27,21 @@
             if (rolDocente.prop('checked')) {
                 usernameLabel.text('Nómina');
                 instructorSwitch.show();
+                docenteBaseCheckContainer.show();
+                horasBaseInput.show();
             } else {
                 usernameLabel.text('Nombre de usuario')
                 instructorSwitch.hide();
+                docenteBaseCheckContainer.hide();
+                horasBaseInput.hide();
+            }
+        }
+
+        const showHorasBaseInput = () => {
+            if (docenteBaseCheck.prop('checked')) {
+                horasBaseInput.show();
+            } else {
+                horasBaseInput.hide();
             }
         }
 
@@ -35,8 +50,13 @@
             updateUsernameLabel();
         });
 
+        $('input[name="base-horas"]').on('change', () => {
+            showHorasBaseInput();
+        })
+
         toggleAdminWarning();
         updateUsernameLabel();
+        showHorasBaseInput();
     });
 </script>
 <main role="main" class="container py-4" style="margin-top: 56px">
@@ -47,11 +67,11 @@
     <form class="row py-4 g-3" method="POST" action="/admin/usuarios">
         <div class="d-flex justify-content-center">
             <div class="col-12 col-md-8 col-lg-6 btn-group pb-4" name="rol" role="group">
-                <input type="radio" class="btn-check" name="rol" id="rol-docente" autocomplete="off" checked>
+                <input type="radio" class="btn-check" name="rol" id="rol-docente" value="docente" autocomplete="off" checked>
                 <label class="btn btn-outline-primary" for="rol-docente">Docente</label>
-                <input type="radio" class="btn-check" name="rol" id="rol-instructor" autocomplete="off">
+                <input type="radio" class="btn-check" name="rol" id="rol-instructor" value="instructor" autocomplete="off">
                 <label class="btn btn-outline-primary" for="rol-instructor">Instructor Externo</label>
-                <input type="radio" class="btn-check" name="rol" id="rol-administrador" autocomplete="off">
+                <input type="radio" class="btn-check" name="rol" id="rol-administrador" value="administrador" autocomplete="off">
                 <label class="btn btn-outline-primary" for="rol-administrador">Administrador</label>
             </div>
         </div>
@@ -112,9 +132,30 @@
                 <?= $errors['confirmarContraseña'] ?>
             </div>
         </div>
+        <div id="hora-base-check-container">
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="base-horas" id="base-check" value="1" checked>
+                <label class="form-check-label" for="base-check">
+                    Docente de base
+                </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="base-horas" id="horas-check" value="0">
+                <label class="form-check-label" for="horas-check">
+                    Docente por horas
+                </label>
+            </div>
+        </div>
+        <div class="col-md-12" id="horas-base-container">
+            <label for="horas-base" class="form-label">Horas base</label>
+            <input type="number" min=0 class="form-control <?= isset($errors['horas-base']) ? 'is-invalid' : '' ?>" id="horas-base" name="horas-base" value="<?= isset($_POST['horas-base']) ? htmlspecialchars($_POST['horas-base']) : '' ?>">
+            <div class="invalid-feedback">
+                <?= $errors['horas-base'] ?>
+            </div>
+        </div>
         <div id="docente-instructor-switch">
-            <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="docente-instructor">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" role="switch" name="docente-instructor" id="docente-instructor" value="1">
                 <label class="form-check-label" for="docente-instructor">El docente es instructor</label>
             </div>
         </div>
