@@ -2,6 +2,7 @@
 
 use Core\App;
 use Core\Database;
+use Core\Roles\Roles;
 use Core\Validator;
 
 $db = App::resolve(Database::class);
@@ -23,15 +24,23 @@ if (!empty($errors)) {
     return require view("auth/login.view.php");
 }
 
+$admin = Roles::ADMIN;
+$docente = Roles::DOCENTE;
+$instructor = Roles::INSTRUCTOR;
+$docenteAndInstructor = Roles::DOCENTE_AND_INSTRUCTOR;
+$guest = Roles::GUEST;
+
 $user = $db->query(
     "SELECT
-	    *,
+	    usuario.USERID,
+		usuario.USER_NombreUsuario,
+        usuario.USER_Password,
 	    CASE
-            WHEN admin.ADMINID IS NOT NULL THEN 'admin'
-            WHEN docente.DOCENTEID IS NOT NULL AND instructor.INSTRUCTORID IS NOT NULL THEN 'docenteAndInstructor'
-            WHEN docente.DOCENTEID IS NOT NULL THEN 'docente'
-            WHEN instructor.INSTRUCTORID IS NOT NULL THEN 'instructor'
-            ELSE 'guest'
+            WHEN admin.ADMINID IS NOT NULL THEN '$admin'
+            WHEN docente.DOCENTEID IS NOT NULL AND instructor.INSTRUCTORID IS NOT NULL THEN '$docenteAndInstructor'
+            WHEN docente.DOCENTEID IS NOT NULL THEN '$docente'
+            WHEN instructor.INSTRUCTORID IS NOT NULL THEN '$instructor'
+            ELSE '$guest'
         END AS rol
     FROM
         [tblUsuario] usuario
@@ -46,6 +55,7 @@ $user = $db->query(
 if ($user) {
     if (password_verify($password, $user["USER_Password"])) {
         login([
+            "id" => $user["USERID"],
             "username" => $username,
             "rol" => $user["rol"]
         ]);
