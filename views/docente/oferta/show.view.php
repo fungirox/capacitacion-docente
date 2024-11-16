@@ -37,8 +37,20 @@
                 </div>
                 <form method="POST" action="/oferta/registroDocenteCurso">
                     <input type="hidden" name="cursoid" value="<?= $id ?>">
-                    <input type="hidden" name="DOCENTEID" value="3333">
-                    <button type="submit" class="btn btn-primary btn-lg">Entrar</button>
+                    <input type="hidden" name="isInscrito" value="<?= $isInscrito ?>">
+                    <?php if ($isInscrito["isInscrito"] > 0): ?>
+                        <button type="submit"
+                            class="btn btn-danger btn-lg"
+                            style="width: 200px;">
+                            Salir del curso
+                        </button>
+                    <?php else: ?>
+                        <button type="submit"
+                            class="btn btn-primary btn-lg"
+                            style="width: 200px;">
+                            Entrar
+                        </button>
+                    <?php endif; ?>
                 </form>
 
             </div>

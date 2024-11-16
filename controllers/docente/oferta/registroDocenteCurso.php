@@ -9,6 +9,7 @@ $db = App::resolve(Database::class);
 $errors = [];
 
 $cursoid = $_POST["cursoid"];
+$isInscrito = $_POST["isInscrito"];
 
 $username = isset($_SESSION["user"]["username"]) ? $_SESSION["user"]["username"] : null;
 
@@ -26,13 +27,20 @@ $docenteIDQuery = $db->query(
 
 $docenteid = $docenteIDQuery['DOCENTEID'];
 
-$db->query(
-    "INSERT INTO tblCursoDocente (CURSOID, DOCENTEID, CURSODOCENTE_Calificacion)
-    VALUES (?, ?, ?)",
-    [$cursoid, $docenteid, 0]
-);
 
+if ($isInscrito > 0) {
+    $db->query(
+        "DELETE FROM tblCursoDocente WHERE CURSOID = ? AND DOCENTEID = ?",
+        [$cursoid, $docenteid]
+    );
+} else {
+    $db->query(
+        "INSERT INTO tblCursoDocente (CURSOID, DOCENTEID, CURSODOCENTE_Calificacion)
+        VALUES (?, ?, ?)",
+        [$cursoid, $docenteid, 0]
+    );
+}
 
-header("location: /oferta");
+header("location: /oferta/curso?id=" . $cursoid);
 die();
 

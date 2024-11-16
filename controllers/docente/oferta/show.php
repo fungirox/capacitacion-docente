@@ -7,6 +7,24 @@ $db = new Database();
 $id = $_GET["id"];
 $course = $db->query("SELECT * FROM tblCurso where CURSOID = ?", [$id])->getOrFail();
 
+$username = isset($_SESSION["user"]["username"]) ? $_SESSION["user"]["username"] : null;
+
+$userIDQuery = $db->query(
+    "SELECT USERID FROM tblUsuario WHERE USER_NombreUsuario = ?",
+    [$username]
+)->get();
+
+$userid = $userIDQuery['USERID'];
+
+$docenteIDQuery = $db->query(
+    "SELECT DOCENTEID FROM tblDocente WHERE USERID = ?",
+    [$userid]
+)->get();
+
+$docenteid = $docenteIDQuery['DOCENTEID'];
+
+$isInscrito = $db->query("SELECT COUNT(*) as isInscrito FROM tblCursoDocente WHERE CURSOID = ? AND DOCENTEID = ?", [$course["CURSOID"], $docenteid])->get();
+
 if (!$course) {
     $abort();
 }
