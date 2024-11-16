@@ -37,7 +37,7 @@
                 </div>
                 <form method="POST" action="/oferta/registroDocenteCurso">
                     <input type="hidden" name="cursoid" value="<?= $id ?>">
-                    <input type="hidden" name="isInscrito" value="<?= $isInscrito ?>">
+                    <input type="hidden" name="isInscrito" value="<?= $isInscrito["isInscrito"] ?>">
                     <?php if ($isInscrito["isInscrito"] > 0): ?>
                         <button type="submit"
                             class="btn btn-danger btn-lg"
