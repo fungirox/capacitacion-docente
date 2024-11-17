@@ -11,7 +11,7 @@ class CarreraForm extends FormTemplate {
             $this->errors['nombre'] = "Favor de introducir el nombre de la carrera.";
         }
 
-        if (!Validator::string($this->attributes["siglas"], 1, 8)) {
+        if (!Validator::string($this->attributes["siglas"], 1, 5)) {
             $this->errors['siglas'] = "Favor de introducir las siglas de la carrera.";
         }
     }
