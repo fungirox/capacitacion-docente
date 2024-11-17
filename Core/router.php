@@ -2,8 +2,8 @@
 
 namespace Core;
 
-use Core\Middleware\Middleware;
 use Core\Roles\Roles;
+use Core\Middleware\Middleware;
 
 class Router {
 
@@ -50,10 +50,10 @@ class Router {
         if ($uri === "/") {
             $destination = "";
 
-            if (! $_SESSION["user"] ?? false) {
+            if (! Session::has("user")) {
                 $destination = "/login";
             } else {
-                $destination = match ($_SESSION["user"]["rol"]) {
+                $destination = match (Session::role()) {
                     Roles::ADMIN => "/admin/cursos",
                     Roles::DOCENTE,
                     Roles::DOCENTE_AND_INSTRUCTOR,
@@ -67,8 +67,7 @@ class Router {
                 (new Authenticator)->logout();
             }
 
-            header("Location: $destination");
-            exit();
+            redirect($destination);
         }
 
         foreach ($this->routes as $route) {
@@ -88,7 +87,7 @@ class Router {
 
     public function abort($code = 404) {
         http_response_code($code);
-        require view("errors/{$code}.php");
+        view("errors/{$code}.php");
         die();
     }
 }

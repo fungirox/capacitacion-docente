@@ -2,7 +2,7 @@
 
 use Core\Roles\Roles; ?>
 
-<?php if ($_SESSION["user"]["rol"] === Roles::DOCENTE_AND_INSTRUCTOR || $_SESSION["user"]["rol"] === Roles::DOCENTE): ?>
+<?php if (Session::role() === Roles::DOCENTE_AND_INSTRUCTOR || Session::role() === Roles::DOCENTE): ?>
     <li class="nav-item">
         <a href="/inscritos" class="nav-link <?= urlIs("/inscritos") ? "active" : null ?>" aria-current="<?= urlIs("/inscritos") ? "page" : null ?>" id="inscritos">Inscritos</a>
     </li>
@@ -10,7 +10,7 @@ use Core\Roles\Roles; ?>
         <a href="/oferta" class="nav-link <?= urlIs("/oferta") || urlIs("/curso") ? "active" : null ?>" aria-current="<?= urlIs("/oferta")  || urlIs("/curso") ? "page" : null ?>" id="oferta">Oferta</a>
     </li>
 <?php endif; ?>
-<?php if ($_SESSION["user"]["rol"] === Roles::DOCENTE_AND_INSTRUCTOR || $_SESSION["user"]["rol"] === Roles::INSTRUCTOR): ?>
+<?php if (Session::role() === Roles::DOCENTE_AND_INSTRUCTOR || Session::role() === Roles::INSTRUCTOR): ?>
     <li class="nav-item">
         <a href="/instruyendo" class="nav-link <?= urlIs("/instruyendo") ? "active" : null ?>" aria-current="<?= urlIs("/instruyendo") ? "page" : null ?>" id="instruyendo">Instruyendo</a>
     </li>

@@ -6,7 +6,7 @@ use Core\Roles\Roles;
 
 $db = App::resolve(Database::class);
 
-$isDocenteAndInstructor = $_SESSION["user"]["rol"] === Roles::DOCENTE_AND_INSTRUCTOR;
+$isDocenteAndInstructor = Session::role() === Roles::DOCENTE_AND_INSTRUCTOR;
 
 $title = "Evaluar curso";
 

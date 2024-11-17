@@ -8,6 +8,10 @@ class Session {
         return (bool) static::get($key);
     }
 
+    public static function role() {
+        return $_SESSION["user"]["rol"];
+    }
+
     public static function put($key, $value) {
         $_SESSION[$key] = $value;
     }

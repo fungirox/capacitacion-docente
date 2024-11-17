@@ -10,7 +10,7 @@ $db = App::resolve(Database::class);
 
 $title = "Historial de Cursos";
 
-$isDocenteAndInstructor = $_SESSION["user"]["rol"] === Roles::DOCENTE_AND_INSTRUCTOR;
+$isDocenteAndInstructor = Session::role() === Roles::DOCENTE_AND_INSTRUCTOR;
 
 $cursosNoEvaluados = $db->query(
     "SELECT 

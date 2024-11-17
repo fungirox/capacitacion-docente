@@ -50,11 +50,11 @@ class Authenticator {
     }
 
     public function login($user) {
-        $_SESSION["user"] = [
+        Session::put("user", [
             "id" => $user["id"],
             "username" => $user["username"],
             "rol" => $user["rol"]
-        ];
+        ]);
         session_regenerate_id(true);
     }
 
