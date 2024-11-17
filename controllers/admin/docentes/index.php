@@ -14,4 +14,4 @@ $allDocentes = $db->query("
 
 $title = "Docentes";
 
-require view("admin/docentes/index.view.php");
+require view("/docentes/index.view.php");

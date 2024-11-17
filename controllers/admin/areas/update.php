@@ -8,7 +8,6 @@ $db = App::resolve(Database::class);
 
 $db->query("SELECT * FROM tblArea WHERE AREAID = ?", [$_POST["id"]]);
 
-### AUTORIZAR QUE SEA ADMIN
 $errors = [];
 
 $id = $_POST["id"];
