@@ -2,13 +2,12 @@
 
 use Core\App;
 use Core\Database;
+use Core\Session;
 
-$db = App::resolve(Database::class);
+$career = App::resolve(Database::class)->query("SELECT * FROM tblCarrera WHERE CARRERAID = ?", [$_GET["id"]])->getOrFail();
 
-$career = $db->query("SELECT * FROM tblCarrera WHERE CARRERAID = ?", [$_GET["id"]])->getOrFail();
-
-# AUTORIZAR QUE SEA ADMIN
-
-$title = "Editar Carrera";
-
-require view("admin/carreras/edit.view.php");
+return view("admin/carreras/edit.view.php", [
+    "title" => "Editar Carrera " . $career["CARRERA_Siglas"],
+    "career" => $career,
+    "errors" => Session::get("errors")
+]);

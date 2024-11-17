@@ -3,11 +3,6 @@
 use Core\App;
 use Core\Database;
 
-$db = App::resolve(Database::class);
+App::resolve(Database::class)->query("DELETE FROM tblCarrera WHERE CARRERAID = ?", [$_POST["id"]]);
 
-# AUTORIZAR QUE SEA ADMIN
-
-$db->query("DELETE FROM tblCarrera WHERE CARRERAID = ?", [$_POST["id"]]);
-
-header("location: /admin/carreras");
-exit();
+redirect("/admin/carreras");

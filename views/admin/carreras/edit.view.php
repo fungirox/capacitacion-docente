@@ -1,4 +1,4 @@
-<?php require view("components/styledHeader.php"); ?>
+<?php view("components/styledHeader.php", ["title" => $title]); ?>
 <script defer>
     $(document).ready(function() {
         $('input').on('input', function() {
@@ -9,21 +9,21 @@
 <main role="main" class="container py-4" style="margin-top: 56px">
     <div class="row row-cols-auto align-items-center">
         <a href="/admin/carreras"><i class="col bi bi-arrow-left-circle" style="font-size: 1.5rem;"></i></a>
-        <h1 class="col">Editar Carrera</h1>
+        <h1 class="col"><?= $title ?></h1>
     </div>
     <form class="row py-4 g-3" method="POST" action="/admin/carreras">
         <input type="hidden" name="_method" value="PATCH">
-        <input type="hidden" name="id" value="<?= isset($career["CARRERAID"]) ? $career["CARRERAID"] : $id ?>">
+        <input type="hidden" name="id" value="<?= cleanOld("id", $career["CARRERAID"]) ?>">
         <div class="col-md-8">
             <label for="nombre" class="form-label">Nombre de la carrera</label>
-            <input type="text" class="form-control <?= isset($errors['nombre']) ? 'is-invalid' : '' ?>" id="nombre" name="nombre" value="<?= isset($career["CARRERA_Nombre"]) ? $career["CARRERA_Nombre"] : $nombre ?>">
+            <input type="text" class="form-control <?= isValidInput($errors, "nombre") ?>" id="nombre" name="nombre" value="<?= cleanOld("nombre", $career["CARRERA_Nombre"]) ?>">
             <div class="invalid-feedback">
                 <?= $errors['nombre'] ?>
             </div>
         </div>
         <div class="col-md-4">
             <label for="siglas" class="form-label">Siglas</label>
-            <input type="text" class="form-control <?= isset($errors['siglas']) ? 'is-invalid' : '' ?>" id="siglas" name="siglas" value="<?= isset($career["CARRERA_Siglas"]) ? $career["CARRERA_Siglas"] : $siglas ?>">
+            <input type="text" class="form-control <?= isValidInput($errors, "siglas") ?>" id="siglas" name="siglas" value="<?= cleanOld("siglas", $career["CARRERA_Siglas"]) ?>">
             <div class="form-text">Usualmente de 3 a 4 letras.</div>
             <div class="invalid-feedback">
                 <?= $errors['siglas'] ?>
@@ -39,4 +39,4 @@
         </div>
     </form>
 </main>
-<?php require view("components/styledFooter.php"); ?>
+<?php view("components/styledFooter.php"); ?>

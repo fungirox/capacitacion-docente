@@ -1,4 +1,4 @@
-<?php view("components/styledHeader.php"); ?>
+<?php view("components/styledHeader.php", ["title" => $title]); ?>
 <script defer>
     $(document).ready(function() {
         $('input').on('input', function() {
@@ -9,7 +9,7 @@
 <main role="main" class="container py-4" style="margin-top: 56px">
     <div class="row row-cols-auto align-items-center">
         <a href="/admin/carreras"><i class="col bi bi-arrow-left-circle" style="font-size: 1.5rem;"></i></a>
-        <h1 class="col">Nueva Carrera</h1>
+        <h1 class="col"><?= $title ?></h1>
     </div>
     <form class="row py-4 g-3" method="POST" action="/admin/carreras">
         <div class="col-md-8">

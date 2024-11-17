@@ -2,8 +2,7 @@
 
 use Core\Session;
 
-$title = "Nueva Carrera";
-
 return view("admin/carreras/create.view.php", [
+    "title" => "Nueva Carrera",
     "errors" => Session::get("errors")
 ]);
