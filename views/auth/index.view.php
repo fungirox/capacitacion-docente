@@ -1,4 +1,4 @@
-<?php view("components/header.php"); ?>
+<?php view("components/header.php", ["title" => $title]); ?>
 <main>
     <div class="container-fluid px-0">
         <div class="row g-0">
@@ -8,7 +8,7 @@
             <div class="col col-lg-4 align-self-center justify-content-center">
                 <header class="text-center">
                     <h1>Capacitación Docente</h1>
-                    <h1>Log-in</h1>
+                    <h1><?= $title ?></h1>
                 </header>
                 <div class="d-flex justify-content-center">
                     <form action="/login" method="POST">
