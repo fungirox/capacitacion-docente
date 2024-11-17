@@ -4,15 +4,13 @@ use Core\App;
 use Core\Database;
 use Core\Roles\Roles;
 
-$db = App::resolve(Database::class);
-
 $admin = Roles::ADMIN;
 $docente = Roles::DOCENTE;
 $instructor = Roles::INSTRUCTOR;
 $docenteAndInstructor = Roles::DOCENTE_AND_INSTRUCTOR;
 $guest = Roles::GUEST;
 
-$allUsers = $db->query(
+$allUsers = App::resolve(Database::class)->query(
     "SELECT
 	    *,
 	    CASE
@@ -30,6 +28,12 @@ $allUsers = $db->query(
     "
 )->getAll();
 
-$title = "Usuarios";
-
-require view("admin/usuarios/index.view.php");
+return view("admin/usuarios/index.view.php", [
+    "title" => "Usuarios",
+    "allUsers" => $allUsers,
+    "admin" => $admin,
+    "docente" => $docente,
+    "instructor" => $instructor,
+    "docenteAndInstructor" => $docenteAndInstructor,
+    "guest" => $guest
+]);
