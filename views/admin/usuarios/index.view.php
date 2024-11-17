@@ -1,4 +1,4 @@
-<?php require view("components/styledHeader.php"); ?>
+<?php view("components/styledHeader.php", ["title" => $title]); ?>
 <script defer>
     $(document).ready(function() {
         $("#search-docente").on("keyup", function() {
@@ -10,7 +10,7 @@
     });
 </script>
 <main role="main" class="container py-4" style="margin-top: 56px">
-    <h1>Usuarios</h1>
+    <h1><?= $title ?></h1>
     <div class="row row-cols-auto justify-content-end py-4 g-2">
         <div class="order-2 order-md-1 col-12 col-md-4">
             <div class="input-group flex-nowrap">
@@ -128,4 +128,4 @@
         </table>
     </div>
 </main>
-<?php require view("components/styledFooter.php"); ?>
+<?php view("components/styledFooter.php"); ?>
