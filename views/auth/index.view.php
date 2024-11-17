@@ -1,4 +1,4 @@
-<?php require view("components/header.php"); ?>
+<?php view("components/header.php"); ?>
 <main>
     <div class="container-fluid px-0">
         <div class="row g-0">
@@ -14,7 +14,10 @@
                     <form action="/login" method="POST">
                         <div class="mb-4">
                             <label for="username" class="form-label">Usuario</label>
-                            <input type="text" class="form-control" id="username" name="username" placeholder="" value="">
+                            <input type="text" class="form-control <?= isValidInput($errors, "username") ?>" id="username" name="username" value="<?= old("username") ?>">
+                            <div class="invalid-feedback">
+                                <?= $errors['username'] ?>
+                            </div>
                         </div>
                         <div class="mb-5">
                             <label for="password" class="form-label">Contraseña</label>
@@ -28,4 +31,4 @@
         </div>
     </div>
 </main>
-<?php require view("components/footer.php"); ?>
+<?php view("components/footer.php"); ?>
