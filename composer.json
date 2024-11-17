@@ -1,5 +1,23 @@
 {
+    "name": "fungirox/capacitacion-docente",
+    "authors": [
+        {
+            "name": "Dulce Roxanna Clark Valenzuela"
+        },
+        {
+            "name": "José Antonio Vega Saenz"
+        },
+        {
+            "name": "José Diego Rascón Amador"
+        }
+    ],
     "require": {
         "dompdf/dompdf": "^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Core\\": "Core/",
+            "Http\\": "Http/"
+        }
     }
 }
