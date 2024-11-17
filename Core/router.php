@@ -64,7 +64,7 @@ class Router {
             }
 
             if ($destination === "/logout") {
-                logout();
+                (new Authenticator)->logout();
             }
 
             header("Location: $destination");
@@ -80,6 +80,10 @@ class Router {
         }
 
         $this->abort();
+    }
+
+    public function previousUrl() {
+        return $_SERVER["HTTP_REFERER"];
     }
 
     public function abort($code = 404) {
