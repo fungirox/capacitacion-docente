@@ -44,6 +44,10 @@ function old($key, $default = "") {
     return Core\Session::get("old")[$key] ?? $default;
 }
 
+function cleanOld($key, $default = "") {
+    return htmlspecialchars(old($key, $default));
+}
+
 function isValidInput($errors, $key) {
     return isset($errors[$key]) ? 'is-invalid' : '';
 }
