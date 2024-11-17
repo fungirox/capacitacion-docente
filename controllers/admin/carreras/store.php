@@ -2,31 +2,16 @@
 
 use Core\App;
 use Core\Database;
-use Core\Validator;
+use Http\Forms\CarreraForm;
 
-$db = App::resolve(Database::class);
+CarreraForm::validate($attributes = [
+    "nombre" => trim($_POST["nombre"]),
+    "siglas" => strtoupper(trim($_POST["siglas"])),
+]);
 
-$errors = [];
+App::resolve(Database::class)->query(
+    "INSERT INTO tblCarrera (CARRERA_Nombre, CARRERA_Siglas) VALUES (?, ?)",
+    [$attributes["nombre"], $attributes["siglas"]]
+);
 
-$nombre = $_POST["nombre"];
-$siglas = strtoupper($_POST["siglas"]);
-
-if (!Validator::string($nombre, 1, 100)) {
-    $errors['nombre'] = "Favor de introducir el nombre de la carrera.";
-}
-
-if (!Validator::string($siglas, 1, 8)) {
-    $errors['siglas'] = "Favor de introducir las siglas de la carrera.";
-}
-
-if (!empty($errors)) {
-    return require view("admin/carreras/create.view.php");
-} else {
-    $db->query(
-        "INSERT INTO tblCarrera (CARRERA_Nombre, CARRERA_Siglas) VALUES (?, ?)",
-        [$nombre, $siglas]
-    );
-
-    header("location: /admin/carreras");
-    die();
-}
+redirect("/admin/carreras");
