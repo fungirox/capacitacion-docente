@@ -15,9 +15,9 @@ use Core\Roles\Roles; ?>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav nav-underline me-auto mb-2 mb-lg-0">
                     <?php if ($_SESSION["user"]["rol"] === Roles::ADMIN): ?>
-                        <?php require base_path("views/components/adminNavItems.php"); ?>
+                        <?php view("components/adminNavItems.php"); ?>
                     <?php else: ?>
-                        <?php require base_path("views/components/standardNavItems.php"); ?>
+                        <?php view("components/standardNavItems.php"); ?>
                     <?php endif; ?>
                 </ul>
                 <div class="dropdown">

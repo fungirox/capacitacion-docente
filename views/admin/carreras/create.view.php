@@ -1,4 +1,4 @@
-<?php require view("components/styledHeader.php"); ?>
+<?php view("components/styledHeader.php"); ?>
 <script defer>
     $(document).ready(function() {
         $('input').on('input', function() {
@@ -14,14 +14,14 @@
     <form class="row py-4 g-3" method="POST" action="/admin/carreras">
         <div class="col-md-8">
             <label for="nombre" class="form-label">Nombre de la carrera</label>
-            <input type="text" class="form-control <?= isset($errors['nombre']) ? 'is-invalid' : '' ?>" id="nombre" name="nombre" value="<?= isset($_POST['nombre']) ? htmlspecialchars($_POST['nombre']) : '' ?>">
+            <input type="text" class="form-control <?= isValidInput($errors, "nombre") ?>" id="nombre" name="nombre" value="<?= cleanOld("nombre") ?>">
             <div class="invalid-feedback">
                 <?= $errors['nombre'] ?>
             </div>
         </div>
         <div class="col-md-4">
             <label for="siglas" class="form-label">Siglas</label>
-            <input type="text" class="form-control <?= isset($errors['siglas']) ? 'is-invalid' : '' ?>" id="siglas" name="siglas" value="<?= isset($_POST['siglas']) ? htmlspecialchars($_POST['siglas']) : '' ?>">
+            <input type="text" class="form-control <?= isValidInput($errors, "siglas") ?>" id="siglas" name="siglas" value="<?= cleanOld("siglas") ?>">
             <div class="form-text">Usualmente de 3 a 4 letras.</div>
             <div class="invalid-feedback">
                 <?= $errors['siglas'] ?>
@@ -37,4 +37,4 @@
         </div>
     </form>
 </main>
-<?php require view("components/styledFooter.php"); ?>
+<?php view("components/styledFooter.php"); ?>

@@ -4,4 +4,4 @@
         <p class="text-center text-body-secondary">© Copyright 2024 ITESCA - Todos los Derechos Reservados</p>
     </footer>
 </div>
-<?php require base_path("views/components/footer.php"); ?>
+<?php view("components/footer.php"); ?>

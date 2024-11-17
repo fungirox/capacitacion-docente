@@ -1,4 +1,4 @@
-<?php require view("components/styledHeader.php"); ?>
+<?php view("components/styledHeader.php"); ?>
 <script defer>
     $(document).ready(function() {
         $("#search-docente").on("keyup", function() {
@@ -94,4 +94,4 @@
         </table>
     </div>
 </main>
-<?php require view("components/styledFooter.php"); ?>
+<?php view("components/styledFooter.php"); ?>
