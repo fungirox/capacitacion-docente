@@ -16,6 +16,10 @@ class ComposerStaticInitac2d307f4ed514763a8119f3523066bb
         array (
             'Masterminds\\' => 12,
         ),
+        'H' => 
+        array (
+            'Http\\' => 5,
+        ),
         'F' => 
         array (
             'FontLib\\' => 8,
@@ -23,6 +27,10 @@ class ComposerStaticInitac2d307f4ed514763a8119f3523066bb
         'D' => 
         array (
             'Dompdf\\' => 7,
+        ),
+        'C' => 
+        array (
+            'Core\\' => 5,
         ),
     );
 
@@ -39,6 +47,10 @@ class ComposerStaticInitac2d307f4ed514763a8119f3523066bb
         array (
             0 => __DIR__ . '/..' . '/masterminds/html5/src',
         ),
+        'Http\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/Http',
+        ),
         'FontLib\\' => 
         array (
             0 => __DIR__ . '/..' . '/dompdf/php-font-lib/src/FontLib',
@@ -46,6 +58,10 @@ class ComposerStaticInitac2d307f4ed514763a8119f3523066bb
         'Dompdf\\' => 
         array (
             0 => __DIR__ . '/..' . '/dompdf/dompdf/src',
+        ),
+        'Core\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/Core',
         ),
     );
 

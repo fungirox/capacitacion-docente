@@ -1,24 +1,15 @@
 <?php return array(
     'root' => array(
-        'name' => '__root__',
+        'name' => 'fungirox/capacitacion-docente',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '8c4646e19510746e12f101ce5e1c243f70188dbb',
+        'reference' => '86eb12d10db34c17ae0691b3b836e89d0e80f17d',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
-        '__root__' => array(
-            'pretty_version' => 'dev-main',
-            'version' => 'dev-main',
-            'reference' => '8c4646e19510746e12f101ce5e1c243f70188dbb',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../../',
-            'aliases' => array(),
-            'dev_requirement' => false,
-        ),
         'dompdf/dompdf' => array(
             'pretty_version' => 'v3.0.0',
             'version' => '3.0.0.0',
@@ -46,6 +37,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'fungirox/capacitacion-docente' => array(
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '86eb12d10db34c17ae0691b3b836e89d0e80f17d',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'masterminds/html5' => array(
             'pretty_version' => '2.9.0',
             'version' => '2.9.0.0',
@@ -56,9 +56,9 @@
             'dev_requirement' => false,
         ),
         'sabberworm/php-css-parser' => array(
-            'pretty_version' => 'v8.5.1',
-            'version' => '8.5.1.0',
-            'reference' => '4a3d572b0f8b28bb6fd016ae8bbfc445facef152',
+            'pretty_version' => 'v8.7.0',
+            'version' => '8.7.0.0',
+            'reference' => 'f414ff953002a9b18e3a116f5e462c56f21237cf',
             'type' => 'library',
             'install_path' => __DIR__ . '/../sabberworm/php-css-parser',
             'aliases' => array(),
