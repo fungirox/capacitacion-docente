@@ -43,9 +43,15 @@ class UsuarioRepository extends RepositoryTemplate {
                 LEFT JOIN tblDocente docente on usuario.USERID = docente.USERID
                 LEFT JOIN tblInstructor instructor on usuario.USERID = instructor.USERID
             WHERE
-                usuario.USERID != $userId
+                usuario.USERID != $userId AND
+                USER_Activo = 1
+
             "
         )->getAll();
+    }
+
+    public function getById($id) {
+        return $this->query("SELECT * FROM tblUsuario WHERE USERID = ? AND USER_Activo = 1", [$id])->getOrFail();
     }
 
     public function getByUsername($username) {
@@ -66,14 +72,12 @@ class UsuarioRepository extends RepositoryTemplate {
                 LEFT JOIN tblAdmin admin on usuario.USERID = admin.USERID
                 LEFT JOIN tblDocente docente on usuario.USERID = docente.USERID
                 LEFT JOIN tblInstructor instructor on usuario.USERID = instructor.USERID
-            WHERE USER_NombreUsuario = ?
+            WHERE
+                USER_NombreUsuario = ? AND
+                USER_Activo = 1
             ",
             [$username]
         )->get();
-    }
-
-    public function getById($id) {
-        return $this->query("SELECT * FROM tblArea WHERE AREAID = ?", [$id])->getOrFail();
     }
 
     public function createUsuario($values) {
@@ -104,14 +108,14 @@ class UsuarioRepository extends RepositoryTemplate {
         );
     }
 
+    public function delete($id) {
+        return $this->query("UPDATE tblUsuario SET USER_Activo = 0 WHERE USERID = ?", [$id]);
+    }
+
     // public function update($values) {
     //     return $this->query(
     //         "UPDATE tblArea SET AREA_Nombre = ?, AREA_Siglas = ? WHERE AREAID = ?",
     //         [$values["nombre"], $values["siglas"], $values["id"]]
     //     );
-    // }
-
-    // public function delete($id) {
-    //     return $this->query("DELETE FROM tblArea WHERE AREAID = ?", [$id]);
     // }
 }
