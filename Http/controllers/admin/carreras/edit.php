@@ -1,10 +1,10 @@
 <?php
 
 use Core\App;
-use Core\Database;
 use Core\Session;
+use Core\Repositories\CarreraRepository;
 
-$career = App::resolve(Database::class)->query("SELECT * FROM tblCarrera WHERE CARRERAID = ?", [$_GET["id"]])->getOrFail();
+$career = App::resolve(CarreraRepository::class)->getById($_GET["id"]);
 
 return view("admin/carreras/edit.view.php", [
     "title" => "Editar Carrera " . $career["CARRERA_Siglas"],

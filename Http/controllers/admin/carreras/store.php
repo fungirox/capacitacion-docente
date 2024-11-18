@@ -1,7 +1,7 @@
 <?php
 
 use Core\App;
-use Core\Database;
+use Core\Repositories\CarreraRepository;
 use Http\Forms\CarreraForm;
 
 CarreraForm::validate($attributes = [
@@ -9,9 +9,6 @@ CarreraForm::validate($attributes = [
     "siglas" => strtoupper(trim($_POST["siglas"])),
 ]);
 
-App::resolve(Database::class)->query(
-    "INSERT INTO tblCarrera (CARRERA_Nombre, CARRERA_Siglas) VALUES (?, ?)",
-    [$attributes["nombre"], $attributes["siglas"]]
-);
+App::resolve(CarreraRepository::class)->create($attributes);
 
 redirect("/admin/carreras");

@@ -1,11 +1,9 @@
 <?php
 
 use Core\App;
-use Core\Database;
-
-$allCareers = App::resolve(Database::class)->query("SELECT * FROM tblCarrera")->getAll();
+use Core\Repositories\CarreraRepository;
 
 return view("admin/carreras/index.view.php", [
     "title" => "Carreras",
-    "allCareers" => $allCareers
+    "allCareers" => App::resolve(CarreraRepository::class)->getAll()
 ]);

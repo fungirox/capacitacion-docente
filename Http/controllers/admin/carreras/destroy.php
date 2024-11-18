@@ -1,8 +1,8 @@
 <?php
 
 use Core\App;
-use Core\Database;
+use Core\Repositories\CarreraRepository;
 
-App::resolve(Database::class)->query("DELETE FROM tblCarrera WHERE CARRERAID = ?", [$_POST["id"]]);
+App::resolve(CarreraRepository::class)->delete($_POST["id"]);
 
 redirect("/admin/carreras");
