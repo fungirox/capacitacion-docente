@@ -14,30 +14,6 @@ class UsuarioRepository extends RepositoryTemplate {
     private $docenteAndInstructor = Roles::DOCENTE_AND_INSTRUCTOR;
     private $guest = Roles::GUEST;
 
-    public function getByUsername($username) {
-        return $this->query(
-            "SELECT
-                usuario.USERID,
-                usuario.USER_NombreUsuario,
-                usuario.USER_Password,
-                CASE
-                    WHEN admin.ADMINID IS NOT NULL THEN '$this->admin'
-                    WHEN docente.DOCENTEID IS NOT NULL AND instructor.INSTRUCTORID IS NOT NULL THEN '$this->docenteAndInstructor'
-                    WHEN docente.DOCENTEID IS NOT NULL THEN '$this->docente'
-                    WHEN instructor.INSTRUCTORID IS NOT NULL THEN '$this->instructor'
-                    ELSE '$this->guest'
-                END AS rol
-            FROM
-                [tblUsuario] usuario
-                LEFT JOIN tblAdmin admin on usuario.USERID = admin.USERID
-                LEFT JOIN tblDocente docente on usuario.USERID = docente.USERID
-                LEFT JOIN tblInstructor instructor on usuario.USERID = instructor.USERID
-            WHERE USER_NombreUsuario = ?
-            ",
-            [$username]
-        )->get();
-    }
-
     public function getAllExceptCurrent() {
         $userId = Session::getUser('id');
 
@@ -72,25 +48,70 @@ class UsuarioRepository extends RepositoryTemplate {
         )->getAll();
     }
 
+    public function getByUsername($username) {
+        return $this->query(
+            "SELECT
+                usuario.USERID,
+                usuario.USER_NombreUsuario,
+                usuario.USER_Password,
+                CASE
+                    WHEN admin.ADMINID IS NOT NULL THEN '$this->admin'
+                    WHEN docente.DOCENTEID IS NOT NULL AND instructor.INSTRUCTORID IS NOT NULL THEN '$this->docenteAndInstructor'
+                    WHEN docente.DOCENTEID IS NOT NULL THEN '$this->docente'
+                    WHEN instructor.INSTRUCTORID IS NOT NULL THEN '$this->instructor'
+                    ELSE '$this->guest'
+                END AS rol
+            FROM
+                [tblUsuario] usuario
+                LEFT JOIN tblAdmin admin on usuario.USERID = admin.USERID
+                LEFT JOIN tblDocente docente on usuario.USERID = docente.USERID
+                LEFT JOIN tblInstructor instructor on usuario.USERID = instructor.USERID
+            WHERE USER_NombreUsuario = ?
+            ",
+            [$username]
+        )->get();
+    }
+
     public function getById($id) {
         return $this->query("SELECT * FROM tblArea WHERE AREAID = ?", [$id])->getOrFail();
     }
 
-    public function create($values) {
+    public function createUsuario($values) {
         return $this->query(
-            "INSERT INTO tblArea (AREA_Nombre, AREA_Siglas) VALUES (?, ?)",
-            [$values["nombre"], $values["siglas"]]
+            "INSERT INTO tblUsuario (USER_NombreUsuario, USER_Password, USER_Nombre, USER_Apellido, USER_Email, USER_Genero) VALUES (?, ?, ?, ?, ?, ?)",
+            [$values["username"], password_hash($values["contraseña"], PASSWORD_BCRYPT), $values["nombre"], $values["apellido"], $values["email"], $values["genero"]]
         );
     }
 
-    public function update($values) {
+    public function createDocente($values) {
         return $this->query(
-            "UPDATE tblArea SET AREA_Nombre = ?, AREA_Siglas = ? WHERE AREAID = ?",
-            [$values["nombre"], $values["siglas"], $values["id"]]
+            "INSERT INTO tblDocente (USERID, DOCENTE_Nomina, DOCENTE_Base, DOCENTE_Horas_Base) VALUES (?, ?, ?, ?)",
+            [$values["userId"], $values["username"], $values["baseOrHoras"], $values["horasBase"]]
         );
     }
 
-    public function delete($id) {
-        return $this->query("DELETE FROM tblArea WHERE AREAID = ?", [$id]);
+    public function createInstructor($userId) {
+        return $this->query(
+            "INSERT INTO tblInstructor (USERID) VALUES (?)",
+            [$userId]
+        );
     }
+
+    public function createAdministrador($userId) {
+        return $this->query(
+            "INSERT INTO tblAdmin (USERID) VALUES (?)",
+            [$userId]
+        );
+    }
+
+    // public function update($values) {
+    //     return $this->query(
+    //         "UPDATE tblArea SET AREA_Nombre = ?, AREA_Siglas = ? WHERE AREAID = ?",
+    //         [$values["nombre"], $values["siglas"], $values["id"]]
+    //     );
+    // }
+
+    // public function delete($id) {
+    //     return $this->query("DELETE FROM tblArea WHERE AREAID = ?", [$id]);
+    // }
 }
