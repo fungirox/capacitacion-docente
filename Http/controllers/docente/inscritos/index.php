@@ -2,6 +2,7 @@
 
 use Core\App;
 use Core\Database;
+use Core\Session;
 
 $db = App::resolve(Database::class);
 
@@ -18,6 +19,8 @@ $userIDQuery = $db->query(
 )->get();
 
 $userid = $userIDQuery['USERID'];
+
+Session::getUser("id");
 
 $docenteIDQuery = $db->query(
     "SELECT DOCENTEID FROM tblDocente WHERE USERID = ?",
