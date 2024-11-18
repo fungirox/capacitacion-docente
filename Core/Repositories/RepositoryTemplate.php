@@ -15,4 +15,8 @@ abstract class RepositoryTemplate {
     protected function query($query, $params = []) {
         return $this->db->query($query, $params);
     }
+
+    public function getDatabase() {
+        return $this->db;
+    }
 }
