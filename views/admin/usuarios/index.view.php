@@ -43,43 +43,16 @@
                     <?php
                     $id = $user["USERID"];
                     $userName = htmlspecialchars($user["USER_NombreUsuario"]);
-                    $name = htmlspecialchars($user["USER_Nombre"]);
-                    $lastName = htmlspecialchars($user["USER_Apellido"]);
-                    $fullName = $name . " " . $lastName;
+                    $fullName = htmlspecialchars($user["USER_NombreCompleto"]);
                     $email = htmlspecialchars($user["USER_Email"]);
                     $rol = htmlspecialchars($user["rol"]);
-
-                    $formattedRol = "";
-                    $variant = "";
-
-                    switch ($rol) {
-                        case $admin:
-                            $formattedRol = "Administrador";
-                            $variant = "danger";
-                            break;
-                        case $docente:
-                            $formattedRol = "Docente";
-                            $variant = "success";
-                            break;
-                        case $instructor:
-                            $formattedRol = "Instructor";
-                            $variant = "secondary";
-                            break;
-                        case $docenteAndInstructor:
-                            $formattedRol = "Docente/Instructor";
-                            $variant = "warning";
-                            break;
-                        case $guest:
-                            $formattedRol = "";
-                            break;
-                    }
-
+                    $color = htmlspecialchars($user["color"]);
                     ?>
                     <tr>
                         <td><?= $userName ?></td>
                         <td><?= $fullName ?></td>
                         <td><?= $email ?></td>
-                        <td><span class="badge rounded-pill text-bg-<?= $variant ?>"><?= $formattedRol ?></span></td>
+                        <td><span class="badge rounded-pill text-bg-<?= $color ?>"><?= $rol ?></span></td>
                         <td class="text-end">
                             <div class="dropdown">
                                 <button class="btn btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
