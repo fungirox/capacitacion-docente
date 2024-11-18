@@ -2,38 +2,13 @@
 
 namespace Core;
 
+use Core\Repositories\UsuarioRepository;
 use Core\Roles\Roles;
 
 class Authenticator {
 
-    private $admin = Roles::ADMIN;
-    private $docente = Roles::DOCENTE;
-    private $instructor = Roles::INSTRUCTOR;
-    private $docenteAndInstructor = Roles::DOCENTE_AND_INSTRUCTOR;
-    private $guest = Roles::GUEST;
-
     public function attempt($username, $password) {
-        $user = App::resolve(Database::class)->query(
-            "SELECT
-                usuario.USERID,
-                usuario.USER_NombreUsuario,
-                usuario.USER_Password,
-                CASE
-                    WHEN admin.ADMINID IS NOT NULL THEN '$this->admin'
-                    WHEN docente.DOCENTEID IS NOT NULL AND instructor.INSTRUCTORID IS NOT NULL THEN '$this->docenteAndInstructor'
-                    WHEN docente.DOCENTEID IS NOT NULL THEN '$this->docente'
-                    WHEN instructor.INSTRUCTORID IS NOT NULL THEN '$this->instructor'
-                    ELSE '$this->guest'
-                END AS rol
-            FROM
-                [tblUsuario] usuario
-                LEFT JOIN tblAdmin admin on usuario.USERID = admin.USERID
-                LEFT JOIN tblDocente docente on usuario.USERID = docente.USERID
-                LEFT JOIN tblInstructor instructor on usuario.USERID = instructor.USERID
-            WHERE USER_NombreUsuario = ?
-            ",
-            [$username]
-        )->get();
+        $user = App::resolve(UsuarioRepository::class)->getByUsername($username);
 
         if ($user) {
             if (password_verify($password, $user["USER_Password"])) {
