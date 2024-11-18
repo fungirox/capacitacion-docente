@@ -15,20 +15,20 @@ class CarreraRepository extends RepositoryTemplate {
     }
 
     public function create($values) {
-        $this->query(
+        return $this->query(
             "INSERT INTO tblCarrera (CARRERA_Nombre, CARRERA_Siglas) VALUES (?, ?)",
             [$values["nombre"], $values["siglas"]]
         );
     }
 
     public function update($values) {
-        $this->query(
+        return $this->query(
             "UPDATE tblCarrera SET CARRERA_Nombre = ?, CARRERA_Siglas = ? WHERE CARRERAID = ?",
             [$values["nombre"], $values["siglas"], $values["id"]]
         );
     }
 
     public function delete($id) {
-        $this->query("DELETE FROM tblCarrera WHERE CARRERAID = ?", [$id]);
+        return $this->query("DELETE FROM tblCarrera WHERE CARRERAID = ?", [$id]);
     }
 }
