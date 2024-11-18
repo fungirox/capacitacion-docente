@@ -126,8 +126,8 @@
             </div>
         </div>
         <div class="col-md-6">
-            <label for="confirmarContraseña" class="form-label">Confirmar Contraseña</label>
-            <input type="password" class="form-control <?= isValidInput($errors, "confirmarContraseña") ?>" id="confirmarContraseña" name="confirmarContraseña" value="">
+            <label for="confirmar-contraseña" class="form-label">Confirmar Contraseña</label>
+            <input type="password" class="form-control <?= isValidInput($errors, "confirmarContraseña") ?>" id="confirmar-contraseña" name="confirmar-contraseña" value="">
             <div class="invalid-feedback">
                 <?= $errors['confirmarContraseña'] ?>
             </div>
