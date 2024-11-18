@@ -30,4 +30,4 @@ $allCourses = $db->query("SELECT * FROM tblCurso, tblCursoDocente
 WHERE tblCursoDocente.CURSOID = tblCurso.CURSOID 
 AND tblCursoDocente.DOCENTEID = ?", [$docenteid])->getAll();
 
-require  view("/docente/inscritos/index.view.php");
+return view("/docente/inscritos/index.view.php");

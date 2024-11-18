@@ -3,6 +3,7 @@
 use Core\App;
 use Core\Database;
 use Core\Roles\Roles;
+use Core\Session;
 
 $db = App::resolve(Database::class);
 
@@ -59,5 +60,7 @@ $cursosConcluidos = $db->query(
     [$_SESSION["user"]["username"]]
 )->getAll();
 
-require view("/docenteOrInstructor/historial/index.view.php");
+return view("/docenteOrInstructor/historial/index.view.php", [
+    "isDocenteAndInstructor" => $isDocenteAndInstructor,
+]);
  
