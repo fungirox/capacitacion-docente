@@ -1,4 +1,4 @@
-<?php require view("components/styledHeader.php"); ?>
+<?php view("components/styledHeader.php", ["title" => $title]); ?>
 <script defer>
     $(document).ready(function() {
         const rolDocente = $('#rol-docente');
@@ -62,7 +62,7 @@
 <main role="main" class="container py-4" style="margin-top: 56px">
     <div class="row row-cols-auto align-items-center">
         <a href="/admin/usuarios"><i class="col bi bi-arrow-left-circle" style="font-size: 1.5rem;"></i></a>
-        <h1 class="col">Nuevo Usuario</h1>
+        <h1 class="col"><?= $title ?></h1>
     </div>
     <form class="row py-4 g-3" method="POST" action="/admin/usuarios">
         <div class="d-flex justify-content-center">
@@ -169,4 +169,4 @@
         </div>
     </form>
 </main>
-<?php require view("components/styledFooter.php"); ?>
+<?php view("components/styledFooter.php"); ?>
