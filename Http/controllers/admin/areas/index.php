@@ -1,7 +1,6 @@
 <?php
 
 use Core\App;
-use Core\Database;
 use Core\Repositories\AreaRepository;
 
 return view("/admin/areas/index.view.php", [
