@@ -5,6 +5,7 @@ use Core\Container;
 use Core\Database;
 use Core\Repositories\AreaRepository;
 use Core\Repositories\CarreraRepository;
+use Core\Repositories\UsuarioRepository;
 
 $container = new Container();
 
@@ -18,6 +19,10 @@ $container->bind("Core\Repositories\AreaRepository", function () {
 
 $container->bind("Core\Repositories\CarreraRepository", function () {
     return new CarreraRepository(App::resolve(Database::class));
+});
+
+$container->bind("Core\Repositories\UsuarioRepository", function () {
+    return new UsuarioRepository(App::resolve(Database::class));
 });
 
 App::setContainer($container);
