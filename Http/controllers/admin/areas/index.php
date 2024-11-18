@@ -3,10 +3,9 @@
 use Core\App;
 use Core\Database;
 
-$db = App::resolve(Database::class);
+$allAreas = App::resolve(Database::class)->query("SELECT * FROM tblArea")->getAll();
 
-$allAreas = $db->query("SELECT * FROM tblArea")->getAll();
-
-$title = "Áreas";
-
-require  view("/admin/areas/index.view.php");
+return view("/admin/areas/index.view.php", [
+    "title" => "Áreas",
+    "allAreas" => $allAreas
+]);

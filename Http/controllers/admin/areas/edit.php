@@ -2,13 +2,12 @@
 
 use Core\App;
 use Core\Database;
+use Core\Session;
 
-$db = App::resolve(Database::class);
+$area = App::resolve(Database::class)->query("SELECT * FROM tblArea WHERE AREAID = ?", [$_GET["id"]])->getOrFail();
 
-$career = $db->query("SELECT * FROM tblArea WHERE AREAID = ?", [$_GET["id"]])->getOrFail();
-
-# AUTORIZAR QUE SEA ADMIN
-
-$title = "Editar Área";
-
-require view("admin/areas/edit.view.php");
+return view("admin/areas/edit.view.php", [
+    "title" => "Editar Área " . $area["AREA_Siglas"],
+    "area" => $area,
+    "errors" => Session::get("errors")
+]);

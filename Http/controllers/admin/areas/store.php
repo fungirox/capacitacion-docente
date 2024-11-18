@@ -2,33 +2,16 @@
 
 use Core\App;
 use Core\Database;
-use Core\Validator;
+use Http\Forms\AreaForm;
 
-$db = App::resolve(Database::class);
+AreaForm::validate($attribuutes = [
+    "nombre" => trim($_POST["nombre"]),
+    "siglas" => strtoupper(trim($_POST["siglas"]))
+]);
 
-$errors = [];
-
-$nombre = $_POST["nombre"];
-$siglas = strtoupper($_POST["siglas"]);
-
-if (!Validator::string($nombre, 1, 100)) {
-    $errors['nombre'] = "Favor de introducir el nombre de la área.";
-}
-
-if (!Validator::string($siglas, 1, 8)) {
-    $errors['siglas'] = "Favor de introducir las siglas de la área.";
-}
-
-if (!empty($errors)) {
-    return require view("admin/areas/create.view.php");
-}
-
-# AUTORIZAR QUE SEA ADMIN
-
-$db->query(
+App::resolve(Database::class)->query(
     "INSERT INTO tblArea (AREA_Nombre, AREA_Siglas) VALUES (?, ?)",
-    [$nombre, $siglas]
+    [$attribuutes["nombre"], $attribuutes["siglas"]]
 );
 
-header("location: /admin/areas");
-die();
+redirect("/admin/areas");

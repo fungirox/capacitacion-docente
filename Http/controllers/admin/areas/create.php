@@ -1,6 +1,8 @@
 <?php
 
-$title = "Nueva Área";
-$errors = [];
+use Core\Session;
 
-require view("/admin/areas/create.view.php");
+return view("/admin/areas/create.view.php", [
+    "title" => "Nueva Área",
+    "errors" => Session::get("errors")
+]);
