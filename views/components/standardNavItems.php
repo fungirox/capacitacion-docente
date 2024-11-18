@@ -1,6 +1,9 @@
 <?php
 
-use Core\Roles\Roles; ?>
+use Core\Roles\Roles;
+use Core\Session;
+
+ ?>
 
 <?php if (Session::role() === Roles::DOCENTE_AND_INSTRUCTOR || Session::role() === Roles::DOCENTE): ?>
     <li class="nav-item">
