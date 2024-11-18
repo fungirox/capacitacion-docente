@@ -2,7 +2,8 @@
 
 use Core\App;
 use Core\Database;
+use Core\Repositories\AreaRepository;
 
-App::resolve(Database::class)->query("DELETE FROM tblArea WHERE AREAID = ?", [$_POST["id"]]);
+App::resolve(AreaRepository::class)->delete($_POST["id"]);
 
 redirect("/admin/areas");

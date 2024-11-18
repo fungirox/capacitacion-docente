@@ -2,10 +2,9 @@
 
 use Core\App;
 use Core\Database;
-
-$allAreas = App::resolve(Database::class)->query("SELECT * FROM tblArea")->getAll();
+use Core\Repositories\AreaRepository;
 
 return view("/admin/areas/index.view.php", [
     "title" => "Áreas",
-    "allAreas" => $allAreas
+    "allAreas" => App::resolve(AreaRepository::class)->getAll()
 ]);
