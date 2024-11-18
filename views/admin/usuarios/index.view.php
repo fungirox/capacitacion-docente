@@ -60,7 +60,7 @@
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end">
                                     <li>
-                                        <a class="dropdown-item" href="/admin/carreras/editar?id=<?= $id ?>">
+                                        <a class="dropdown-item" href="/admin/usuarios/editar?id=<?= $id ?>">
                                             <i class="bi bi-pencil"></i>
                                             <span class="ms-2">Editar</span>
                                         </a>
@@ -80,11 +80,11 @@
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="deleteModalLabel<?= $id ?>">Eliminar Carrera</h1>
+                                        <h1 class="modal-title fs-5" id="deleteModalLabel<?= $id ?>">Eliminar Usuario</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <p>¿Seguro de que desea eliminar esta carrera?</p>
+                                        <p>¿Seguro de que desea eliminar al usuario <?= $userName ?>?</p>
                                     </div>
                                     <div class="modal-footer">
                                         <input type="hidden" name="_method" value="DELETE" />
