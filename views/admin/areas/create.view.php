@@ -7,9 +7,9 @@
     });
 </script>
 <main role="main" class="container py-4" style="margin-top: 56px">
-    <div class="row row-cols-auto align-items-center">
-        <a href="/admin/areas"><i class="col bi bi-arrow-left-circle" style="font-size: 1.5rem;"></i></a>
-        <h1 class="col"><?= $title ?></h1>
+    <div class="row align-items-center">
+        <a class="col-12 col-md-auto" href="/admin/areas"><i class="bi bi-arrow-left-circle" style="font-size: 1.5rem;"></i></a>
+        <h1 class="col-12 col-md-10"><?= $title ?></h1>
     </div>
     <form class="row py-4 g-3" method="POST" action="/admin/areas">
         <div class="col-md-8">

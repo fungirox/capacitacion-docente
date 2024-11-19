@@ -1,7 +1,10 @@
 <?php view("components/styledHeader.php"); ?>
 <main role="main" class="container py-4" style="margin-top: 56px">
     <div class="d-flex flex-column align-items-start gap-2 pb-4">
-        <h1><span class="fw-light"><?= $title ?></span> <span><?= $courseName["CURSO_Nombre"] ?></span></h1>
+        <div class="row align-items-center">
+            <a class="col-12 col-md-auto" href="/historial"><i class="bi bi-arrow-left-circle" style="font-size: 1.5rem;"></i></a>
+            <h1 class="col-12 col-md-10"><span class="fw-light"><?= $title ?></span> <span><?= $courseName["CURSO_Nombre"] ?></span></h1>
+        </div>
         <span class="badge rounded-pill text-bg-primary"><span class="fw-normal"><?= $instructorNombre ?></span></span>
     </div>
     <span>Por favor, responda el siguiente cuestionario de la manera más objetiva. Coloque un número del 1 al 5 considerando
@@ -20,13 +23,13 @@
 
                     // Mostrar subtítulo de evaluación del instructor
                     if ($mostrarSubtituloInstructor && strpos($questionText, $preguntaInstructor) !== false) {
-                        echo "<h4 class='fs-2'>Evaluación de instructor</h4>";
+                        echo "<h2>Evaluación de instructor</h2>";
                         $mostrarSubtituloInstructor = false; // Evita mostrar el subtítulo más de una vez
                     }
 
                     // Mostrar subtítulo de evaluación de organización y logística
                     if ($mostrarSubtituloOrganizacion && strpos($questionText, $preguntaOrganizacion) !== false) {
-                        echo "<h4 class='fs-2'>Evaluación de organización y logística</h4>";
+                        echo "<h2>Evaluación de organización y logística</h2>";
                         $mostrarSubtituloOrganizacion = false; // Evita mostrar el subtítulo más de una vez
                     }
                 ?>
@@ -43,8 +46,17 @@
             </div>
             <!-- Queda pendiente el comentarios (textarea) -->
             <!-- Queda pendiente frontend y separar por categorias las preguntas :D -->
-            <div class="pt-4 d-grid gap-2 d-md-flex justify-content-md-end">
-                <button class="btn btn-primary btn-lg fs-5" type="submit">Evaluar</button>
+            <div class="pt-4">
+                <h2>Comentarios</h2>
+                <textarea class="form-control" id="comentarios" rows="2"></textarea>
+            </div>
+            <div class="row row-cols-auto justify-content-end pt-4 g-2">
+                <div class="order-2 order-md-1 col-12 col-md-auto d-grid">
+                    <a href="/historial" class="btn btn-outline-secondary">Cancelar</a>
+                </div>
+                <div class="order-1 order-md-2 col-12 col-md-auto d-grid">
+                    <button type="submit" class="btn btn-primary">Evaluar</button>
+                </div>
             </div>
         </form>
     </div>
