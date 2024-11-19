@@ -7,10 +7,6 @@ use Core\Session;
 
 $db = App::resolve(Database::class);
 
-// $allAreas = $db->query("SELECT * FROM tblArea")->getAll();
-
-$title = "Historial de Cursos";
-
 $isDocenteAndInstructor = Session::role() === Roles::DOCENTE_AND_INSTRUCTOR;
 
 $cursosNoEvaluados = $db->query(
@@ -61,6 +57,9 @@ $cursosConcluidos = $db->query(
 )->getAll();
 
 return view("/docenteOrInstructor/historial/index.view.php", [
+    "title" => "Historial de Cursos",
     "isDocenteAndInstructor" => $isDocenteAndInstructor,
+    "cursosNoEvaluados" => $cursosNoEvaluados,
+    "cursosSinSegundaEncuesta" => $cursosSinSegundaEncuesta,
+    "cursosConcluidos" => $cursosConcluidos
 ]);
- 
