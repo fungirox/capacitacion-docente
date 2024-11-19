@@ -44,7 +44,7 @@ $perfil = htmlspecialchars($course["CURSO_Perfil"], ENT_QUOTES, "UTF-8");
 
 $title = $nombreCurso;
 
-require view("admin/cursos/show.view.php", [
+return view("admin/cursos/show.view.php", [
     "title" => $nombreCurso,
     "id" => $id,
     "nombreCurso" => $nombreCurso,
