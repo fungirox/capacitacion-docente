@@ -1,4 +1,4 @@
-<?php require view("components/styledHeader.php"); ?>
+<?php view("components/styledHeader.php"); ?>
 <main role="main" class="container py-4" style="margin-top: 56px">
     <h1>Cursos</h1>
     <div class="row row-cols-auto justify-content-end pt-4 g-2">
@@ -79,4 +79,4 @@
         <?php endforeach; ?>
     </div>
 </main>
-<?php require view("components/styledFooter.php"); ?>
+<?php view("components/styledFooter.php"); ?>

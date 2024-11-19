@@ -8,7 +8,7 @@ $db = App::resolve(Database::class);
 
 $errors = [];
 
-// Recibir los datos del formulario
+// Recibir los datos del formulario para nuevo curso
 $nombreCurso = $_POST["service-name"];
 $descripcionCurso = $_POST["service-description"];
 $tipoCurso = $_POST["service-type"];
@@ -19,12 +19,17 @@ $horasPresenciales = $_POST["physical-hours"];
 $horasVirtuales = $_POST["virtual-hours"];
 $fechaInicio = $_POST["start-date"];
 $fechaFin = $_POST["finish-date"];
-$aula = $_POST["classroom"];
+
 $modalidadCurso = $_POST["service-category"];
-$diasSemana = $_POST["weekdays"] ?? [];
 $cursoEnProgreso = 1;
 $cursoActivo = 1;
 $cursoPerfil = 1;
+
+// Recibir los datos del formulario HorarioCurso
+$diasSemana = $_POST["weekdays"] ?? [];
+$horaInicio = $_POST["horaInicio"];
+$horaFinal = $_POST["horaFinal"];
+$aula = $_POST["classroom"];
 
 
 // Validación de los datos
@@ -76,8 +81,6 @@ if (!empty($errors)) {
       $modalidadCurso = ($horasVirtuales > 0) ? "Hibrido" : "Presencial";
   }
 
-// AUTORIZAR QUE SEA ADMIN (implementar si es necesario)
-
 // Insertar el curso en la base de datos
 $db->query(
     "INSERT INTO tblCurso (CURSO_Nombre, CURSO_Descripcion, CURSO_Tipo, CURSO_Externo, CURSO_Total_Horas, 
@@ -99,7 +102,8 @@ foreach ($areas as $areaId) {
 
 // Insertar los días de la semana seleccionados
 foreach ($diasSemana as $dia) {
-    $db->query("INSERT INTO tblCursoHorario (CURSOID, DIA) VALUES (?, ?)", [$cursoId, $dia]);
+    $db->query("INSERT INTO tblHorarioCurso (CURSOID, HORARIOCURSO_Dia_Semana, HORARIOCURSO_Hora_Inicio, HORARIOCURSO_Horas, HORARIOCURSO_Aula) 
+    VALUES (?, ?, ?, ?, ?)", [$cursoId, $dia, $horaInicio, 0, $aula]);
 }
 
 header("location: /admin/cursos");

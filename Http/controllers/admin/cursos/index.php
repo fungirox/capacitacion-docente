@@ -7,6 +7,9 @@ $db = App::resolve(Database::class);
 
 $allCourses = $db->query("SELECT * FROM tblCurso")->getAll();
 
-$title = "Cursos";
-
-require view("admin/cursos/index.view.php");
+return view("admin/cursos/index.view.php", [
+    "title" => "Cursos",
+    "allCourses" => $allCourses,
+    "db" => $db
+]
+);

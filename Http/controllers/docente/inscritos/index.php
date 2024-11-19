@@ -6,10 +6,7 @@ use Core\Session;
 
 $db = App::resolve(Database::class);
 
-// $allAreas = $db->query("SELECT * FROM tblArea")->getAll();
-
 $title = "Inscritos";
-
 
 $username = isset($_SESSION["user"]["username"]) ? $_SESSION["user"]["username"] : null;
 
@@ -33,4 +30,8 @@ $allCourses = $db->query("SELECT * FROM tblCurso, tblCursoDocente
 WHERE tblCursoDocente.CURSOID = tblCurso.CURSOID 
 AND tblCursoDocente.DOCENTEID = ?", [$docenteid])->getAll();
 
-return view("/docente/inscritos/index.view.php");
+return view("/docente/inscritos/index.view.php", [
+    "title" => "Inscritos",
+    "allCourses" => $allCourses,
+    "db" => $db
+]);

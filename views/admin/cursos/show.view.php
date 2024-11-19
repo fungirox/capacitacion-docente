@@ -1,7 +1,7 @@
 <div>
     <img src="https://www.ketchum.edu/sites/default/files/2022-08/First%20%28Top%29%20Image%20.jpeg" class="img-fluid" alt="Imagen" style="width: 100%; height: 300px; object-fit: cover;">
 </div>
-<?php require view("components/styledHeader.php"); ?>
+<?php view("components/styledHeader.php"); ?>
 <main role="main" class="container pt-5">
     <div class="d-flex justify-content-between align-items-start">
         <div class="w-75 fs-4 mx-5">
@@ -35,10 +35,8 @@
                             <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V5h16V4H0V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5" />
                         </svg> Fecha Inicio:<span class="fw-bold"> <?= $fechaInicio ?> </span></p>
                 </div>
-                <button type="button" class="btn btn-primary btn-lg"> Entrar </button>
-
             </div>
         </div>
     </div>
 </main>
-<?php require view("components/styledFooter.php"); ?>
+<?php view("components/styledFooter.php"); ?>

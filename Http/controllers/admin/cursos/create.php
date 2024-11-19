@@ -29,4 +29,14 @@ $weekdays = [
 
 $title = "Registrar Curso";
 
-require view("admin/cursos/create.view.php");
+return view("admin/cursos/create.view.php", [
+    "title" => "Registrar Curso",
+    "db" => $db,
+    "teachers" => $teachers,
+    "areas" => $areas,
+    "todayDate" => $todayDate,
+    "formattedToday" => $formattedToday,
+    "tomorrowDate" => $tomorrowDate,
+    "formattedTomorrow" => $formattedTomorrow,
+    "weekdays" => $weekdays
+]);
