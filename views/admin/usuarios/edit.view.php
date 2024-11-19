@@ -1,45 +1,29 @@
 <?php view("components/styledHeader.php", ["title" => $title]); ?>
 <script defer>
-    $(document).ready(function() {
-        const usernameLabel = $('label[for="username"]');
-        const instructorSwitch = $('#docente-instructor-switch');
-        const docenteBaseCheckContainer = $('#hora-base-check-container');
-        const docenteBaseCheck = $('#base-check');
-        const horasBaseInput = $('#horas-base-container');
+    $(document).ready(() => {
+        const handleRoleVisibility = () => {
+            const rolValue = $('input[name="rol"]').val().toLowerCase();
+            const isDocente = rolValue === 'docente';
+            const isDocenteAndInstructor = rolValue === 'docenteandinstructor';
 
-        $('input').on('input', function() {
-            $(this).removeClass('is-invalid');
-        });
-
-        const updateUsernameLabel = () => {
-            if (rolDocente.prop('checked')) {
-                usernameLabel.text('Nómina');
-                instructorSwitch.show();
-                docenteBaseCheckContainer.show();
-                horasBaseInput.show();
+            if (isDocente || isDocenteAndInstructor) {
+                $('#hora-base-check-container').show();
+                $('#horas-base-container').show();
             } else {
-                usernameLabel.text('Nombre de usuario')
-                instructorSwitch.hide();
-                docenteBaseCheckContainer.hide();
-                horasBaseInput.hide();
+                $('#hora-base-check-container').hide();
+                $('#horas-base-container').hide();
+            }
+
+            if (isDocente) {
+                $('#docente-instructor-switch').show();
+            } else {
+                $('#docente-instructor-switch').hide();
             }
         }
 
-        const showHorasBaseInput = () => {
-            if (docenteBaseCheck.prop('checked')) {
-                horasBaseInput.show();
-            } else {
-                horasBaseInput.hide();
-            }
-        }
+        handleRoleVisibility();
 
-        $('input[name="base-horas"]').on('change', () => {
-            showHorasBaseInput();
-        })
-
-        toggleAdminWarning();
-        updateUsernameLabel();
-        showHorasBaseInput();
+        $('input[name="rol"]').on('input', handleRoleVisibility);
     });
 </script>
 <main role="main" class="container py-4" style="margin-top: 56px">
@@ -49,7 +33,8 @@
     </div>
     <form class="row py-4 g-3" method="POST" action="/admin/usuarios">
         <input type="hidden" name="_method" value="PATCH">
-        <input type="hidden" name="id" value="<?= cleanOld("id", $career["USERID"]) ?>">
+        <input type="hidden" name="id" value="<?= cleanOld("id", $usuario["USERID"]) ?>">
+        <input type="hidden" name="rol" value="<?= cleanOld("rol", $usuario["rol"]) ?>">
         <div class="col-md-6">
             <label for="nombre" class="form-label">Nombre</label>
             <input type="text" class="form-control <?= isValidInput($errors, "nombre") ?>" id="nombre" name="nombre" value="<?= cleanOld("nombre", $usuario["USER_Nombre"]) ?>">
@@ -71,7 +56,7 @@
                 <?= $errors['email'] ?>
             </div>
         </div>
-        <div class="col-md-6">
+        <!-- <div class="col-md-6">
             <label for="contraseña" class="form-label">Contraseña</label>
             <input type="password" class="form-control <?= isValidInput($errors, "contraseña") ?>" id="contraseña" name="contraseña" value="">
             <div class="invalid-feedback">
@@ -84,7 +69,7 @@
             <div class="invalid-feedback">
                 <?= $errors['confirmarContraseña'] ?>
             </div>
-        </div>
+        </div> -->
         <div id="hora-base-check-container">
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="base-horas" id="base-check" value="1" <?= cleanOld("base-horas", "1") === "1" ? "checked" : "" ?>>
