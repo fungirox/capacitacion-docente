@@ -51,7 +51,26 @@ class UsuarioRepository extends RepositoryTemplate {
     }
 
     public function getById($id) {
-        return $this->query("SELECT * FROM tblUsuario WHERE USERID = ? AND USER_Activo = 1", [$id])->getOrFail();
+        return $this->query(
+            "SELECT
+                *,
+                CASE
+                    WHEN admin.ADMINID IS NOT NULL THEN '$this->admin'
+                    WHEN docente.DOCENTEID IS NOT NULL AND instructor.INSTRUCTORID IS NOT NULL THEN '$this->docenteAndInstructor'
+                    WHEN docente.DOCENTEID IS NOT NULL THEN '$this->docente'
+                    WHEN instructor.INSTRUCTORID IS NOT NULL THEN '$this->instructor'
+                    ELSE '$this->guest'
+                END AS rol
+            FROM
+                [tblUsuario] usuario
+                LEFT JOIN tblAdmin admin on usuario.USERID = admin.USERID
+                LEFT JOIN tblDocente docente on usuario.USERID = docente.USERID
+                LEFT JOIN tblInstructor instructor on usuario.USERID = instructor.USERID
+            WHERE
+                usuario.USERID = ? AND USER_Activo = 1
+            ",
+            [$id]
+        )->getOrFail();
     }
 
     public function getByUsername($username) {
