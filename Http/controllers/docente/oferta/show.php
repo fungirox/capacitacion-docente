@@ -59,4 +59,21 @@ $perfil = htmlspecialchars($course["CURSO_Perfil"], ENT_QUOTES, "UTF-8");
 
 $title = $nombreCurso;
 
-require view("docente/oferta/show.view.php");
+return view("docente/oferta/show.view.php", [
+    "id" => $id,
+    "nombreCurso" => $nombreCurso,
+    "nombreInstructor" => $nombreInstructor,
+    "apellidoInstructor" => $apellidoInstructor,
+    "descripcion" => $descripcion,
+    "tipo" => $tipo,
+    "totalHoras" => $totalHoras,
+    "fechaInicio" => $fechaInicio,
+    "fechaFinal" => $fechaFinal,
+    "externo" => $externo,
+    "tipoCurso" => $tipoCurso,
+    "modalidad" => $modalidad,
+    "activo" => $activo,
+    "enProgreso" => $enProgreso,
+    "perfil" => $perfil,
+    "isInscrito" => $isInscrito
+]);

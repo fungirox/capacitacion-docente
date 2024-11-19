@@ -1,6 +1,5 @@
-<?php require view("components/styledHeader.php"); ?>
+<?php view("components/styledHeader.php"); ?>
 <main role="main" class="container py-4" style="margin-top: 56px">
-
     <h1 class="mb-4">Registrar Curso</h1>
     <form action="/admin/cursos" method="POST" class="row g-3 my-4">
         <!--- Nombre del Curso --->
@@ -105,17 +104,29 @@
         </div>
         <!--- Días de la semana -->
         <div class="form-group">
-            <label for="week" class="form-label fw-bold">Días de la semana</label>
+        <label class="form-label fw-bold">Horario</label>
+            <!-- Hora Inicio y Hora Final al inicio -->
+            <div class="d-flex align-items-center mb-4">
+                <div class="me-4">
+                    <label for="start-time" class="form-label fw-bold">Hora Inicio</label>
+                    <input type="time" id="horaInicio" name="horaInicio" class="form-control form-control-sm">
+                </div>
+                <div>
+                    <label for="end-time" class="form-label fw-bold">Hora Final</label>
+                    <input type="time" id="horaFinal" name="horaFinal" class="form-control form-control-sm">
+                </div>
+            </div>
+
+            <!-- Lista de días con checkboxes -->
+            <label class="fw-bold mb-2">Días de la semana</label>
             <?php foreach ($weekdays as $id => $name) : ?>
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="<?= $id ?>" name="weekdays[]" value="<?= $id ?>">
-                    <label class="form-check-label" for="<?= $id ?>"><?= $name ?></label>
+                <div class="form-check mb-2">
+                    <input type="checkbox" class="form-check-input" id="checkbox-<?= $id ?>" name="weekdays[]" value="<?= $id ?>">
+                    <label class="form-check-label" for="checkbox-<?= $id ?>"><?= $name ?></label>
                 </div>
             <?php endforeach; ?>
-
-            <div>Hora inicio: </div>
-            <div>Hora final: </div>
         </div>
+
         <div class="form-group">
             <button type="submit" class="btn btn-success">Añadir</button>
         </div>
@@ -130,4 +141,4 @@
         });
     </script>
 </main>
-<?php require view("components/styledFooter.php"); ?>
+<?php view("components/styledFooter.php"); ?>
