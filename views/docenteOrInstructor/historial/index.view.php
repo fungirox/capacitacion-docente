@@ -25,9 +25,9 @@
                 <div class="accordion-body">
                     <?php if (!empty($cursosNoEvaluados)): ?>
                         <?php foreach ($cursosNoEvaluados as $curso): ?>
-                            <div class="d-flex align-items-center justify-content-between gap-3">
-                                <span><?= $curso["CURSO_Nombre"]; ?></span>
-                                <form action="/historial/evaluarCurso" method="POST">
+                            <div class="row align-items-center justify-content-between gap-3">
+                                <span class="col-12 col-md-auto"><?= $curso["CURSO_Nombre"]; ?></span>
+                                <form class="d-grid col-12 col-md-auto" action="/historial/evaluarCurso" method="POST">
                                     <input type="hidden" name="CURSOID" value="<?= $curso["CURSOID"] ?>">
                                     <button type="submit" class="btn btn-primary">Evaluar curso</button>
                                 </form>
@@ -55,9 +55,9 @@
                 <div class="accordion-body">
                     <?php if (!empty($cursosSinSegundaEncuesta)): ?>
                         <?php foreach ($cursosSinSegundaEncuesta as $key => $curso): ?>
-                            <div class="d-flex align-items-center justify-content-between gap-3">
-                                <span><?= $curso["CURSO_Nombre"]; ?></span>
-                                <form action="/historial/evaluarCurso" method="POST">
+                            <div class="row align-items-center justify-content-between gap-3">
+                                <span class="col-12 col-md-auto"><?= $curso["CURSO_Nombre"]; ?></span>
+                                <form class="d-grid col-12 col-md-auto" action="/historial/evaluarCurso" method="POST">
                                     <input type="hidden" name="CURSOID" value="<?= $curso["CURSOID"] ?>">
                                     <button type="submit" class="btn btn-outline-primary">Evaluar curso</button>
                                 </form>
