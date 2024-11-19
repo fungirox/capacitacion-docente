@@ -1,6 +1,6 @@
-<?php require view("components/styledHeader.php"); ?>
+<?php view("components/styledHeader.php", ["title" => $title]); ?>
 <main role="main" class="container py-4" style="margin-top: 56px">
-    <h1>Historial de Cursos</h1>
+    <h1><?= $title ?></h1>
     <?php if ($isDocenteAndInstructor): ?>
         <div class="d-flex justify-content-center">
             <div class="col-12 col-md-4 btn-group py-4" name="rol" role="group">
@@ -10,46 +10,92 @@
                 <label class="btn btn-outline-primary" for="rol-instructor">Instructor</label>
             </div>
         </div>
-        <div>
-            <h2>Cursos sin evaluar</h2>
-            <div>
-                <?php if (!empty($cursosNoEvaluados)): ?>
-                    <?php foreach ($cursosNoEvaluados as $curso): ?>
-                        <p>Nombre del curso: <?= $curso["CURSO_Nombre"]; ?></p>
-                        <form action="/historial/evaluarCurso" method="POST">
-                            <input type="hidden" name="CURSOID" value="<?= $curso["CURSOID"] ?>">
-                            <button type="submit" class="btn btn-primary">Evaluar curso</button>
-                        </form>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <p>No hay cursos por evaluar.</p>
-                <?php endif; ?>
-            </div>
-        </div>
-        <div>
-            <h2>Encuesta de eficacia</h2>
-            <div>
-                <?php if (!empty($cursosSinSegundaEncuesta)): ?>
-                    <?php foreach ($cursosSinSegundaEncuesta as $curso): ?>
-                        <p>Nombre del curso: <?= $curso["CURSO_Nombre"]; ?></p>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <p>No hay cursos por evaluar.</p>
-                <?php endif; ?>
-            </div>
-        </div>
-        <div>
-            <h2>Cursos concluidos</h2>
-            <div>
-                <?php if (!empty($cursosConcluidos)): ?>
-                    <?php foreach ($cursosConcluidos as $curso): ?>
-                        <p>Nombre del curso: <?= $curso["CURSO_Nombre"]; ?></p>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <p>No hay cursos concluidos.</p>
-                <?php endif; ?>
-            </div>
-        </div>
     <?php endif ?>
+    <div class="accordion">
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button <?= count($cursosNoEvaluados) > 0 ? "" : "collapsed" ?>" type="button" data-bs-toggle="collapse" data-bs-target="#cursos-sin-evaluar" aria-expanded="false" aria-controls="cursos-sin-evaluar">
+                    <div class="w-100 row align-items-center justify-content-between">
+                        <span class="col fs-4">Cursos sin Evaluar</span>
+                        <span class="col text-end me-3"><?= count($cursosNoEvaluados) ?></span>
+                    </div>
+                </button>
+            </h2>
+            <div id="cursos-sin-evaluar" class="accordion-collapse collapse <?= count($cursosNoEvaluados) > 0 ? "show" : "" ?>">
+                <div class="accordion-body">
+                    <?php if (!empty($cursosNoEvaluados)): ?>
+                        <?php foreach ($cursosNoEvaluados as $curso): ?>
+                            <div class="d-flex align-items-center justify-content-between gap-3">
+                                <span><?= $curso["CURSO_Nombre"]; ?></span>
+                                <form action="/historial/evaluarCurso" method="POST">
+                                    <input type="hidden" name="CURSOID" value="<?= $curso["CURSOID"] ?>">
+                                    <button type="submit" class="btn btn-primary">Evaluar curso</button>
+                                </form>
+                            </div>
+                            <?php if ($key < count($cursosNoEvaluados) - 1): ?>
+                                <hr class="text-body-tertiary" />
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <span class="text-secondary">No hay cursos por evaluar.</span>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button <?= count($cursosSinSegundaEncuesta) > 0 ? "" : "collapsed" ?>" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    <div class="w-100 row align-items-center justify-content-between">
+                        <span class="col fs-4">Encuesta de Eficacia</span>
+                        <span class="col text-end me-3"><?= count($cursosSinSegundaEncuesta) ?></span>
+                    </div>
+                </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse <?= count($cursosSinSegundaEncuesta) > 0 ? "show" : "" ?>">
+                <div class="accordion-body">
+                    <?php if (!empty($cursosSinSegundaEncuesta)): ?>
+                        <?php foreach ($cursosSinSegundaEncuesta as $key => $curso): ?>
+                            <div class="d-flex align-items-center justify-content-between gap-3">
+                                <span><?= $curso["CURSO_Nombre"]; ?></span>
+                                <form action="/historial/evaluarCurso" method="POST">
+                                    <input type="hidden" name="CURSOID" value="<?= $curso["CURSOID"] ?>">
+                                    <button type="submit" class="btn btn-outline-primary">Evaluar curso</button>
+                                </form>
+                            </div>
+                            <?php if ($key < count($cursosSinSegundaEncuesta) - 1): ?>
+                                <hr class="text-body-tertiary" />
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <span class="text-secondary">No hay cursos por evaluar.</span>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button <?= count($cursosConcluidos) > 0 ? "" : "collapsed" ?>" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    <div class="w-100 row align-items-center justify-content-between">
+                        <span class="col fs-4">Cursos Concluidos</span>
+                        <span class="col text-end me-3"><?= count($cursosConcluidos) ?></span>
+                    </div>
+                </button>
+            </h2>
+            <div id="collapseThree" class="accordion-collapse collapse <?= count($cursosConcluidos) > 0 ? "show" : "" ?>">
+                <div class="accordion-body">
+                    <?php if (!empty($cursosConcluidos)): ?>
+                        <?php foreach ($cursosConcluidos as $key => $curso): ?>
+                            <div><?= $curso["CURSO_Nombre"]; ?></div>
+                            <?php if ($key < count($cursosConcluidos) - 1): ?>
+                                <hr class="text-body-tertiary" />
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <span class="text-secondary">No hay cursos concluidos.</span>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
-<?php require view("components/styledFooter.php"); ?>
+<?php view("components/styledFooter.php"); ?>

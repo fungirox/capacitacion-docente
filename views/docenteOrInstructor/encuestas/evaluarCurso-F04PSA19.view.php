@@ -1,15 +1,15 @@
-<?php require view("components/styledHeader.php"); ?>
-
+<?php view("components/styledHeader.php"); ?>
 <main role="main" class="container py-4" style="margin-top: 56px">
-    <h1>Evaluar curso</h1>
-    <h2><?= $courseName["CURSO_Nombre"] ?></h2>
-    <p><?= $instructorName["USER_Nombre"]?> <?= $instructorName["USER_Apellido"]?></p>  
-    <p>Por favor, responda el siguiente cuestionario de la manera más objetiva. Coloque un número del 1 al 5 considerando
-    que uno es muy malo y 5 excelente, anote el que mejor describa su percepción del evento.</p>
-    <div>
+    <div class="d-flex flex-column align-items-start gap-2 pb-4">
+        <h1><span class="fw-light"><?= $title ?></span> <span><?= $courseName["CURSO_Nombre"] ?></span></h1>
+        <span class="badge rounded-pill text-bg-primary"><span class="fw-normal"><?= $instructorNombre ?></span></span>
+    </div>
+    <span>Por favor, responda el siguiente cuestionario de la manera más objetiva. Coloque un número del 1 al 5 considerando
+        que uno es muy malo y 5 excelente, anote el que mejor describa su percepción del evento.</span>
+    <div class="pt-4">
         <form action="/historial/evaluarCurso/F04PSA19" method="POST">
             <input type="hidden" name="CURSOID" value="<?= $_POST["CURSOID"] ?>">
-            <div>
+            <div class="d-flex flex-column gap-3">
                 <?php
                 $mostrarSubtituloInstructor = true;
                 $mostrarSubtituloOrganizacion = true;
@@ -20,24 +20,22 @@
 
                     // Mostrar subtítulo de evaluación del instructor
                     if ($mostrarSubtituloInstructor && strpos($questionText, $preguntaInstructor) !== false) {
-                        echo "<h4 class='py-3 fs-2'>Evaluación de instructor</h4>";
+                        echo "<h4 class='fs-2'>Evaluación de instructor</h4>";
                         $mostrarSubtituloInstructor = false; // Evita mostrar el subtítulo más de una vez
                     }
 
                     // Mostrar subtítulo de evaluación de organización y logística
                     if ($mostrarSubtituloOrganizacion && strpos($questionText, $preguntaOrganizacion) !== false) {
-                        echo "<h4 class='py-3 fs-2'>Evaluación de organización y logística</h4>";
+                        echo "<h4 class='fs-2'>Evaluación de organización y logística</h4>";
                         $mostrarSubtituloOrganizacion = false; // Evita mostrar el subtítulo más de una vez
                     }
                 ?>
-                    <div class="fs-5 d-flex justify-content-between align-items-center mb-3">
-                        <label for="<?= $questionID ?>" class="flex-grow-1 mb-0"><?= $questionText ?></label>
-                        <div class="d-flex">
+                    <div class="row g-2 align-items-start">
+                        <label for="<?= $questionID ?>" class="col-12 col-md-8"><?= $questionText ?></label>
+                        <div class="btn-group col-12 col-md-4" role="group">
                             <?php foreach ($options as $op): ?>
-                                <div class="form-check ms-3">
-                                    <input type="radio" class="form-check-input" required name="<?= $questionID ?>" id="<?= $op ?>-<?= $questionID ?>" value="<?= $op ?>">
-                                    <label class="form-check-label" for="<?= $op ?>-<?= $questionID ?>"><?= $op ?></label>
-                                </div>
+                                <input type="radio" class="btn-check" required name="<?= $questionID ?>" id="<?= $op ?>-<?= $questionID ?>" value="<?= $op ?>">
+                                <label class="btn btn-outline-primary" for="<?= $op ?>-<?= $questionID ?>"><?= $op ?></label>
                             <?php endforeach; ?>
                         </div>
                     </div>
@@ -49,6 +47,6 @@
                 <button class="btn btn-primary btn-lg fs-5" type="submit">Evaluar</button>
             </div>
         </form>
-    </div>  
+    </div>
 </main>
-<?php require view("components/styledFooter.php"); ?>
+<?php view("components/styledFooter.php"); ?>
