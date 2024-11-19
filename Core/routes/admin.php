@@ -26,6 +26,8 @@ $router->post("/admin/usuarios", "admin/usuarios/store.php")->only(ADMIN);
 
 $router->delete("/admin/usuarios", "admin/usuarios/destroy.php")->only(ADMIN);
 
+$router->patch("/admin/usuarios", "admin/usuarios/update.php")->only(ADMIN);
+
 # Áreas
 
 $router->get("/admin/areas", "admin/areas/index.php")->only(ADMIN);
