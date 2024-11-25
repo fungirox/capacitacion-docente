@@ -5,7 +5,7 @@ use Core\Roles\Roles;
 ?>
 
 <header>
-    <nav class="navbar bg-light fixed-top navbar-expand-lg shadow-sm user-select-none">
+    <nav class="navbar bg-body-tertiary fixed-top navbar-expand-lg shadow-sm user-select-none">
         <div class="container-fluid">
             <div class="navbar-brand">
                 <img src="../../assets/images/icono-itesca.png" alt="Logo de ITESCA" width="24">
@@ -23,7 +23,7 @@ use Core\Roles\Roles;
                     <?php endif; ?>
                 </ul>
                 <div class="dropdown">
-                    <button class="btn btn-light w-100 py-0 d-flex align-items-center justify-content-end" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="btn w-100 py-0 d-flex align-items-center justify-content-end" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <span class="fs-6 me-2"><?= Session::getUser("username") ?></span>
                         <i class="bi bi-person-circle" style="font-size: 1.5rem;"></i>
                     </button>
@@ -36,6 +36,31 @@ use Core\Roles\Roles;
                                     <span class="ms-2">Cerrar Sesión</span>
                                 </button>
                             </form>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dropdown ms-md-2">
+                    <button class="btn w-100 py-0 d-flex align-items-center justify-content-end" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-circle-half theme-icon" style="font-size: 1.5rem;"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <button class="dropdown-item" data-theme="auto">
+                                <i class="bi bi-circle-half"></i>
+                                <span class="ms-2">Automático</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="dropdown-item" data-theme="light">
+                                <i class="bi bi-brightness-high"></i>
+                                <span class="ms-2">Claro</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="dropdown-item" data-theme="dark">
+                                <i class="bi bi-moon"></i>
+                                <span class="ms-2">Noche</span>
+                            </button>
                         </li>
                     </ul>
                 </div>
