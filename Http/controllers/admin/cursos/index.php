@@ -1,15 +1,9 @@
 <?php
 
 use Core\App;
-use Core\Database;
-
-$db = App::resolve(Database::class);
-
-$allCourses = $db->query("SELECT * FROM tblCurso")->getAll();
+use Core\Repositories\CursoRepository;
 
 return view("admin/cursos/index.view.php", [
     "title" => "Cursos",
-    "allCourses" => $allCourses,
-    "db" => $db
-]
-);
+    "allCourses" => App::resolve(CursoRepository::class)->getAll()
+]);
