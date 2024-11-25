@@ -2,8 +2,6 @@
 
 namespace Core\Repositories;
 
-use Core\Repositories\RepositoryTemplate;
-
 class AreaRepository extends RepositoryTemplate {
 
     public function getAll() {

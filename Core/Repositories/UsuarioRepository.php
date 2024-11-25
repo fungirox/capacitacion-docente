@@ -2,7 +2,6 @@
 
 namespace Core\Repositories;
 
-use Core\Repositories\RepositoryTemplate;
 use Core\Roles\Roles;
 use Core\Session;
 
@@ -44,9 +43,7 @@ class UsuarioRepository extends RepositoryTemplate {
                 LEFT JOIN tblInstructor instructor on usuario.USERID = instructor.USERID
             WHERE
                 usuario.USERID != $userId AND
-                USER_Activo = 1
-
-            "
+                USER_Activo = 1"
         )->getAll();
     }
 
@@ -67,8 +64,7 @@ class UsuarioRepository extends RepositoryTemplate {
                 LEFT JOIN tblDocente docente on usuario.USERID = docente.USERID
                 LEFT JOIN tblInstructor instructor on usuario.USERID = instructor.USERID
             WHERE
-                usuario.USERID = ? AND USER_Activo = 1
-            ",
+                usuario.USERID = ? AND USER_Activo = 1",
             [$id]
         )->getOrFail();
     }
@@ -93,8 +89,7 @@ class UsuarioRepository extends RepositoryTemplate {
                 LEFT JOIN tblInstructor instructor on usuario.USERID = instructor.USERID
             WHERE
                 USER_NombreUsuario = ? AND
-                USER_Activo = 1
-            ",
+                USER_Activo = 1",
             [$username]
         )->get();
     }
