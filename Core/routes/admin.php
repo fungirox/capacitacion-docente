@@ -7,7 +7,7 @@ const ADMIN = Roles::ADMIN;
 # Cursos
 
 $router->get("/admin/cursos", "admin/cursos/index.php")->only(ADMIN);
-$router->get("/admin/curso", "admin/cursos/show.php")->only(ADMIN);
+$router->get("/admin/cursos/curso", "admin/cursos/show.php")->only(ADMIN);
 $router->get("/admin/cursos/nuevo", "admin/cursos/create.php")->only(ADMIN);
 
 $router->post("/admin/cursos", "admin/cursos/store.php")->only(ADMIN);
