@@ -70,6 +70,11 @@ class Router {
             redirect($destination);
         }
 
+        if (substr($uri, -1) === "/") {
+            $uri = substr_replace($uri, "", -1);
+            redirect($uri);
+        }
+
         foreach ($this->routes as $route) {
             if ($route["uri"] === $uri && $route["method"] === strtoupper($method)) {
                 Middleware::resolve($route["middleware"]);
