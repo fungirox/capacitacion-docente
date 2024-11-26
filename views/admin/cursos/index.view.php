@@ -1,5 +1,5 @@
-<?php view("components/styledHeader.php"); ?>
-<main role="main" class="container py-4" style="margin-top: 56px">
+<?php view("components/styledHeader.php", ["title" => $title]); ?>
+<main role="main" class="container-sm py-4" style="margin-top: 56px">
     <h1>Cursos</h1>
     <div class="row row-cols-auto justify-content-end pt-4 g-2">
         <div class="order-1 order-md-2 d-grid col-12 col-md-auto">
@@ -35,23 +35,12 @@
         </div>
     </div>
     <div class="my-2 row row-cols-1 row-cols-md-3 g-4">
-        <?php foreach ($allCourses as $course) : ?>
+        <?php foreach ($allCourses as $curso) : ?>
             <?php
-            $id = htmlspecialchars($course["CURSOID"]);
-            $nombre = htmlspecialchars($course["CURSO_Nombre"]);
-            $instructorNombre = htmlspecialchars($course["instructor_nombre"]);
-            $duracion = htmlspecialchars($course["CURSO_Total_Horas"] . " horas");
-
-            $tipo = htmlspecialchars($course["CURSO_Tipo"]);
-            $tipoColor = $tipo === "curso" ? "text-bg-primary" : "text-bg-warning";
-
-            $modalidad = htmlspecialchars($course["CURSO_Modalidad"]);
-            $modalidadColor = match ($modalidad) {
-                "virtual" => "text-bg-success",
-                "presencial" => "text-bg-danger",
-                "hibrido" => "text-bg-info"
-            };
-            $modalidad = $modalidad === "hibrido" ? "híbrido" : $modalidad;
+            $id = htmlspecialchars($curso["CURSOID"]);
+            $nombre = htmlspecialchars($curso["CURSO_Nombre"]);
+            $instructorNombre = htmlspecialchars($curso["instructor_nombre"]);
+            $tipo = htmlspecialchars($curso["tipo"]);
             ?>
             <div class="col">
                 <div class="card h-100">
@@ -63,18 +52,21 @@
                             style="object-fit: cover"
                             alt="Portada del curso">
                     </a>
-                    <div class="card-body flex-grow-1 d-flex flex-column">
+                    <div class="card-body">
                         <a class="h5 card-title link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="/admin/cursos/curso?id=<?= $id ?>">
                             <?= $nombre ?>
                         </a>
-                        <span class="card-text"><?= $instructorNombre ?></span>
+                        <p class="card-text text-secondary-emphasis pt-2"><?= $instructorNombre ?></p>
                     </div>
-                    <div class="card-footer px-4 gap-2 d-flex justify-content-between align-items-center">
-                        <div class="row gap-2">
-                            <span class="col-auto text-capitalize badge rounded-pill <?= $tipoColor ?>"> <?= $tipo ?> </span>
-                            <span class="col-auto text-capitalize badge rounded-pill <?= $modalidadColor ?>"> <?= $modalidad ?></span>
+                    <div class="card-footer d-flex justify-content-between align-items-end">
+                        <div>
+                            <?php foreach ($curso["areas"] as $area): ?>
+                                <?php if (!empty($area)): ?>
+                                    <span class="col-auto text-capitalize badge rounded-pill text-bg-primary"> <?= $area ?> </span>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
                         </div>
-                        <span class="text-secondary text-end"><?= $duracion ?></span>
+                        <span class="text-secondary text-capitalize text-end"><small><?= $tipo ?></small></span>
                     </div>
                 </div>
             </div>
