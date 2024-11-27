@@ -4,8 +4,17 @@ namespace Core\Repositories;
 
 class AreaRepository extends RepositoryTemplate {
 
-    public function getAll() {
-        return $this->query("SELECT * FROM tblArea")->getAll();
+    public function getAll($archivado = 0) {
+        return $this->query(
+            "SELECT
+                AREAID as id,
+                AREA_Nombre as nombre,
+                AREA_Siglas as siglas
+            FROM tblArea
+            WHERE AREA_Archivado = $archivado
+            ORDER BY Area_Nombre",
+            [$archivado]
+        )->getAll();
     }
 
     public function getById($id) {
@@ -23,6 +32,13 @@ class AreaRepository extends RepositoryTemplate {
         return $this->query(
             "UPDATE tblArea SET AREA_Nombre = ?, AREA_Siglas = ? WHERE AREAID = ?",
             [$values["nombre"], $values["siglas"], $values["id"]]
+        );
+    }
+
+    public function archive($id, $state) {
+        return $this->query(
+            "UPDATE tblArea SET AREA_Archivado = ? WHERE AREAID = ?",
+            [$state, $id]
         );
     }
 
