@@ -12,7 +12,7 @@ $router->get("/admin/cursos/nuevo", "admin/cursos/create.php")->only(ADMIN);
 
 $router->post("/admin/cursos", "admin/cursos/store.php")->only(ADMIN);
 
-$router->delete("/admin/cursos", "admin/cursos/destroy.php")->only(ADMIN);
+$router->delete("/admin/cursos", "admin/cursos/archive.php")->only(ADMIN);
 
 $router->patch("/admin/cursos", "admin/cursos/update.php")->only(ADMIN);
 
@@ -36,7 +36,7 @@ $router->get("/admin/areas/nuevo", "admin/areas/create.php")->only(ADMIN);
 
 $router->post("/admin/areas", "admin/areas/store.php")->only(ADMIN);
 
-$router->delete("/admin/areas", "admin/areas/destroy.php")->only(ADMIN);
+$router->delete("/admin/areas", "admin/areas/archive.php")->only(ADMIN);
 
 $router->patch("/admin/areas", "admin/areas/update.php")->only(ADMIN);
 
