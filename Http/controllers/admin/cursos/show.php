@@ -14,5 +14,5 @@ return view("admin/cursos/show.view.php", [
     "duracion" => $curso["duracion"],
     "inicio" => formatDate($curso["inicio"]),
     "final" => formatDate($curso["final"]),
-    "instructor" => $curso["instructor"]
+    "instructor" => $curso["instructor_nombre"]
 ]);
