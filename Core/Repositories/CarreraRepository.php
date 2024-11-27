@@ -4,8 +4,17 @@ namespace Core\Repositories;
 
 class CarreraRepository extends RepositoryTemplate {
 
-    public function getAll() {
-        return $this->query("SELECT * FROM tblCarrera")->getAll();
+    public function getAll($archivado = 0) {
+        return $this->query(
+            "SELECT
+                CARRERAID as id,
+                CARRERA_Nombre as nombre,
+                CARRERA_Siglas as siglas
+            FROM tblCarrera
+            WHERE CARRERA_Archivado = ?
+            ORDER BY CARRERA_Nombre",
+            [$archivado]
+        )->getAll();
     }
 
     public function getById($id) {
@@ -23,6 +32,13 @@ class CarreraRepository extends RepositoryTemplate {
         return $this->query(
             "UPDATE tblCarrera SET CARRERA_Nombre = ?, CARRERA_Siglas = ? WHERE CARRERAID = ?",
             [$values["nombre"], $values["siglas"], $values["id"]]
+        );
+    }
+
+    public function archive($id, $state) {
+        return $this->query(
+            "UPDATE tblCarrera SET CARRERA_Archivado = ? WHERE CARRERAID = ?",
+            [$state, $id]
         );
     }
 

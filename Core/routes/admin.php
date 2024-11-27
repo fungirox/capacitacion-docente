@@ -48,6 +48,6 @@ $router->get("/admin/carreras/nuevo", "admin/carreras/create.php")->only(ADMIN);
 
 $router->post("/admin/carreras", "admin/carreras/store.php")->only(ADMIN);
 
-$router->delete("/admin/carreras", "admin/carreras/destroy.php")->only(ADMIN);
+$router->delete("/admin/carreras", "admin/carreras/archive.php")->only(ADMIN);
 
 $router->patch("/admin/carreras", "admin/carreras/update.php")->only(ADMIN);
