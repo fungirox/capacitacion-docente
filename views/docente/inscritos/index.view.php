@@ -1,73 +1,45 @@
 <?php view("components/styledHeader.php", ["title" => $title]); ?>
-<main role="main" class="container py-4" style="margin-top: 56px">
-    <h1> <?= $title ?></h1>
-    <div class="row row-cols-auto justify-content-end pt-4 g-2">
-        <div class="col-12 col-md-auto">
-            <div class="input-group flex-nowrap">
-                <span class="input-group-text" id="addon-wrapping"><i class="bi bi-search"></i></span>
-                <input type="text" class="form-control" placeholder="Buscar curso..." aria-label="Username" aria-describedby="addon-wrapping">
-            </div>
-        </div>
-        <div class="col-12 col-md-auto">
-            <div class="input-group flex-nowrap">
-                <span class="input-group-text" id="addon-wrapping"><i class="bi bi-filter"></i></span>
-                <select class="form-select" aria-label="Default select example">
-                    <option selected>Filtrar</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                </select>
-            </div>
-        </div>
-        <div class="col-12 col-md-auto">
-            <select class="form-select" aria-label="Default select example">
-                <option selected>Ordenar por</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-            </select>
-        </div>
-    </div>
-    <div class="my-2 row row-cols-1 row-cols-md-3 g-4">
-        <?php foreach ($allCourses as $course) : ?>
+<main role="main" class="container-sm py-4" style="margin-top: 56px">
+    <h1><?= $title ?></h1>
+    <div class="my-4 row gap-4">
+        <?php foreach ($allCursos as $curso) : ?>
             <?php
-            $id = $course["CURSOID"];
-            $nombre = htmlspecialchars($course["CURSO_Nombre"], ENT_QUOTES, "UTF-8");
-
-            $instructorQuery = $db->query("SELECT tblUsuario.USER_Nombre, tblUsuario.USER_Apellido  
-            FROM tblUsuario 
-            INNER JOIN tblInstructor ON tblUsuario.USERID = tblInstructor.USERID 
-            INNER JOIN tblCursoInstructor ON tblCursoInstructor.INSTRUCTORID = tblInstructor.INSTRUCTORID
-            INNER JOIN tblCurso ON tblCurso.CURSOID = tblCursoInstructor.CURSOID
-            WHERE tblCurso.CURSOID = ?", [$id])->get();
-
-            if ($instructorQuery) {
-                $nombreInstructor = htmlspecialchars($instructorQuery['USER_Nombre'], ENT_QUOTES, "UTF-8");
-                $apellidoInstructor = htmlspecialchars($instructorQuery['USER_Apellido'], ENT_QUOTES, "UTF-8");
-            } else {
-                $nombreInstructor = "Instructor";
-                $apellidoInstructor = "no encontrado";
-            }
-
-            $tipo = htmlspecialchars($course["CURSO_Tipo"], ENT_QUOTES, "UTF-8");
-
-            $modalidad = htmlspecialchars($course["CURSO_Modalidad"], ENT_QUOTES, "UTF-8");
-
+            $id = htmlspecialchars($curso["id"]);
+            $nombre = htmlspecialchars($curso["nombre"]);
+            $instructorNombre = htmlspecialchars($curso["instructor_nombre"]);
+            $duración = htmlspecialchars(formattedDateRange(formatDate($curso["inicio"]), formatDate($curso["final"])));
             ?>
-            <div class="col">
-                <div class="card h-100 d-flex flex-column">
-                    <a class="link-dark link-offset-2 link-underline link-underline-opacity-0 d-flex flex-column h-100" href="oferta/curso?id=<?= $id ?>">
-                        <img src="https://plus.unsplash.com/premium_photo-1682125773446-259ce64f9dd7?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img-top" alt="..." height="150px" style="object-fit:cover;">
-                        <div class="card-body flex-grow-1 d-flex flex-column">
-                            <h5 class="card-title"><?= $nombre ?></h5>
-                            <p class="card-text"><?= $nombreInstructor ?> <?= $apellidoInstructor ?> </p>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <a class="col-auto" href="/oferta/curso?id=<?= $id ?>">
+                                <img
+                                    src="https://plus.unsplash.com/premium_photo-1682125773446-259ce64f9dd7?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                                    height="100px"
+                                    width="100px"
+                                    style="object-fit: cover; aspect-ratio: 1; border-radius: 4px"
+                                    alt="Portada del curso">
+                            </a>
+                            <div class="col-8">
+                                <a class="h4 card-title link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="/oferta/curso?id=<?= $id ?>">
+                                    <?= $nombre ?>
+                                </a>
+                                <p class="card-text text-secondary-emphasis pt-2"><?= $instructorNombre ?></p>
+                            </div>
                         </div>
-
-                        <div class="card-footer mt-auto">
-                            <span class="list-inline-item text-capitalize badge text-bg-primary"> <?= $tipo ?> </span>
-                            <p class="list-inline-item text-capitalize badge text-bg-primary"> <?= $modalidad ?></p>
-                        </div>
-                    </a>
+                    </div>
+                    <div class="card-footer d-flex justify-content-center align-items-center gap-2">
+                        <?php if ($curso["modalidad"] !== "virtual"): ?>
+                            <span class="text-secondary text-center">Aula 515</span>
+                            <i class="bi bi-dot text-secondary"></i>
+                            <span class="text-secondary text-center">LU MA JU VI</span>
+                            <i class="bi bi-dot text-secondary"></i>
+                            <span class="text-secondary text-center">8:00 AM - 10:00 AM</span>
+                            <i class="bi bi-dot text-secondary"></i>
+                        <?php endif ?>
+                        <span class="text-secondary text-center"><?= $duración ?></span>
+                    </div>
                 </div>
             </div>
         <?php endforeach; ?>
