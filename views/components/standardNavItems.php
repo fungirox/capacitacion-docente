@@ -19,8 +19,5 @@ use Core\Session;
     </li>
 <?php endif; ?>
 <li class="nav-item">
-    <a href="/horario" class="nav-link <?= urlIs("/horario") ? "active" : null ?>" aria-current="<?= urlIs("/horario") ? "page" : null ?>" id="horario">Horario</a>
-</li>
-<li class="nav-item">
     <a href="/historial" class="nav-link <?= urlIs("/historial") ? "active" : null ?>" aria-current="<?= urlIs("/historial") ? "page" : null ?>" id="historial">Historial</a>
 </li>
