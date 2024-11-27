@@ -78,4 +78,19 @@ class CursoRepository extends RepositoryTemplate {
             [$cursoId]
         )->getOrFail();
     }
+    public function getEvaluacion($cursoId, $userId){
+        return $this->query(
+            "SELECT c.* FROM tblCurso c
+                        JOIN tblCursoDocente cd ON c.CURSOID = cd.CURSOID
+                        JOIN tblDocente d ON cd.DOCENTEID = d.DOCENTEID
+                        JOIN tblUsuario u ON d.USERID = u.USERID
+                        WHERE u.USERID = ?
+                        AND c.CURSOID = ?
+                        AND cd.CURSODOCENTE_EncuestaEvaluacion IS NULL
+                        AND c.CURSO_Activo = 0
+                        AND c.CURSO_En_Progreso = 0
+                        AND cd.CURSODOCENTE_Calificacion > 0;",
+            [$userId,$cursoId]
+        )->getOrFail();
+    }
 }

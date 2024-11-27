@@ -126,6 +126,18 @@ class UsuarioRepository extends RepositoryTemplate {
         return $this->query("UPDATE tblUsuario SET USER_Activo = 0 WHERE USERID = ?", [$id]);
     }
 
+    public function getInstructorFullName($cursoId){
+        return $this->query(
+            "SELECT u.USER_Nombre + ' ' + u.USER_Apellido as nombre
+            FROM tblCurso c
+            JOIN tblCursoInstructor ci ON c.CURSOID = ci.CURSOID
+            JOIN tblInstructor i ON ci.INSTRUCTORID = i.INSTRUCTORID
+            JOIN tblUsuario u ON i.USERID = u.USERID
+            WHERE c.CURSOID = ?",
+            [$cursoId]
+        )->get();
+    }
+
     // public function update($values) {
     //     return $this->query(
     //         "UPDATE tblArea SET AREA_Nombre = ?, AREA_Siglas = ? WHERE AREAID = ?",

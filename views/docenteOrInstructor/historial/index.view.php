@@ -27,7 +27,7 @@
                         <?php foreach ($cursosNoEvaluados as $key => $curso): ?>
                             <div class="row align-items-center justify-content-between gap-3">
                                 <span class="col-12 col-md-auto"><?= $curso["CURSO_Nombre"]; ?></span>
-                                <form class="d-grid col-12 col-md-auto" action="/historial/evaluarCurso" method="POST">
+                                <form class="d-grid col-12 col-md-auto" action="/historial/evaluarCurso" method="GET">
                                     <input type="hidden" name="CURSOID" value="<?= $curso["CURSOID"] ?>">
                                     <button type="submit" class="btn btn-outline-primary">Evaluar curso</button>
                                 </form>

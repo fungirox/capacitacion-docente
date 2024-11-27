@@ -14,22 +14,11 @@
             <input type="hidden" name="CURSOID" value="<?= $_POST["CURSOID"] ?>">
             <div class="d-flex flex-column gap-3">
                 <?php
-                    $mostrarSubtituloInstructor = true;
-                    $mostrarSubtituloOrganizacion = true;
                     foreach ($questions as $row):
                         $questionID = htmlspecialchars($row["PREGUNTAID"], ENT_QUOTES, "UTF-8");
                         $questionText = htmlspecialchars($row["PREGUNTA_Texto"], ENT_QUOTES, "UTF-8");
                         $options = range(1, 5);
                 ?>
-                <?php if ($mostrarSubtituloInstructor && strpos($questionText, $preguntaInstructor) !== false): ?>
-                    <h2>Evaluación de instructor</h2>
-                    <?php $mostrarSubtituloInstructor = false; // Evita mostrar el subtítulo más de una vez ?>
-                <?php endif; ?>
-
-                <?php if ($mostrarSubtituloOrganizacion && strpos($questionText, $preguntaOrganizacion) !== false): ?>
-                    <h2>Evaluación de organización y logística</h2>
-                    <?php $mostrarSubtituloOrganizacion = false; // Evita mostrar el subtítulo más de una vez ?>
-                <?php endif; ?>
                 <div class="row g-2 align-items-start">
                     <label for="<?= $questionID ?>" class="col-12 col-md-8"><?= $questionText ?></label>
                     <div class="btn-group col-12 col-md-4" role="group">
