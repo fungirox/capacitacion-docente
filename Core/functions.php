@@ -49,5 +49,17 @@ function cleanOld($key, $default = "") {
 }
 
 function isValidInput($errors, $key) {
-    return isset($errors[$key]) ? 'is-invalid' : '';
+    return isset($errors[$key]) ? "is-invalid" : "";
+}
+
+function formatDate($sqlDate) {
+    $dateTime = DateTime::createFromFormat("Y-m-d", $sqlDate);
+
+    $months = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
+
+    $monthIndex = (int)$dateTime->format("m") - 1;
+    $day = $dateTime->format("d");
+    $year = $dateTime->format("Y");
+
+    return sprintf("%s %s, %s", $months[$monthIndex], $day, $year);
 }
