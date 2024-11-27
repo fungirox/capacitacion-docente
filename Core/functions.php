@@ -15,7 +15,7 @@ function urlIs($value) {
 
 function abort($status = 404) {
     http_response_code($status);
-    require view("errors/{$status}.php");
+    view("errors/{$status}.php");
     die();
 }
 
@@ -62,4 +62,12 @@ function formatDate($sqlDate) {
     $year = $dateTime->format("Y");
 
     return sprintf("%s %s, %s", $months[$monthIndex], $day, $year);
+}
+
+function formattedDateRange($startDate, $endDate) {
+    if (substr($startDate, -4) === substr($startDate, -4)) {
+        return substr($startDate, 0, -6) . " - " . $endDate;
+    }
+
+    return $startDate . " - " - $endDate;
 }
