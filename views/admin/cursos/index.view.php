@@ -37,8 +37,8 @@
     <div class="my-2 row row-cols-1 row-cols-md-3 g-4">
         <?php foreach ($allCourses as $curso) : ?>
             <?php
-            $id = htmlspecialchars($curso["CURSOID"]);
-            $nombre = htmlspecialchars($curso["CURSO_Nombre"]);
+            $id = htmlspecialchars($curso["id"]);
+            $nombre = htmlspecialchars($curso["nombre"]);
             $instructorNombre = htmlspecialchars($curso["instructor_nombre"]);
             $tipo = htmlspecialchars($curso["tipo"]);
             ?>
