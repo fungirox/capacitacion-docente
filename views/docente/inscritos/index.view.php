@@ -1,11 +1,12 @@
 <?php view("components/styledHeader.php", ["title" => $title]); ?>
-<main role="main" class="container-sm py-4" style="margin-top: 56px">
+<main role="main" class="container col-xl-8 py-5" style="margin-top: 56px">
     <h1><?= $title ?></h1>
     <div class="my-4 row gap-4">
         <?php foreach ($allCursos as $curso) : ?>
             <?php
             $id = htmlspecialchars($curso["id"]);
             $nombre = htmlspecialchars($curso["nombre"]);
+            $tipo = htmlspecialchars($curso["tipo"]);
             $instructorNombre = htmlspecialchars($curso["instructor_nombre"]);
             $duración = htmlspecialchars(formattedDateRange(formatDate($curso["inicio"]), formatDate($curso["final"])));
             ?>
@@ -21,12 +22,13 @@
                                     style="object-fit: cover; aspect-ratio: 1; border-radius: 4px"
                                     alt="Portada del curso">
                             </a>
-                            <div class="col-8">
+                            <div class="col-6">
                                 <a class="h4 card-title link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="/oferta/curso?id=<?= $id ?>">
                                     <?= $nombre ?>
                                 </a>
                                 <p class="card-text text-secondary-emphasis pt-2"><?= $instructorNombre ?></p>
                             </div>
+                            <div class="col text-end"><span class="badge text-bg-primary text-capitalize"><?= $tipo ?></span></div>
                         </div>
                     </div>
                     <div class="card-footer d-flex justify-content-center align-items-center gap-2">
