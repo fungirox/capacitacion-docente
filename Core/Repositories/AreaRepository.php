@@ -11,7 +11,7 @@ class AreaRepository extends RepositoryTemplate {
                 AREA_Nombre as nombre,
                 AREA_Siglas as siglas
             FROM tblArea
-            WHERE AREA_Archivado = $archivado
+            WHERE AREA_Archivado = ?
             ORDER BY Area_Nombre",
             [$archivado]
         )->getAll();
