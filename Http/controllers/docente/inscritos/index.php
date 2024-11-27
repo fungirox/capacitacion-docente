@@ -1,37 +1,17 @@
 <?php
 
 use Core\App;
-use Core\Database;
+use Core\Repositories\CursoRepository;
 use Core\Session;
 
-$db = App::resolve(Database::class);
+$allCursos = App::resolve(CursoRepository::class)->getAllSubscribed(Session::getUser("id"));
 
-$title = "Inscritos";
-
-$username = isset($_SESSION["user"]["username"]) ? $_SESSION["user"]["username"] : null;
-
-$userIDQuery = $db->query(
-    "SELECT USERID FROM tblUsuario WHERE USER_NombreUsuario = ?",
-    [$username]
-)->get();
-
-$userid = $userIDQuery['USERID'];
-
-Session::getUser("id");
-
-$docenteIDQuery = $db->query(
-    "SELECT DOCENTEID FROM tblDocente WHERE USERID = ?",
-    [$userid]
-)->get();
-
-$docenteid = $docenteIDQuery['DOCENTEID'];
-
-$allCourses = $db->query("SELECT * FROM tblCurso, tblCursoDocente 
-WHERE tblCursoDocente.CURSOID = tblCurso.CURSOID 
-AND tblCursoDocente.DOCENTEID = ?", [$docenteid])->getAll();
+foreach ($allCursos as $key => $curso) {
+    $areas = explode(",", $curso["areas"]);
+    $allCursos[$key]["areas"] = $areas;
+}
 
 return view("/docente/inscritos/index.view.php", [
-    "title" => "Inscritos",
-    "allCourses" => $allCourses,
-    "db" => $db
+    "title" => "Cursos Inscritos",
+    "allCursos" => $allCursos,
 ]);
