@@ -1,15 +1,17 @@
 <?php
 
 use Core\App;
-use Core\Database;
+use Core\Repositories\CursoRepository;
+use Core\Session;
 
-$db = App::resolve(Database::class);
+$allCursos = App::resolve(CursoRepository::class)->getAllUnsubscribed(Session::getUser("id"));
 
-$allCourses = $db->query("SELECT * FROM tblCurso")->getAll();
+foreach ($allCursos as $key => $curso) {
+    $areas = explode(",", $curso["areas"]);
+    $allCursos[$key]["areas"] = $areas;
+}
 
 return view("/docente/oferta/index.view.php", [
-    "title" => "Oferta",
-    "allCourses" => $allCourses,
-    "db" => $db
-]
-);
+    "title" => "Oferta de Cursos",
+    "allCursos" => $allCursos,
+]);
