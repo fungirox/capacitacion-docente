@@ -26,7 +26,7 @@
         $('input[name="rol"]').on('input', handleRoleVisibility);
     });
 </script>
-<main role="main" class="container py-4" style="margin-top: 56px">
+<main role="main" class="container py-5" style="margin-top: 56px">
     <div class="row row-cols-auto align-items-center">
         <a href="/admin/usuarios"><i class="col bi bi-arrow-left-circle" style="font-size: 1.5rem;"></i></a>
         <h1 class="col"><?= $title ?></h1>

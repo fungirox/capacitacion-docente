@@ -1,5 +1,5 @@
 <?php view("components/styledHeader.php", ["title" => $title]); ?>
-<main role="main" class="container-sm py-4" style="margin-top: 56px">
+<main role="main" class="container py-5" style="margin-top: 56px">
     <h1><?= $title ?></h1>
     <div class="row row-cols-auto justify-content-end pt-4 g-2">
         <div class="col-12 col-md-auto">

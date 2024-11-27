@@ -1,5 +1,5 @@
 <?php view("components/styledHeader.php"); ?>
-<main role="main" class="container py-4" style="margin-top: 56px">
+<main role="main" class="container py-5" style="margin-top: 56px">
     <h1 class="mb-4">Registrar Curso</h1>
     <form action="/admin/cursos" method="POST" class="row g-3 my-4">
         <!--- Nombre del Curso --->

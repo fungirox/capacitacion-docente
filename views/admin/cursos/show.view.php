@@ -18,7 +18,7 @@
         class="img-fluid header-image"
         alt="Imagen">
 </header>
-<main role="main" class="container col-md-8 py-4">
+<main role="main" class="container col-md-8 py-5">
     <div class="row">
         <div class="col-12 col-lg-8">
             <div class="container pb-3">

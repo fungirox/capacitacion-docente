@@ -6,7 +6,7 @@
         });
     });
 </script>
-<main role="main" class="container py-4" style="margin-top: 56px">
+<main role="main" class="container py-5" style="margin-top: 56px">
     <div class="row align-items-center">
         <a class="col-12 col-md-auto" href="/admin/areas"><i class="bi bi-arrow-left-circle" style="font-size: 1.5rem;"></i></a>
         <h1 class="col-12 col-md-10"><?= $title ?></h1>

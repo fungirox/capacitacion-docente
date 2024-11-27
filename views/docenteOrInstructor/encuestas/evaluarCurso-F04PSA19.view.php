@@ -1,5 +1,5 @@
 <?php view("components/styledHeader.php"); ?>
-<main role="main" class="container py-4" style="margin-top: 56px">
+<main role="main" class="container py-5" style="margin-top: 56px">
     <div class="d-flex flex-column align-items-start gap-2 pb-4">
         <div class="row align-items-center">
             <a class="col-12 col-md-auto" href="/historial"><i class="bi bi-arrow-left-circle" style="font-size: 1.5rem;"></i></a>

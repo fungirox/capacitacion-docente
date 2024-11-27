@@ -9,7 +9,7 @@
         });
     });
 </script>
-<main role="main" class="container py-4" style="margin-top: 56px">
+<main role="main" class="container py-5" style="margin-top: 56px">
     <h1><?= $title ?></h1>
     <div class="row row-cols-auto justify-content-end py-4 g-2">
         <div class="order-2 order-md-1 col-12 col-md-4">

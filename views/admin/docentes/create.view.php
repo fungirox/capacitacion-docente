@@ -1,5 +1,5 @@
 <?php require view("components/styledHeader.php"); ?>
-<main role="main" class="container py-4" style="margin-top: 56px">
+<main role="main" class="container py-5" style="margin-top: 56px">
     <h1>Nuevo Docente</h1>
     <form class="row g-3 my-4" method="POST">
         <div class="col-md-6">
