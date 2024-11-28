@@ -9,6 +9,16 @@
 </li>
 <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Usuarios
+    </a>
+    <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="#">Docentes</a></li>
+        <li><a class="dropdown-item" href="#">Instructores</a></li>
+        <li><a class="dropdown-item" href="#">Administradores</a></li>
+    </ul>
+</li>
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
         Documentación
     </a>
     <ul class="dropdown-menu">
