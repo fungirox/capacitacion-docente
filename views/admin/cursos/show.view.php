@@ -1,23 +1,11 @@
 <?php view("components/styledHeader.php", ["title" => $nombre]); ?>
-<style>
-    .header-image {
-        width: 100%;
-        height: 18vh;
-        object-fit: cover;
-    }
-
-    @media (min-width: 768px) {
-        .header-image {
-            height: 28vh;
-        }
-    }
-</style>
 <header style="margin-top: 56px">
     <img
         src="https://www.ketchum.edu/sites/default/files/2022-08/First%20%28Top%29%20Image%20.jpeg"
         class="img-fluid header-image"
         alt="Imagen">
 </header>
+<div style="margin-top: 56px" class="fixed-top text-end p-3"><span class="badge text-bg-secondary fs-6">Vista Previa</span></div>
 <main role="main" class="container col-md-8 py-5">
     <div class="row">
         <div class="col-12 col-lg-8">
@@ -34,7 +22,7 @@
                 </div>
             </div>
             <h1><?= $nombre ?></h1>
-            <h5 class="text-secondary"><?= $instructor ?></h5>
+            <h4 class="text-secondary py-1"><?= $instructor ?></h4>
             <hr class="text-secondary" />
             <div class="row justify-content-between pb-4">
                 <div class="col">
@@ -44,7 +32,7 @@
                 </div>
                 <span class="col text-secondary text-capitalize text-end"><?= $tipo ?></span>
             </div>
-            <p><?= $descripcion ?></p>
+            <p class="lh-lg"><?= $descripcion ?></p>
         </div>
         <div class="col-12 col-lg-4">
             <div class="card">
@@ -73,8 +61,8 @@
                             </div>
                         </div>
                         <div class="d-flex flex-column gap-2">
-                            <button type="button" class="btn btn-outline-primary">Descargar Ficha</button>
-                            <button type="button" class="btn btn-primary">Entrar al Curso</button>
+                            <div type="button" class="btn btn-outline-primary">Descargar Ficha</div>
+                            <div type="button" class="btn btn-primary">Entrar al Curso</div>
                         </div>
                     </div>
                 </div>
