@@ -8,6 +8,7 @@
             $nombre = htmlspecialchars($curso["nombre"]);
             $tipo = htmlspecialchars($curso["tipo"]);
             $instructorNombre = htmlspecialchars($curso["instructor_nombre"]);
+            $aula = htmlspecialchars($curso["aula"]);
             $duración = htmlspecialchars(formattedDateRange(formatDate($curso["inicio"]), formatDate($curso["final"])));
             ?>
             <div class="col-12">
@@ -33,7 +34,7 @@
                     </div>
                     <div class="card-footer d-flex justify-content-center align-items-center gap-2">
                         <?php if ($curso["modalidad"] !== "virtual"): ?>
-                            <span class="text-secondary text-center">Aula 515</span>
+                            <span class="text-secondary text-center"><?= $aula ?></span>
                             <i class="bi bi-dot text-secondary"></i>
                             <span class="text-secondary text-center">LU MA JU VI</span>
                             <i class="bi bi-dot text-secondary"></i>
