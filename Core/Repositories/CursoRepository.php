@@ -45,6 +45,7 @@ class CursoRepository extends RepositoryTemplate {
                 STRING_AGG(area.AREA_Siglas, ',') AS areas,
                 curso.CURSO_Fecha_Inicio as inicio,
                 curso.CURSO_Fecha_Final as final,
+                curso.CURSO_Aula as aula,
                 instructor_usuario.USER_Nombre + ' ' + instructor_usuario.USER_Apellido AS instructor_nombre
             FROM
                 tblCurso AS curso
@@ -77,6 +78,7 @@ class CursoRepository extends RepositoryTemplate {
                 curso.CURSO_Modalidad,
                 curso.CURSO_Fecha_Inicio,
                 curso.CURSO_Fecha_Final,
+                curso.CURSO_Aula,
                 instructor_usuario.USER_Nombre,
                 instructor_usuario.USER_Apellido
             ORDER BY
@@ -183,6 +185,7 @@ class CursoRepository extends RepositoryTemplate {
                 curso.CURSO_Total_Horas as duracion,
                 curso.CURSO_Fecha_Inicio as inicio,
                 curso.CURSO_Fecha_Final as final,
+                curso.CURSO_Aula as aula,
                 instructor_usuario.USER_Nombre + ' ' + instructor_usuario.USER_Apellido AS instructor_nombre
             FROM
                 tblCurso AS curso
@@ -218,6 +221,7 @@ class CursoRepository extends RepositoryTemplate {
                 curso.CURSO_Total_Horas,
                 curso.CURSO_Fecha_Inicio,
                 curso.CURSO_Fecha_Final,
+                curso.CURSO_Aula,
                 instructor_usuario.USER_Nombre,
                 instructor_usuario.USER_Apellido
             ORDER BY
