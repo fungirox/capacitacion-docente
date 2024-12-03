@@ -5,19 +5,20 @@ namespace Core\Repositories;
 use Core\Roles\Roles;
 use Core\Session;
 
-class PreguntaRepository extends RepositoryTemplate {
+class DocenteRepository extends RepositoryTemplate {
     private $admin = Roles::ADMIN;
     private $docente = Roles::DOCENTE;
     private $instructor = Roles::INSTRUCTOR;
     private $docenteAndInstructor = Roles::DOCENTE_AND_INSTRUCTOR;
     private $guest = Roles::GUEST;
 
-    public function getPreguntas($encuestaId){
+    public function getDocenteId($userId){
         return $this->query(
-            "SELECT *
-            FROM tblPregunta
-            WHERE ENCUESTAID = ?",
-            [$encuestaId]
-        )->getAll();
+            "SELECT d.DOCENTEID
+                FROM tblUsuario u
+                JOIN tblDocente d ON u.USERID = d.USERID
+                WHERE u.USER_NombreUsuario = ?",
+            [$userId]
+        )->get();
     }
 }

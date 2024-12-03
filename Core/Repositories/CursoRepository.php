@@ -78,6 +78,7 @@ class CursoRepository extends RepositoryTemplate {
             [$cursoId]
         )->getOrFail();
     }
+
     public function getEvaluacion($cursoId, $userId){
         return $this->query(
             "SELECT c.* FROM tblCurso c
@@ -93,4 +94,51 @@ class CursoRepository extends RepositoryTemplate {
             [$userId,$cursoId]
         )->getOrFail();
     }
+
+    public function getCursosNoEvaluados($userId){
+        return $this->query("SELECT c.CURSOID, c.CURSO_Nombre
+            FROM tblUsuario u
+            JOIN tblDocente d ON u.USERID = d.USERID
+            JOIN tblCursoDocente cd ON d.DOCENTEID = cd.DOCENTEID
+            JOIN tblCurso c ON cd.CURSOID = c.CURSOID
+            WHERE u.USERID = ?
+            AND cd.CURSODOCENTE_EncuestaEvaluacion IS NULL
+            AND cd.CURSODOCENTE_EncuestaEficacia IS NULL
+            AND c.CURSO_En_Progreso = 0
+            AND cd.CURSODOCENTE_Calificacion > 0;",
+        [$userId])->getAll();
+    }
+
+    public function getCursosSinEficacia($userId){
+        return $this->query("SELECT 
+                c.CURSOID,
+                c.CURSO_Nombre
+            FROM tblUsuario u
+            JOIN tblDocente d ON u.USERID = d.USERID
+            JOIN tblCursoDocente cd ON d.DOCENTEID = cd.DOCENTEID
+            JOIN tblCurso c ON cd.CURSOID = c.CURSOID
+            WHERE u.USERID = ?
+            AND cd.CURSODOCENTE_EncuestaEvaluacion = 1
+            AND cd.CURSODOCENTE_EncuestaEficacia IS NULL
+            AND c.CURSO_En_Progreso = 0
+            AND cd.CURSODOCENTE_Calificacion > 0;",
+        [$userId])->getAll();
+    }
+
+    public function getCursosConcluidos($userId){
+        return $this->query("SELECT 
+                c.CURSOID,
+                c.CURSO_Nombre
+            FROM tblUsuario u
+            JOIN tblDocente d ON u.USERID = d.USERID
+            JOIN tblCursoDocente cd ON d.DOCENTEID = cd.DOCENTEID
+            JOIN tblCurso c ON cd.CURSOID = c.CURSOID
+            WHERE u.USERID = ?
+            AND cd.CURSODOCENTE_EncuestaEvaluacion = 1
+            AND cd.CURSODOCENTE_EncuestaEficacia = 1
+            AND c.CURSO_En_Progreso = 0
+            AND cd.CURSODOCENTE_Calificacion > 0;",
+        [$userId])->getAll();
+    }
+
 }

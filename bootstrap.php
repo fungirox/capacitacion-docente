@@ -7,6 +7,8 @@ use Core\Repositories\AreaRepository;
 use Core\Repositories\CarreraRepository;
 use Core\Repositories\CursoRepository;
 use Core\Repositories\UsuarioRepository;
+use Core\Repositories\PreguntaRepository;
+use Core\Repositories\DocenteRepository;
 
 $container = new Container();
 
@@ -28,6 +30,14 @@ $container->bind("Core\Repositories\CursoRepository", function () {
 
 $container->bind("Core\Repositories\UsuarioRepository", function () {
     return new UsuarioRepository(App::resolve(Database::class));
+});
+
+$container->bind("Core\Repositories\PreguntaRepository", function () {
+    return new PreguntaRepository(App::resolve(Database::class));
+});
+
+$container->bind("Core\Repositories\DocenteRepository", function () {
+    return new DocenteRepository(App::resolve(Database::class));
 });
 
 App::setContainer($container);

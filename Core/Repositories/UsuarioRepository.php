@@ -138,10 +138,4 @@ class UsuarioRepository extends RepositoryTemplate {
         )->get();
     }
 
-    // public function update($values) {
-    //     return $this->query(
-    //         "UPDATE tblArea SET AREA_Nombre = ?, AREA_Siglas = ? WHERE AREAID = ?",
-    //         [$values["nombre"], $values["siglas"], $values["id"]]
-    //     );
-    // }
 }
