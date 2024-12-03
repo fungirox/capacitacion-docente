@@ -1,35 +1,72 @@
 <?php view("components/styledHeader.php", ["title" => $title]); ?>
-<script defer>
-    $(document).ready(function() {
-        $("#search-docente").on("keyup", function() {
-            const value = $(this).val().toLowerCase();
-            $("table tbody tr").filter(function() {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-        });
-    });
-</script>
 <main role="main" class="container py-5" style="margin-top: 56px">
     <h1><?= $title ?></h1>
-    <div class="row row-cols-auto justify-content-end py-4 g-2">
-        <?php if (!empty($allAreas)): ?>
-            <div class="order-2 order-md-1 col-12 col-md-4">
-                <div class="input-group flex-nowrap">
-                    <span class="input-group-text" id="addon-wrapping">
-                        <i class="bi bi-search"></i>
-                    </span>
-                    <input type="text" id="search-docente" class="form-control" placeholder="Buscar área..." aria-label="BuscarDocente" aria-describedby="buscar-docente">
+    <form class="row pt-4 g-2 justify-content-between" method="GET">
+        <?php if ($archivados): ?>
+            <input type="hidden" name="archivados" value="true">
+        <?php endif; ?>
+        <div class="col-12 col-md-9 col-lg-8">
+            <div class="row g-2">
+                <div class="col-md-6">
+                    <div class="input-group flex-nowrap">
+                        <span class="input-group-text" id="addon-wrapping">
+                            <i class="bi bi-search"></i>
+                        </span>
+                        <input
+                            type="text"
+                            name="search"
+                            id="search"
+                            class="form-control"
+                            placeholder="Buscar área..."
+                            aria-label="BuscarArea"
+                            aria-describedby="buscar-area"
+                            value="<?= htmlspecialchars($search ?? "") ?>">
+                        <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="input-group flex-nowrap">
+                        <span class="input-group-text" id="addon-wrapping">
+                            <i class="bi bi-sort-down"></i>
+                        </span>
+                        <select name="sortBy" class="form-select" aria-label="Ordenar por" onchange="this.form.submit()">
+                            <option value="AREA_Nombre-ASC" <?= $sortBy . '-' . $sortOrder == 'AREA_Nombre-ASC' ? 'selected' : '' ?>>
+                                ↓ Nombre
+                            </option>
+                            <option value="AREA_Nombre-DESC" <?= $sortBy . '-' . $sortOrder == 'AREA_Nombre-DESC' ? 'selected' : '' ?>>
+                                ↑ Nombre
+                            </option>
+                            <option value="AREA_Siglas-ASC" <?= $sortBy . '-' . $sortOrder == 'AREA_Siglas-ASC' ? 'selected' : '' ?>>
+                                ↓ Siglas
+                            </option>
+                            <option value="AREA_Siglas-DESC" <?= $sortBy . '-' . $sortOrder == 'AREA_Siglas-DESC' ? 'selected' : '' ?>>
+                                ↑ Siglas
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php if (!$archivados): ?>
+            <div class="col-12 col-md-auto">
+                <div class="d-grid">
+                    <a href="areas/nuevo" type="button" class="btn btn-primary">
+                        <i class="bi bi-plus-lg"></i>
+                        <span>Nueva área</span>
+                    </a>
                 </div>
             </div>
         <?php endif ?>
-        <?php if (!$archivados): ?>
-            <div class="order-1 order-md-2 d-grid col-12 col-md-auto">
-                <a href="areas/nuevo" type="button" class="btn btn-primary">
-                    <i class="bi bi-plus-lg"></i>
-                    <span>Nueva área</span>
-                </a>
-            </div>
-        <?php endif ?>
+    </form>
+    <div class="row row-cols-auto justify-content-between py-3 px-2">
+        <?php if ($paramsActive): ?>
+            <a class="col" href="<?= $archivados ? "?archivados=true" : "/admin/areas" ?>">
+                <i class="bi bi-x me-1"></i><span>Limpiar filtros</span>
+            </a>
+        <?php else: ?>
+            <span></span>
+        <?php endif; ?>
+        <span class="col text-secondary text-end fst-italic"><?= $pagination["totalItems"] ?> areas encontradas</span>
     </div>
     <?php if (empty($allAreas)): ?>
         <?php view("components/emptyList.php") ?>
@@ -101,10 +138,31 @@
                 </tbody>
             </table>
         </div>
+        <nav aria-label="pagination">
+            <ul class="pagination justify-content-center">
+                <li class="page-item <?= $pagination["currentPage"] == 1 ? "disabled" : "" ?>">
+                    <a class="page-link" href="?page=<?= $pagination["currentPage"] - 1 ?><?= $archivados ? "&archivados=true" : "" ?><?= $search ? "&search=" . urlencode($search) : "" ?><?= $sortBy && $sortOrder ? "&sortBy=" . $sortBy . "-" . $sortOrder : "" ?>">
+                        Anterior
+                    </a>
+                </li>
+                <?php for ($i = 1; $i <= $pagination["totalPages"]; $i++): ?>
+                    <li class="page-item <?= $i == $pagination["currentPage"] ? "active" : "" ?>">
+                        <a class="page-link" href="?page=<?= $i ?><?= $archivados ? "&archivados=true" : "" ?><?= $search ? "&search=" . urlencode($search) : "" ?><?= $sortBy && $sortOrder ? "&sortBy=" . $sortBy . "-" . $sortOrder : "" ?>">
+                            <?= $i ?>
+                        </a>
+                    </li>
+                <?php endfor; ?>
+                <li class="page-item <?= $pagination["currentPage"] == $pagination["totalPages"] ? "disabled" : "" ?>">
+                    <a class="page-link" href="?page=<?= $pagination["currentPage"] + 1 ?><?= $archivados ? "&archivados=true" : "" ?><?= $search ? "&search=" . urlencode($search) : "" ?><?= $sortBy && $sortOrder ? "&sortBy=" . $sortBy . "-" . $sortOrder : "" ?>">
+                        Siguiente
+                    </a>
+                </li>
+            </ul>
+        </nav>
     <?php endif ?>
     <div class="d-flex flex-column align-items-center gap-3 pt-3">
         <span class="text-center text-secondary">¿No encuentras el área que buscas?</span>
-        <a href="<?= $archivados ? "/admin/areas" : "?archivados" ?>" type="btn" class="btn btn-outline-secondary">
+        <a href="<?= $archivados ? "/admin/areas" : "?archivados=true" ?>" type="btn" class="btn btn-outline-secondary">
             <?= $archivados ? "Ver Áreas Activas" : "Ver Áreas Archivadas" ?>
         </a>
     </div>
