@@ -4,11 +4,32 @@ use Core\App;
 use Core\Repositories\AreaRepository;
 
 $archivados = isset($_GET["archivados"]);
-$title = $archivados ? "Áreas Archivadas" : "Áreas";
-$allAreas = App::resolve(AreaRepository::class)->getAll($archivados ? 1 : 0);
+$page = $_GET["page"] ?? 1;
+$search = $_GET["search"] ?? "";
+
+$sortInput = $_GET["sortBy"] ?? 'AREA_Nombre-ASC';
+$sortParts = explode('-', $sortInput);
+$sortBy = $sortParts[0];
+$sortOrder = $sortParts[1];
+
+$areasData = App::resolve(AreaRepository::class)->getAll(
+    $archivados ? 1 : 0,
+    $page,
+    3,
+    $search,
+    $sortBy,
+    $sortOrder
+);
+
+$paramsActive = isset($_GET["search"]);
 
 return view("/admin/areas/index.view.php", [
-    "title" => $title,
-    "allAreas" => $allAreas,
-    "archivados" => $archivados
+    "title" => $archivados ? "Áreas Archivadas" : "Áreas",
+    "allAreas" => $areasData["data"],
+    "paramsActive" => $paramsActive,
+    "pagination" => $areasData["pagination"],
+    "archivados" => $archivados,
+    "search" => $search,
+    "sortBy" => $sortBy,
+    "sortOrder" => $sortOrder
 ]);
