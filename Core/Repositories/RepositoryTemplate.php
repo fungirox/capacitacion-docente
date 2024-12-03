@@ -7,6 +7,7 @@ use Core\Database;
 abstract class RepositoryTemplate {
 
     protected Database $db;
+    protected $validOrders = ["ASC", "DESC"];
 
     public function __construct(Database $db) {
         $this->db = $db;
@@ -18,5 +19,9 @@ abstract class RepositoryTemplate {
 
     public function getDatabase() {
         return $this->db;
+    }
+
+    public function getOffset ($page, $limit) {
+        return ($page - 1) * $limit;
     }
 }
