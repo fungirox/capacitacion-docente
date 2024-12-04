@@ -5,21 +5,19 @@ namespace Core\Repositories;
 use Core\Roles\Roles;
 use Core\Session;
 
-class PreguntaRepository extends RepositoryTemplate {
+class RespuestaPreguntaRepository extends RepositoryTemplate {
     private $admin = Roles::ADMIN;
     private $docente = Roles::DOCENTE;
     private $instructor = Roles::INSTRUCTOR;
     private $docenteAndInstructor = Roles::DOCENTE_AND_INSTRUCTOR;
     private $guest = Roles::GUEST;
 
-    public function getPreguntas($encuestaId){
+    public function setRespuestas($texto,$respuestaId,$preguntaId){
         return $this->query(
-            "SELECT *
-            FROM tblPregunta
-            WHERE ENCUESTAID = ?",
-            [$encuestaId]
-        )->getAll();
+            "INSERT INTO tblRespuestaPregunta (RESPUESTAPREGUNTA_Texto,
+                RESPUESTAID, PREGUNTAID) 
+            VALUES (?, ?, ?)",
+            [$texto,$respuestaId,$preguntaId]
+        );
     }
-
-    
 }

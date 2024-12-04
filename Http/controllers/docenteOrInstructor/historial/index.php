@@ -19,6 +19,6 @@ return view("/docenteOrInstructor/historial/index.view.php", [
     "title" => "Historial de Cursos",
     "isDocenteAndInstructor" => $isDocenteAndInstructor,
     "cursosNoEvaluados" => $cursosNoEvaluados,
-    "cursosSinSegundaEncuesta" => $cursosSinSegundaEncuesta,
+    "cursosSinSegundaEncuesta" => $cursosSinEficacia,
     "cursosConcluidos" => $cursosConcluidos
 ]);

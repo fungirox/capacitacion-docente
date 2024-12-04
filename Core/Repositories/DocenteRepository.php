@@ -17,7 +17,7 @@ class DocenteRepository extends RepositoryTemplate {
             "SELECT d.DOCENTEID
                 FROM tblUsuario u
                 JOIN tblDocente d ON u.USERID = d.USERID
-                WHERE u.USER_NombreUsuario = ?",
+                WHERE u.USERID = ?",
             [$userId]
         )->get();
     }

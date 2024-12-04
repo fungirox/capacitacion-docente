@@ -2,36 +2,25 @@
 
 use Core\App;
 use Core\Database;
-use Core\Validator;
+use Core\Roles\Roles;
+use Core\Session;
+use Core\Repositories\CursoRepository;
+use Core\Repositories\DocenteRepository;
+use Core\Repositories\CursoDocenteRepository;
+use Core\Repositories\RespuestaRepository;
+use Core\Repositories\RespuestaPreguntaRepository;
 
 $db = App::resolve(Database::class);
-dd("evaluar2");
+$isDocenteAndInstructor = Session::role() === Roles::DOCENTE_AND_INSTRUCTOR;
+$userId = Session::getUser("id");
 $courseID = $_POST["CURSOID"];
 
-$docenteId = $db->query("SELECT d.DOCENTEID
-                          FROM tblUsuario u
-                          JOIN tblDocente d ON u.USERID = d.USERID
-                          WHERE u.USER_NombreUsuario = ?",
-                          [$_SESSION["user"]["username"]]) ->get();
+$docenteId = App::resolve(DocenteRepository::class) -> getDocenteId($userId);
+App::resolve(CursoDocenteRepository::class) -> updateEncuestaEvaluacion($docenteId["DOCENTEID"],$courseID);
+App::resolve(RespuestaRepository::class) -> setRespuesta($docenteId["DOCENTEID"],2,$courseID);
+$respuestasId = App::resolve(RespuestaRepository::class) -> getUltimoId();
 
-$db->query(
-    "UPDATE tblCursoDocente SET CURSODOCENTE_EncuestaEvaluacion = 1 WHERE CURSOID = ? AND DOCENTEID = ?",
-    [$courseID, $docenteId["DOCENTEID"]]
-);
-
-$db->query(
-    "INSERT INTO tblRespuesta (DOCENTEID,ENCUESTAID,CURSOID) 
-    VALUES (?,?,?)",
-    [$docenteId["DOCENTEID"], 1, $courseID]
-);
-
-$respuestasId = $db->query(
-    "SELECT TOP 1 RESPUESTAID FROM tblRespuesta ORDER BY RESPUESTAID DESC;"
-)->get();
-
-$preguntasIds = $db->query(
-    "SELECT PREGUNTAID FROM tblPregunta where ENCUESTAID = '1';"
-)->getAll();
+$preguntasIds = $_POST["questions"];
 
 $preguntasIdsConsulta = [];
 foreach ($preguntasIds as $row){
@@ -41,14 +30,8 @@ foreach ($preguntasIds as $row){
 
 foreach ($preguntasIds as $index => $row) {
     $preguntaId = $row["PREGUNTAID"];
-    
     $respuestaTexto = htmlspecialchars($_POST[$preguntaId]);
-
-    $db->query(
-        "INSERT INTO tblRespuestaPregunta (RESPUESTAPREGUNTA_Texto, RESPUESTAID, PREGUNTAID) 
-         VALUES (?, ?, ?)", 
-        [$respuestaTexto, $respuestasId["RESPUESTAID"], $preguntaId]
-    );
+    App::resolve(RespuestaPreguntaRepository::class) -> setRespuestas($respuestaTexto,$respuestasId["RESPUESTAID"],$preguntaId);
 }
 
 header("location: /historial");

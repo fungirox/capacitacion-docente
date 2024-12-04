@@ -16,8 +16,8 @@ $userId = Session::getUser("id");
 $courseID = $_POST["CURSOID"];
 
 $docenteId = App::resolve(DocenteRepository::class) -> getDocenteId($userId);
-App::resolve(CursoDocenteRepository::class) -> updateEncuestaEvaluacion($docenteId,$courseID);
-App::resolve(RespuestaRepository::class) -> setRespuesta($docenteId,1,$courseID);
+App::resolve(CursoDocenteRepository::class) -> updateEncuestaEficacia($docenteId["DOCENTEID"],$courseID);
+App::resolve(RespuestaRepository::class) -> setRespuesta($docenteId["DOCENTEID"],3,$courseID);
 $respuestasId = App::resolve(RespuestaRepository::class) -> getUltimoId();
 
 $preguntasIds = $_POST["questions"];
@@ -31,7 +31,7 @@ foreach ($preguntasIds as $row){
 foreach ($preguntasIds as $index => $row) {
     $preguntaId = $row["PREGUNTAID"];
     $respuestaTexto = htmlspecialchars($_POST[$preguntaId]);
-    App::resolve(RespuestaPreguntaRepository::class) -> setRespuestas($respuestaTexto,$respuestasId,$preguntaId);
+    App::resolve(RespuestaPreguntaRepository::class) -> setRespuestas($respuestaTexto,$respuestasId["RESPUESTAID"],$preguntaId);
 }
 
 header("location: /historial");
