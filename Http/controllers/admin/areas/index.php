@@ -21,7 +21,7 @@ $areasData = App::resolve(AreaRepository::class)->getAll(
     $sortOrder
 );
 
-$paramsActive = isset($_GET["search"]);
+$paramsActive = isset($_GET["search"]) && !empty($_GET["search"]);
 
 return view("/admin/areas/index.view.php", [
     "title" => $archivados ? "Áreas Archivadas" : "Áreas",
