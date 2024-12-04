@@ -7,6 +7,7 @@ const DOCENTE = Roles::DOCENTE;
 # Inscritos
 
 $router->get("/inscritos", "docente/inscritos/index.php")->only(DOCENTE);
+$router->get("/inscritos/curso", "docente/inscritos/show.php")->only(DOCENTE);
 
 # Oferta
 
