@@ -3,14 +3,14 @@
 use Core\Roles\Roles;
 use Core\Session;
 
- ?>
+?>
 
 <?php if (Session::role() === Roles::DOCENTE_AND_INSTRUCTOR || Session::role() === Roles::DOCENTE): ?>
     <li class="nav-item">
         <a href="/inscritos" class="nav-link <?= urlIs("/inscritos") ? "active" : null ?>" aria-current="<?= urlIs("/inscritos") ? "page" : null ?>" id="inscritos">Inscritos</a>
     </li>
     <li class="nav-item">
-        <a href="/oferta" class="nav-link <?= urlIs("/oferta") || urlIs("/curso") ? "active" : null ?>" aria-current="<?= urlIs("/oferta")  || urlIs("/curso") ? "page" : null ?>" id="oferta">Oferta</a>
+        <a href="/oferta" class="nav-link <?= urlIs("/oferta") ? "active" : null ?>" aria-current="<?= urlIs("/oferta") ? "page" : null ?>" id="oferta">Oferta</a>
     </li>
 <?php endif; ?>
 <?php if (Session::role() === Roles::DOCENTE_AND_INSTRUCTOR || Session::role() === Roles::INSTRUCTOR): ?>
