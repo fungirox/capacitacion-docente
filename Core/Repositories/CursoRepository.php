@@ -4,13 +4,62 @@ namespace Core\Repositories;
 
 class CursoRepository extends RepositoryTemplate {
 
-    public function getAll() {
-        return $this->query(
+    public function getAll($archivado = 0, $page = 1, $limit = 15, $search = "", $sortBy = "CURSOID", $sortOrder = "DESC") {
+        $allowedSortColumns = ['CURSOID', 'CURSO_Nombre'];
+    
+        // Fully qualify the sort column to avoid ambiguity
+        $sortBy = in_array($sortBy, $allowedSortColumns) ? 'curso.' . $sortBy : 'curso.CURSOID';
+        $sortOrder = in_array($sortOrder, $this->validOrders) ? $sortOrder : 'DESC';
+    
+        $searchCondition = $search ? "AND (curso.CURSO_Nombre LIKE ? OR usuario.USER_Nombre + ' ' + usuario.USER_Apellido LIKE ?)" : "";
+    
+        $params = [$archivado];
+    
+        if ($search) {
+            $searchParam = "%$search%";
+            $params[] = $searchParam;
+            $params[] = $searchParam;
+        }
+    
+        $countParams = [$archivado];
+        if ($search) {
+            $searchParam = "%{$search}%";
+            $countParams[] = $searchParam;
+            $countParams[] = $searchParam;
+        }
+    
+        $totalCount = $this->query(
+            "SELECT COUNT(*) AS total
+            FROM tblCurso AS curso
+            LEFT JOIN tblCursoInstructor AS cursoInstructor ON curso.CURSOID = cursoInstructor.CURSOID
+            LEFT JOIN tblInstructor AS instructor ON instructor.INSTRUCTORID = cursoInstructor.INSTRUCTORID
+            LEFT JOIN tblUsuario AS usuario ON usuario.USERID = instructor.USERID
+            WHERE curso.CURSO_Archivado = ?
+            $searchCondition",
+            $countParams
+        )->get()["total"];
+    
+        $totalPages = max(1, ceil($totalCount / $limit));
+    
+        $page = max(1, min($page, $totalCount));
+    
+        $params[] = $this->getOffset($page, $limit);
+        $params[] = $limit;
+    
+        $results = $this->query(
             "SELECT
                 curso.CURSOID as id,
                 curso.CURSO_Nombre as nombre,
                 curso.CURSO_Tipo + ' ' + curso.CURSO_Modalidad as tipo,
-                STRING_AGG(area.AREA_Siglas, ',') AS areas,
+                (
+                    SELECT STRING_AGG(AREA_Siglas, ',') WITHIN GROUP (ORDER BY AREA_Siglas)
+                    FROM (
+                        SELECT DISTINCT area.AREA_Siglas
+                        FROM tblCursoArea AS cursoArea
+                        JOIN tblArea AS area ON area.AREAID = cursoArea.AREAID
+                        WHERE cursoArea.CURSOID = curso.CURSOID
+                    ) AS distinct_areas
+                ) AS areas,
                 usuario.USER_Nombre + ' ' + usuario.USER_Apellido AS instructor_nombre
             FROM
                 tblCurso AS curso
@@ -24,14 +73,29 @@ class CursoRepository extends RepositoryTemplate {
                 tblCursoArea AS cursoArea ON cursoArea.CURSOID = curso.CURSOID
             LEFT JOIN
                 tblArea AS area ON area.AREAID = cursoArea.AREAID
+            WHERE curso.CURSO_Archivado = ?
+            $searchCondition
             GROUP BY
                 curso.CURSOID,
                 curso.CURSO_Nombre,
                 curso.CURSO_Tipo,
                 curso.CURSO_Modalidad,
                 usuario.USER_Nombre,
-                usuario.USER_Apellido"
+                usuario.USER_Apellido
+            ORDER BY $sortBy $sortOrder
+            OFFSET CAST(? AS INT) ROWS
+            FETCH NEXT CAST(? AS INT) ROWS ONLY",
+            $params
         )->getAll();
+    
+        return [
+            "data" => $results,
+            "pagination" => [
+                "totalItems" => $totalCount,
+                "totalPages" => $totalPages,
+                "currentPage" => $page,
+            ]
+        ];
     }
 
     public function getAllSubscribed($userId) {
@@ -114,7 +178,15 @@ class CursoRepository extends RepositoryTemplate {
                 curso.CURSOID as id,
                 curso.CURSO_Nombre as nombre,
                 curso.CURSO_Tipo + ' ' + curso.CURSO_Modalidad as tipo,
-                STRING_AGG(area.AREA_Siglas, ',') AS areas,
+                (
+                    SELECT STRING_AGG(AREA_Siglas, ',') WITHIN GROUP (ORDER BY AREA_Siglas)
+                    FROM (
+                        SELECT DISTINCT area.AREA_Siglas
+                        FROM tblCursoArea AS cursoArea
+                        JOIN tblArea AS area ON area.AREAID = cursoArea.AREAID
+                        WHERE cursoArea.CURSOID = curso.CURSOID
+                    ) AS distinct_areas
+                ) AS areas,
                 instructor_usuario.USER_Nombre + ' ' + instructor_usuario.USER_Apellido AS instructor_nombre
             FROM
                 tblCurso AS curso
@@ -178,8 +250,7 @@ class CursoRepository extends RepositoryTemplate {
             LEFT JOIN
                 tblArea AS area ON area.AREAID = cursoArea.AREAID
             WHERE
-                curso.CURSOID = ? AND
-                curso.CURSO_Activo = 1
+                curso.CURSOID = ?
             GROUP BY
                 curso.CURSOID,
                 curso.CURSO_Nombre,
