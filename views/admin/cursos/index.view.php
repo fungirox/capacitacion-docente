@@ -72,5 +72,32 @@
             </div>
         <?php endforeach; ?>
     </div>
+    <nav class="pt-3 pb-4" aria-label="pagination">
+        <ul class="pagination justify-content-center">
+            <li class="page-item <?= $pagination["currentPage"] == 1 ? "disabled" : "" ?>">
+                <a class="page-link" href="?page=<?= $pagination["currentPage"] - 1 ?><?= $archivados ? "&archivados=true" : "" ?><?= $search ? "&search=" . urlencode($search) : "" ?><?= $sortBy && $sortOrder ? "&sortBy=" . $sortBy . "-" . $sortOrder : "" ?>">
+                    Anterior
+                </a>
+            </li>
+            <?php for ($i = 1; $i <= $pagination["totalPages"]; $i++): ?>
+                <li class="page-item <?= $i == $pagination["currentPage"] ? "active" : "" ?>">
+                    <a class="page-link" href="?page=<?= $i ?><?= $archivados ? "&archivados=true" : "" ?><?= $search ? "&search=" . urlencode($search) : "" ?><?= $sortBy && $sortOrder ? "&sortBy=" . $sortBy . "-" . $sortOrder : "" ?>">
+                        <?= $i ?>
+                    </a>
+                </li>
+            <?php endfor; ?>
+            <li class="page-item <?= $pagination["currentPage"] == $pagination["totalPages"] ? "disabled" : "" ?>">
+                <a class="page-link" href="?page=<?= $pagination["currentPage"] + 1 ?><?= $archivados ? "&archivados=true" : "" ?><?= $search ? "&search=" . urlencode($search) : "" ?><?= $sortBy && $sortOrder ? "&sortBy=" . $sortBy . "-" . $sortOrder : "" ?>">
+                    Siguiente
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <div class="d-flex flex-column align-items-center gap-3 pt-3">
+        <span class="text-center text-secondary">¿No encuentras el área que buscas?</span>
+        <a href="<?= $archivados ? "/admin/areas" : "?archivados=true" ?>" type="btn" class="btn btn-outline-secondary">
+            <?= $archivados ? "Ver Áreas Activas" : "Ver Áreas Archivadas" ?>
+        </a>
+    </div>
 </main>
 <?php view("components/styledFooter.php"); ?>
