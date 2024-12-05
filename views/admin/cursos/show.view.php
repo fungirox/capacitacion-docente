@@ -5,7 +5,7 @@
         class="img-fluid header-image"
         alt="Imagen">
 </header>
-<div style="margin-top: 56px" class="fixed-top text-end p-3"><span class="badge text-bg-secondary fs-6">Vista Previa</span></div>
+<div style="margin-top: 56px; position: fixed; top: 0; right: 0;" class="p-3"><span class="badge text-bg-secondary fs-6">Vista Previa</span></div>
 <main role="main" class="container col-md-8 py-5">
     <div class="row">
         <div class="col-12 col-lg-8">
