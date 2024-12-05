@@ -15,7 +15,7 @@ $sortOrder = $sortParts[1];
 $cursosData = App::resolve(CursoRepository::class)->getAll(
     $archivados ? 1 : 0,
     $page,
-    3,
+    15,
     $search,
     $sortBy,
     $sortOrder
