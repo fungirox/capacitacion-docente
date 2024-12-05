@@ -66,7 +66,7 @@
         <?php else: ?>
             <span></span>
         <?php endif; ?>
-        <span class="col text-secondary text-end fst-italic"><?= $pagination["totalItems"] ?> areas encontradas</span>
+        <span class="col text-secondary text-end fst-italic"><?= $pagination["totalItems"] ?> áreas encontradas</span>
     </div>
     <?php if (empty($allAreas)): ?>
         <?php view("components/emptyList.php") ?>
@@ -138,7 +138,7 @@
                 </tbody>
             </table>
         </div>
-        <nav aria-label="pagination">
+        <nav class="pt-3 pb-4" aria-label="pagination">
             <ul class="pagination justify-content-center">
                 <li class="page-item <?= $pagination["currentPage"] == 1 ? "disabled" : "" ?>">
                     <a class="page-link" href="?page=<?= $pagination["currentPage"] - 1 ?><?= $archivados ? "&archivados=true" : "" ?><?= $search ? "&search=" . urlencode($search) : "" ?><?= $sortBy && $sortOrder ? "&sortBy=" . $sortBy . "-" . $sortOrder : "" ?>">
