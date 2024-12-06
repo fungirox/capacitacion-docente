@@ -1,6 +1,6 @@
 <?php view("components/styledHeader.php", ["title" => $title]); ?>
 <main role="main" class="container py-5" style="margin-top: 56px">
-    <h1>Cursos</h1>
+    <h1><?= $title ?></h1>
     <form class="row pt-4 g-2 justify-content-between" method="GET">
         <?php if ($archivados): ?>
             <input type="hidden" name="archivados" value="true">
@@ -103,6 +103,9 @@
                 <div class="col">
                     <div class="card h-100">
                         <a href="/admin/curso?id=<?= $id ?>">
+                            <div class="pt-2 pe-3 shadow-sm" style="position: absolute; right: 0">
+                                <span class="badge bg-success">Activo</span>
+                            </div>
                             <img
                                 src="https://plus.unsplash.com/premium_photo-1682125773446-259ce64f9dd7?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                                 class="card-img-top"
