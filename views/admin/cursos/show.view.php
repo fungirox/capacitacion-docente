@@ -6,11 +6,15 @@
         alt="Imagen">
 </header>
 <div style="margin-top: 56px; position: fixed; top: 0; right: 0;" class="p-3"><span class="badge text-bg-secondary fs-6">Vista Previa</span></div>
-<main role="main" class="container col-md-8 py-5">
+<main role="main" class="container col-md-8 py-4 py-md-5">
     <div class="row">
         <div class="col-12 col-lg-8">
             <div class="container pb-3">
                 <div class="row gap-3">
+                    <button type="button" class="col-12 col-md-auto btn btn-outline-success">
+                        <i class="bi bi-flag pe-2"></i>
+                        <span>Iniciar curso</span>
+                    </button>
                     <button type="button" class="col-12 col-md-auto btn btn-outline-primary">
                         <i class="bi bi-pencil pe-2"></i>
                         <span>Editar</span>
@@ -30,7 +34,7 @@
                         <span class="badge rounded-pill text-bg-primary"><?= $area ?></span>
                     <?php endforeach; ?>
                 </div>
-                <span class="col text-secondary text-capitalize text-end"><?= $tipo ?></span>
+                <span class="col text-secondary text-capitalize text-end"><?= $tipo ?> (En curso)</span>
             </div>
             <p class="lh-lg"><?= $descripcion ?></p>
         </div>
@@ -45,24 +49,29 @@
                             </div>
                             <div class="d-flex gap-3 align-items-center">
                                 <i class="bi bi-calendar3 fs-4 text-secondary-emphasis"></i>
-                                <span class="text-secondary-emphasis"><?= $inicio . " - " . $final ?></span>
+                                <span class="text-secondary-emphasis"><?= $fechas ?></span>
                             </div>
-                            <div class="d-flex gap-3 align-items-center">
-                                <i class="bi bi-geo-alt fs-4 text-secondary-emphasis"></i>
-                                <span class="text-secondary-emphasis"><?= "Aula 515" ?></span>
-                            </div>
-                            <div class="d-flex gap-3 align-items-center">
-                                <i class="bi bi-calendar3-week fs-4 text-secondary-emphasis"></i>
-                                <span class="text-secondary-emphasis"><?= "Lunes, Miércoles, Jueves, Viernes" ?></span>
-                            </div>
-                            <div class="d-flex gap-3 align-items-center">
-                                <i class="bi bi-alarm fs-4 text-secondary-emphasis"></i>
-                                <span class="text-secondary-emphasis"><?= "8:00 AM - 10:00 AM" ?></span>
-                            </div>
+                            <?php if (!$isVirtual): ?>
+                                <div class="d-flex gap-3 align-items-center">
+                                    <i class="bi bi-geo-alt fs-4 text-secondary-emphasis"></i>
+                                    <span class="text-secondary-emphasis"><?= $aula ?></span>
+                                </div>
+                                <div class="d-flex gap-3 align-items-center">
+                                    <i class="bi bi-calendar3-week fs-4 text-secondary-emphasis"></i>
+                                    <span class="text-secondary-emphasis"><?= $dias ?></span>
+                                </div>
+                                <div class="d-flex gap-3 align-items-center">
+                                    <i class="bi bi-alarm fs-4 text-secondary-emphasis"></i>
+                                    <span class="text-secondary-emphasis"><?= $horas ?></span>
+                                </div>
+                            <?php endif; ?>
                         </div>
                         <div class="d-flex flex-column gap-2">
                             <div type="button" class="btn btn-outline-primary">Descargar Ficha</div>
                             <div type="button" class="btn btn-primary">Entrar al Curso</div>
+                            <?php if (!$isVirtual): ?>
+                                <span class="col text-secondary text-end fst-italic"># Cupos disponibles</span>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
