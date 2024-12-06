@@ -104,7 +104,7 @@
                     <div class="card h-100">
                         <a href="/admin/curso?id=<?= $id ?>">
                             <div class="pt-2 pe-3 shadow-sm" style="position: absolute; right: 0">
-                                <span class="badge bg-success">Activo</span>
+                                <span class="badge bg-success">En progreso</span>
                             </div>
                             <img
                                 src="https://plus.unsplash.com/premium_photo-1682125773446-259ce64f9dd7?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -123,6 +123,12 @@
                                         <i class="bi bi-three-dots-vertical"></i>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end">
+                                        <li>
+                                            <a class="dropdown-item" href="/admin/cursos/activar<?= $id ?>">
+                                                <i class="bi bi-flag"></i>
+                                                <span class="ms-2">Iniciar curso</span>
+                                            </a>
+                                        </li>
                                         <li>
                                             <a class="dropdown-item" href="/admin/cursos/editar?id=<?= $id ?>">
                                                 <i class="bi bi-pencil"></i>
