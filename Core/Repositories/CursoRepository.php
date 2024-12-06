@@ -4,30 +4,34 @@ namespace Core\Repositories;
 
 class CursoRepository extends RepositoryTemplate {
 
-    public function getAll($archivado = 0, $page = 1, $limit = 15, $search = "", $sortBy = "CURSOID", $sortOrder = "DESC") {
+    public function getAll($archivado = 0, $page = 1, $limit = 15, $search = "", $sortBy = "CURSOID", $sortOrder = "DESC", $filterBy = null) {
         $allowedSortColumns = ['CURSOID', 'CURSO_Nombre'];
-    
-        // Fully qualify the sort column to avoid ambiguity
+        $allowedModalidades = ['virtual', 'hibrido', 'presencial'];
+
         $sortBy = in_array($sortBy, $allowedSortColumns) ? 'curso.' . $sortBy : 'curso.CURSOID';
         $sortOrder = in_array($sortOrder, $this->validOrders) ? $sortOrder : 'DESC';
-    
+
         $searchCondition = $search ? "AND (curso.CURSO_Nombre LIKE ? OR usuario.USER_Nombre + ' ' + usuario.USER_Apellido LIKE ?)" : "";
-    
+
+        $modalidadCondition = "";
+        if ($filterBy && in_array(strtolower($filterBy), $allowedModalidades)) {
+            $modalidadCondition = "AND LOWER(curso.CURSO_Modalidad) = ?";
+        }
+
         $params = [$archivado];
-    
+
         if ($search) {
             $searchParam = "%$search%";
             $params[] = $searchParam;
             $params[] = $searchParam;
         }
-    
-        $countParams = [$archivado];
-        if ($search) {
-            $searchParam = "%{$search}%";
-            $countParams[] = $searchParam;
-            $countParams[] = $searchParam;
+
+        if ($filterBy && in_array(strtolower($filterBy), $allowedModalidades)) {
+            $params[] = strtolower($filterBy);
         }
-    
+
+        $countParams = $params;
+
         $totalCount = $this->query(
             "SELECT COUNT(*) AS total
             FROM tblCurso AS curso
@@ -35,17 +39,18 @@ class CursoRepository extends RepositoryTemplate {
             LEFT JOIN tblInstructor AS instructor ON instructor.INSTRUCTORID = cursoInstructor.INSTRUCTORID
             LEFT JOIN tblUsuario AS usuario ON usuario.USERID = instructor.USERID
             WHERE curso.CURSO_Archivado = ?
-            $searchCondition",
+            $searchCondition
+            $modalidadCondition",
             $countParams
         )->get()["total"];
-    
+
         $totalPages = max(1, ceil($totalCount / $limit));
-    
+
         $page = max(1, min($page, $totalCount));
-    
+
         $params[] = $this->getOffset($page, $limit);
         $params[] = $limit;
-    
+
         $results = $this->query(
             "SELECT
                 curso.CURSOID as id,
@@ -75,6 +80,7 @@ class CursoRepository extends RepositoryTemplate {
                 tblArea AS area ON area.AREAID = cursoArea.AREAID
             WHERE curso.CURSO_Archivado = ?
             $searchCondition
+            $modalidadCondition
             GROUP BY
                 curso.CURSOID,
                 curso.CURSO_Nombre,
@@ -87,7 +93,7 @@ class CursoRepository extends RepositoryTemplate {
             FETCH NEXT CAST(? AS INT) ROWS ONLY",
             $params
         )->getAll();
-    
+
         return [
             "data" => $results,
             "pagination" => [
