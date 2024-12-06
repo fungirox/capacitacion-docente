@@ -12,13 +12,16 @@ $sortParts = explode('-', $sortInput);
 $sortBy = $sortParts[0];
 $sortOrder = $sortParts[1];
 
+$filterBy = $_GET["filterBy"] ?? null;
+
 $cursosData = App::resolve(CursoRepository::class)->getAll(
     $archivados ? 1 : 0,
     $page,
     15,
     $search,
     $sortBy,
-    $sortOrder
+    $sortOrder,
+    $filterBy
 );
 
 foreach ($cursosData["data"] as $key => $curso) {
@@ -26,7 +29,7 @@ foreach ($cursosData["data"] as $key => $curso) {
     $cursosData["data"][$key]["areas"] = $areas;
 }
 
-$paramsActive = isset($_GET["search"]) && !empty($_GET["search"]);
+$paramsActive = (isset($_GET["search"]) && !empty($_GET["search"])) || (isset($_GET["filterBy"]) && !empty($_GET["filterBy"]));
 
 return view("admin/cursos/index.view.php", [
     "title" => "Cursos",
@@ -36,5 +39,6 @@ return view("admin/cursos/index.view.php", [
     "archivados" => $archivados,
     "search" => $search,
     "sortBy" => $sortBy,
-    "sortOrder" => $sortOrder
+    "sortOrder" => $sortOrder,
+    "filterBy" => $filterBy
 ]);
