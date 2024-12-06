@@ -238,10 +238,38 @@ class CursoRepository extends RepositoryTemplate {
                 curso.CURSO_Nombre as nombre,
                 CAST(curso.CURSO_Descripcion AS VARCHAR(MAX)) as descripcion,
                 curso.CURSO_Tipo + ' ' + curso.CURSO_Modalidad as tipo,
-                STRING_AGG(area.AREA_Siglas, ',') AS areas,
+                curso.CURSO_Modalidad as modalidad,
+                (
+                    SELECT STRING_AGG(AREA_Siglas, ',') WITHIN GROUP (ORDER BY AREA_Siglas)
+                    FROM (
+                        SELECT DISTINCT area.AREA_Siglas
+                        FROM tblCursoArea AS cursoArea
+                        JOIN tblArea AS area ON area.AREAID = cursoArea.AREAID
+                        WHERE cursoArea.CURSOID = curso.CURSOID
+                    ) AS distinct_areas
+                ) AS areas,
+                (
+                    SELECT STRING_AGG(HORARIOCURSO_Dia_Semana, ',') WITHIN GROUP (ORDER BY HORARIOCURSO_Dia_Semana)
+                    FROM (
+                        SELECT DISTINCT horario.HORARIOCURSO_Dia_Semana
+                        FROM tblHorarioCurso AS horario
+                        WHERE horario.CURSOID = curso.CURSOID
+                    ) AS distinct_dias
+                ) AS dias,
+                (
+                    SELECT TOP 1 horario.HORARIOCURSO_Hora_Inicio
+                    FROM tblHorarioCurso AS horario
+                    WHERE horario.CURSOID = curso.CURSOID
+                ) AS hora_inicial,
+                (
+                    SELECT TOP 1 horario.HORARIOCURSO_Hora_Final
+                    FROM tblHorarioCurso AS horario
+                    WHERE horario.CURSOID = curso.CURSOID
+                ) AS hora_final,
                 curso.CURSO_Total_Horas as duracion,
                 curso.CURSO_Fecha_Inicio as inicio,
                 curso.CURSO_Fecha_Final as final,
+                curso.CURSO_Aula as aula,
                 usuario.USER_Nombre + ' ' + usuario.USER_Apellido AS instructor_nombre
             FROM
                 tblCurso AS curso
@@ -266,6 +294,7 @@ class CursoRepository extends RepositoryTemplate {
                 curso.CURSO_Total_Horas,
                 curso.CURSO_Fecha_Inicio,
                 curso.CURSO_Fecha_Final,
+                curso.CURSO_Aula,
                 usuario.USER_Nombre,
                 usuario.USER_Apellido",
             [$cursoId]
