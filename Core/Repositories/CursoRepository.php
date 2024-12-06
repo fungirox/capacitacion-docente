@@ -404,4 +404,11 @@ class CursoRepository extends RepositoryTemplate {
             [$userId, $cursoId]
         )->getOrFail();
     }
+
+    public function archive($id, $state) {
+        return $this->query(
+            "UPDATE tblCurso SET CURSO_Archivado = ? WHERE CURSOID = ?",
+            [$state, $id]
+        );
+    }
 }
