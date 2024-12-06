@@ -32,7 +32,7 @@ foreach ($cursosData["data"] as $key => $curso) {
 $paramsActive = (isset($_GET["search"]) && !empty($_GET["search"])) || (isset($_GET["filterBy"]) && !empty($_GET["filterBy"]));
 
 return view("admin/cursos/index.view.php", [
-    "title" => "Cursos",
+    "title" => $archivados ? "Cursos Archivados" : "Cursos",
     "allCourses" => $cursosData["data"],
     "paramsActive" => $paramsActive,
     "pagination" => $cursosData["pagination"],
