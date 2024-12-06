@@ -29,4 +29,12 @@ class CursoDocenteRepository extends RepositoryTemplate {
             [$cursoId,$docenteId]
         );
     }
+
+    public function getParticipantesCurso($cursoId){
+        return $this -> query(
+            "SELECT COUNT(*) AS CantidadDocentes 
+                FROM tblCursoDocente 
+                WHERE CURSOID = ?
+            ",[$cursoId])->getOrFail();
+    }
 }

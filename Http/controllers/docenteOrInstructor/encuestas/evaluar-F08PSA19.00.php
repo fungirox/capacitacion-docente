@@ -31,7 +31,7 @@ foreach ($preguntasIds as $row){
 foreach ($preguntasIds as $index => $row) {
     $preguntaId = $row["PREGUNTAID"];
     $respuestaTexto = htmlspecialchars($_POST[$preguntaId]);
-    App::resolve(RespuestaPreguntaRepository::class) -> setRespuestas($respuestaTexto,$respuestasId["RESPUESTAID"],$preguntaId);
+    App::resolve(RespuestaPreguntaRepository::class) -> setRespuestas($respuestaTexto,$respuestasId,$preguntaId);
 }
 
 header("location: /historial");

@@ -25,4 +25,12 @@ class RespuestaRepository extends RepositoryTemplate {
             "SELECT TOP 1 RESPUESTAID FROM tblRespuesta ORDER BY RESPUESTAID DESC;"
         )->get();
     }
+
+    public function getCantidadRespuestas($cursoId,$encuestaId){
+        return $this->query(
+            "SELECT COUNT(*) AS CantidadRespuestas 
+                    FROM tblRespuesta 
+                    WHERE CURSOID = ? AND ENCUESTAID = ?"
+        ,[$cursoId,$encuestaId])->getOrFail();
+    }
 }

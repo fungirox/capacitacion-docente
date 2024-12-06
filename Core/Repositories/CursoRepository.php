@@ -121,6 +121,7 @@ class CursoRepository extends RepositoryTemplate {
             WHERE u.USERID = ?
             AND cd.CURSODOCENTE_EncuestaEvaluacion IS NULL
             AND cd.CURSODOCENTE_EncuestaEficacia IS NULL
+            AND c.CURSO_Activo = 0
             AND c.CURSO_En_Progreso = 0
             AND cd.CURSODOCENTE_Calificacion > 0;",
         [$userId])->getAll();
@@ -158,4 +159,53 @@ class CursoRepository extends RepositoryTemplate {
         [$userId])->getAll();
     }
 
+    public function getCursosSinEficaciaAdmin(){
+        return $this->query("SELECT 
+            c.CURSOID, 
+            c.CURSO_Nombre
+        FROM 
+            tblCurso c
+        JOIN 
+            tblCursoDocente cd ON c.CURSOID = cd.CURSOID
+        WHERE 
+            cd.CURSODOCENTE_EncuestaEvaluacion = 1
+            AND cd.CURSODOCENTE_EncuestaEficacia IS NULL
+            AND cd.CURSODOCENTE_Calificacion > 0
+        GROUP BY 
+            c.CURSOID, c.CURSO_Nombre")->getAll();
+    }
+
+    public function getCursosConcluidosAdmin(){
+        return $this->query("SELECT 
+                c.CURSOID, 
+                c.CURSO_Nombre
+            FROM 
+                tblCurso c
+            JOIN 
+                tblCursoDocente cd ON c.CURSOID = cd.CURSOID
+            WHERE 
+                cd.CURSODOCENTE_EncuestaEvaluacion = 1
+                AND cd.CURSODOCENTE_EncuestaEficacia = 1
+                AND cd.CURSODOCENTE_Calificacion > 0
+            GROUP BY 
+                c.CURSOID, c.CURSO_Nombre")->getAll();
+    }
+
+    public function getCursoConcluido($cursoId){
+        return $this->query("SELECT 
+            c.CURSOID, 
+            c.CURSO_Nombre,
+            c.CURSO_Modalidad
+        FROM 
+            tblCurso c
+        JOIN 
+            tblCursoDocente cd ON c.CURSOID = cd.CURSOID
+        WHERE 
+            cd.CURSODOCENTE_EncuestaEvaluacion = 1
+            AND cd.CURSODOCENTE_EncuestaEficacia = 1
+            AND cd.CURSODOCENTE_Calificacion > 0
+            AND c.CURSOID = ?
+        GROUP BY 
+            c.CURSOID, c.CURSO_Nombre, c.CURSO_Modalidad",[$cursoId])->getOrFail();
+    }
 }

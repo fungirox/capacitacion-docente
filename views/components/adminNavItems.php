@@ -12,7 +12,7 @@
         Documentación
     </a>
     <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#">Reportes</a></li>
+        <li><a class="dropdown-item" href="/admin/reportes">Reportes</a></li>
         <li><a class="dropdown-item" href="#">Formatos</a></li>
     </ul>
 </li>

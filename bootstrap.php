@@ -12,6 +12,7 @@ use Core\Repositories\DocenteRepository;
 use Core\Repositories\RespuestaRepository;
 use Core\Repositories\RespuestaPreguntaRepository;
 use Core\Repositories\CursoDocenteRepository;
+use Core\Repositories\EncuestaRepository;
 
 $container = new Container();
 
@@ -53,6 +54,10 @@ $container->bind("Core\Repositories\RespuestaPreguntaRepository", function () {
 
 $container->bind("Core\Repositories\CursoDocenteRepository", function () {
     return new CursoDocenteRepository(App::resolve(Database::class));
+});
+
+$container->bind("Core\Repositories\EncuestaRepository", function () {
+    return new EncuestaRepository(App::resolve(Database::class));
 });
 
 App::setContainer($container);
