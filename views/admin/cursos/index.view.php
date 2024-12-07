@@ -119,7 +119,7 @@
                                     <?= $nombre ?>
                                 </a>
                                 <div class="dropup">
-                                    <button class="btn btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <button class="btn rounded-pill btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="bi bi-three-dots-vertical"></i>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end">
