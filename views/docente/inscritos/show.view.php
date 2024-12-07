@@ -5,11 +5,11 @@
         class="img-fluid header-image"
         alt="Imagen">
 </header>
-<main role="main" class="container col-md-8 py-5">
+<main role="main" class="container col-md-8 py-4 py-md-5">
     <div class="row">
         <div class="col-12 col-lg-8">
             <h1><?= $nombre ?></h1>
-            <h4 class="text-secondary py-1"><?= $instructor ?></h3>
+            <h4 class="text-secondary py-1"><?= $instructor ?></h4>
             <hr class="text-secondary" />
             <div class="row justify-content-between pb-4">
                 <div class="col">
@@ -34,22 +34,24 @@
                                 <i class="bi bi-calendar3 fs-4 text-secondary-emphasis"></i>
                                 <span class="text-secondary-emphasis"><?= $fechas ?></span>
                             </div>
-                            <div class="d-flex gap-3 align-items-center">
-                                <i class="bi bi-geo-alt fs-4 text-secondary-emphasis"></i>
-                                <span class="text-secondary-emphasis"><?= $aula ?></span>
-                            </div>
-                            <div class="d-flex gap-3 align-items-center">
-                                <i class="bi bi-calendar3-week fs-4 text-secondary-emphasis"></i>
-                                <span class="text-secondary-emphasis"><?= $dias ?></span>
-                            </div>
-                            <div class="d-flex gap-3 align-items-center">
-                                <i class="bi bi-alarm fs-4 text-secondary-emphasis"></i>
-                                <span class="text-secondary-emphasis"><?= $horas ?></span>
-                            </div>
+                            <?php if (!$isVirtual): ?>
+                                <div class="d-flex gap-3 align-items-center">
+                                    <i class="bi bi-geo-alt fs-4 text-secondary-emphasis"></i>
+                                    <span class="text-secondary-emphasis"><?= $aula ?></span>
+                                </div>
+                                <div class="d-flex gap-3 align-items-center">
+                                    <i class="bi bi-calendar3-week fs-4 text-secondary-emphasis"></i>
+                                    <span class="text-secondary-emphasis"><?= $dias ?></span>
+                                </div>
+                                <div class="d-flex gap-3 align-items-center">
+                                    <i class="bi bi-alarm fs-4 text-secondary-emphasis"></i>
+                                    <span class="text-secondary-emphasis"><?= $horas ?></span>
+                                </div>
+                            <?php endif; ?>
                         </div>
                         <div class="d-flex flex-column gap-2">
-                            <button type="button" class="btn btn-outline-secondary">Descargar Ficha</button>
-                            <a href="#" type="button" class="btn btn-danger">Abandonar el Curso</a>
+                            <a type="button" class="btn btn-outline-secondary">Descargar Ficha</a>
+                            <a type="button" class="btn btn-danger">Salir del curso</a>
                         </div>
                     </div>
                 </div>

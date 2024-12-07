@@ -11,6 +11,7 @@ return view("docente/inscritos/show.view.php", [
     "nombre" => htmlspecialchars($curso["nombre"]),
     "descripcion" => htmlspecialchars($curso["descripcion"]),
     "tipo" => htmlspecialchars($curso["tipo"]),
+    "isVirtual" => htmlspecialchars($curso["modalidad"] == "virtual"),
     "areas" => explode(",", htmlspecialchars($curso["areas"])),
     "duracion" => htmlspecialchars($curso["duracion"]),
     "fechas" => htmlspecialchars(formattedDateRange(formatDate($curso["inicio"]), formatDate($curso["final"]))),
