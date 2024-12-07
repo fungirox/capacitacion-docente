@@ -11,10 +11,12 @@ return view("docente/oferta/show.view.php", [
     "nombre" => htmlspecialchars($curso["nombre"]),
     "descripcion" => htmlspecialchars($curso["descripcion"]),
     "tipo" => htmlspecialchars($curso["tipo"]),
+    "isVirtual" => htmlspecialchars($curso["modalidad"] == "virtual"),
     "areas" => explode(",", htmlspecialchars($curso["areas"])),
     "duracion" => htmlspecialchars($curso["duracion"]),
-    "inicio" => formatDate(htmlspecialchars($curso["inicio"])),
-    "final" => formatDate(htmlspecialchars($curso["final"])),
+    "fechas" => htmlspecialchars(formattedDateRange(formatDate($curso["inicio"]), formatDate($curso["final"]))),
+    "dias" => htmlspecialchars(fullFormattedDays($curso["dias"])),
+    "horas" => htmlspecialchars(formattedHourRange($curso["hora_inicial"], $curso["hora_final"])),
     "aula" => htmlspecialchars($curso["aula"]),
     "instructor" => htmlspecialchars($curso["instructor_nombre"])
 ]);
