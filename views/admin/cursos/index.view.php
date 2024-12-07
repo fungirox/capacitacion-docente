@@ -73,7 +73,7 @@
                 <div class="d-grid">
                     <a href="cursos/nuevo" type="button" class="btn btn-primary">
                         <i class="bi bi-plus-lg"></i>
-                        <span>Nueva área</span>
+                        <span>Nuevo curso</span>
                     </a>
                 </div>
             </div>
@@ -89,11 +89,11 @@
         <?php endif; ?>
         <span class="col text-secondary text-end fst-italic"><?= $pagination["totalItems"] ?> cursos encontrados</span>
     </div>
-    <?php if (empty($allCourses)): ?>
+    <?php if (empty($allCursos)): ?>
         <?php view("components/emptyList.php") ?>
     <?php else: ?>
         <div class="mb-3 row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-            <?php foreach ($allCourses as $curso) : ?>
+            <?php foreach ($allCursos as $curso) : ?>
                 <?php
                 $id = htmlspecialchars($curso["id"]);
                 $nombre = htmlspecialchars($curso["nombre"]);

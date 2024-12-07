@@ -33,7 +33,7 @@ $paramsActive = (isset($_GET["search"]) && !empty($_GET["search"])) || (isset($_
 
 return view("admin/cursos/index.view.php", [
     "title" => $archivados ? "Cursos Archivados" : "Cursos",
-    "allCourses" => $cursosData["data"],
+    "allCursos" => $cursosData["data"],
     "paramsActive" => $paramsActive,
     "pagination" => $cursosData["pagination"],
     "archivados" => $archivados,
