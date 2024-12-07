@@ -67,7 +67,7 @@
                             <?php endif; ?>
                         </div>
                         <div class="d-flex flex-column gap-2">
-                            <div type="button" class="btn btn-outline-primary">Descargar Ficha</div>
+                            <div type="button" class="btn btn-outline-secondary">Descargar Ficha</div>
                             <div type="button" class="btn btn-primary">Entrar al Curso</div>
                             <?php if (!$isVirtual): ?>
                                 <span class="col text-secondary text-end fst-italic"># Cupos disponibles</span>
