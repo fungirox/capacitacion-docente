@@ -1,70 +1,169 @@
 <?php view("components/styledHeader.php", ["title" => $title]); ?>
 <main role="main" class="container py-5" style="margin-top: 56px">
     <h1><?= $title ?></h1>
-    <div class="row row-cols-auto justify-content-end pt-4 g-2">
-        <div class="col-12 col-md-auto">
-            <div class="input-group flex-nowrap">
-                <span class="input-group-text" id="addon-wrapping"><i class="bi bi-search"></i></span>
-                <input type="text" class="form-control" placeholder="Buscar curso..." aria-label="Username" aria-describedby="addon-wrapping">
-            </div>
-        </div>
-        <div class="col-12 col-md-auto">
-            <div class="input-group flex-nowrap">
-                <span class="input-group-text" id="addon-wrapping"><i class="bi bi-filter"></i></span>
-                <select class="form-select" aria-label="Default select example">
-                    <option selected>Filtrar</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                </select>
-            </div>
-        </div>
-        <div class="col-12 col-md-auto">
-            <select class="form-select" aria-label="Default select example">
-                <option selected>Ordenar por</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-            </select>
-        </div>
-    </div>
-    <div class="my-2 row row-cols-1 row-cols-md-3 g-4">
-        <?php foreach ($allCursos as $curso) : ?>
-            <?php
-            $id = htmlspecialchars($curso["id"]);
-            $nombre = htmlspecialchars($curso["nombre"]);
-            $instructorNombre = htmlspecialchars($curso["nombre"]);
-            $tipo = htmlspecialchars($curso["tipo"]);
-            ?>
-            <div class="col">
-                <div class="card h-100">
-                    <a href="/oferta/curso?id=<?= $id ?>">
-                        <img
-                            src="https://plus.unsplash.com/premium_photo-1682125773446-259ce64f9dd7?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                            class="card-img-top"
-                            height="160px"
-                            style="object-fit: cover"
-                            alt="Portada del curso">
-                    </a>
-                    <div class="card-body">
-                        <a class="h5 card-title link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="/oferta/curso?id=<?= $id ?>">
-                            <?= $nombre ?>
-                        </a>
-                        <p class="card-text text-secondary-emphasis pt-2"><?= $instructorNombre ?></p>
+    <form class="row pt-4 g-2 justify-content-between" method="GET">
+        <div class="col-12 col-md-9 col-lg-8">
+            <div class="row g-2">
+                <div class="col-md-6">
+                    <div class="input-group flex-nowrap">
+                        <span class="input-group-text" id="addon-wrapping">
+                            <i class="bi bi-search"></i>
+                        </span>
+                        <input
+                            type="text"
+                            name="search"
+                            id="search"
+                            class="form-control"
+                            placeholder="Buscar curso..."
+                            aria-label="BuscarCurso"
+                            aria-describedby="buscar-curso"
+                            value="<?= htmlspecialchars($search ?? "") ?>">
+                        <button class="btn btn-outline-secondary" type="submit">Buscar</button>
                     </div>
-                    <div class="card-footer d-flex justify-content-between align-items-end">
-                        <div>
-                            <?php foreach ($curso["areas"] as $area): ?>
-                                <?php if (!empty($area)): ?>
-                                    <span class="col-auto text-capitalize badge rounded-pill text-bg-primary"> <?= $area ?> </span>
-                                <?php endif; ?>
-                            <?php endforeach; ?>
-                        </div>
-                        <span class="text-secondary text-capitalize text-end"><small><?= $tipo ?></small></span>
+                </div>
+                <div class="col-md-3">
+                    <div class="input-group flex-nowrap">
+                        <span class="input-group-text" id="addon-wrapping">
+                            <i class="bi bi-sort-down"></i>
+                        </span>
+                        <select name="sortBy" class="form-select" aria-label="Ordenar por" onchange="this.form.submit()">
+                            <option value="CURSOID-DESC" <?= $sortBy . '-' . $sortOrder == 'CURSOID-DESC' ? 'selected' : '' ?>>
+                                ↓ Más recientes
+                            </option>
+                            <option value="CURSOID-ASC" <?= $sortBy . '-' . $sortOrder == 'CURSOID-ASC' ? 'selected' : '' ?>>
+                                ↓ Más antigüos
+                            </option>
+                            <option value="CURSO_Nombre-ASC" <?= $sortBy . '-' . $sortOrder == 'CURSO_Nombre-ASC' ? 'selected' : '' ?>>
+                                ↓ Nombre
+                            </option>
+                            <option value="CURSO_Nombre-DESC" <?= $sortBy . '-' . $sortOrder == 'CURSO_Nombre-DESC' ? 'selected' : '' ?>>
+                                ↑ Nombre
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="input-group flex-nowrap">
+                        <span class="input-group-text" id="addon-wrapping">
+                            <i class="bi bi-funnel"></i>
+                        </span>
+                        <select name="filterBy" class="form-select" aria-label="Filtrar por modalidad" onchange="this.form.submit()">
+                            <option value="" <?= empty($filterBy) ? 'selected' : '' ?>>
+                                Todos los servicios
+                            </option>
+                            <option value="presencial" <?= $filterBy == 'presencial' ? 'selected' : '' ?>>
+                                Servicios presenciales
+                            </option>
+                            <option value="virtual" <?= $filterBy == 'virtual' ? 'selected' : '' ?>>
+                                Servicios virtuales
+                            </option>
+                            <option value="hibrido" <?= $filterBy == 'hibrido' ? 'selected' : '' ?>>
+                                Servicios híbridos
+                            </option>
+                        </select>
                     </div>
                 </div>
             </div>
-        <?php endforeach; ?>
+        </div>
+    </form>
+    <div class="row row-cols-auto justify-content-between py-3 px-2">
+        <?php if ($paramsActive): ?>
+            <a class="col" href="/oferta">
+                <i class="bi bi-x me-1"></i><span>Limpiar filtros</span>
+            </a>
+        <?php else: ?>
+            <span></span>
+        <?php endif; ?>
+        <span class="col text-secondary text-end fst-italic">
+            <?= $pagination["totalItems"] ?> <?= $pagination["totalItems"] == 1 ? "curso encontrado" : "cursos encontrados" ?>
+        </span>
     </div>
+    <?php if (empty($allCursos)): ?>
+        <?php view("components/emptyList.php") ?>
+    <?php else: ?>
+        <div class="mb-3 row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            <?php foreach ($allCursos as $curso) : ?>
+                <?php
+                $id = htmlspecialchars($curso["id"]);
+                $nombre = htmlspecialchars($curso["nombre"]);
+                $instructorNombre = htmlspecialchars($curso["instructor_nombre"]);
+                $tipo = htmlspecialchars($curso["tipo"]);
+                ?>
+                <div class="col">
+                    <div class="card h-100">
+                        <a href="/oferta/curso?id=<?= $id ?>">
+                            <img
+                                src="https://plus.unsplash.com/premium_photo-1682125773446-259ce64f9dd7?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                                class="card-img-top"
+                                height="160px"
+                                style="object-fit: cover"
+                                alt="Portada del curso">
+                        </a>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <a class="h5 card-title link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="/oferta/curso?id=<?= $id ?>">
+                                    <?= $nombre ?>
+                                </a>
+                            </div>
+                            <form method="POST">
+                                <div class="modal fade" id="archiveModal<?= $id ?>" tabindex="-1" aria-labelledby="archiveModalLabel<?= $id ?>" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="archiveModalLabel<?= $id ?>"><?= $archivados ? "Desarchivar" : "Archivar" ?> Curso</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>¿Seguro de que desea <?= $archivados ? "desarchivar" : "archivar" ?> este curso?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <input type="hidden" name="_method" value="DELETE" />
+                                                <input type="hidden" name="id" value="<?= $id ?>" />
+                                                <input type="hidden" name="action" value="<?= $archivados ? "unarchive" : "archive" ?>" />
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                <button type="submit" class="btn btn-warning"><?= $archivados ? "Desarchivar" : "Archivar" ?></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <p class="card-text text-secondary-emphasis pt-1"><?= $instructorNombre ?></p>
+                        </div>
+                        <div class="card-footer d-flex justify-content-between align-items-end">
+                            <div>
+                                <?php foreach ($curso["areas"] as $area): ?>
+                                    <?php if (!empty($area)): ?>
+                                        <span class="col-auto text-capitalize badge rounded-pill text-bg-primary"> <?= $area ?> </span>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            </div>
+                            <span class="text-secondary text-capitalize text-end"><small><?= $tipo ?></small></span>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+        <nav class="pt-3" aria-label="pagination">
+            <ul class="pagination justify-content-center">
+                <li class="page-item <?= $pagination["currentPage"] == 1 ? "disabled" : "" ?>">
+                    <a class="page-link" href="?page=<?= $pagination["currentPage"] - 1 ?><?= $archivados ? "&archivados=true" : "" ?><?= $search ? "&search=" . urlencode($search) : "" ?><?= $sortBy && $sortOrder ? "&sortBy=" . $sortBy . "-" . $sortOrder : "" ?>">
+                        Anterior
+                    </a>
+                </li>
+                <?php for ($i = 1; $i <= $pagination["totalPages"]; $i++): ?>
+                    <li class="page-item <?= $i == $pagination["currentPage"] ? "active" : "" ?>">
+                        <a class="page-link" href="?page=<?= $i ?><?= $archivados ? "&archivados=true" : "" ?><?= $search ? "&search=" . urlencode($search) : "" ?><?= $sortBy && $sortOrder ? "&sortBy=" . $sortBy . "-" . $sortOrder : "" ?>">
+                            <?= $i ?>
+                        </a>
+                    </li>
+                <?php endfor; ?>
+                <li class="page-item <?= $pagination["currentPage"] == $pagination["totalPages"] ? "disabled" : "" ?>">
+                    <a class="page-link" href="?page=<?= $pagination["currentPage"] + 1 ?><?= $archivados ? "&archivados=true" : "" ?><?= $search ? "&search=" . urlencode($search) : "" ?><?= $sortBy && $sortOrder ? "&sortBy=" . $sortBy . "-" . $sortOrder : "" ?>">
+                        Siguiente
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    <?php endif ?>
 </main>
 <?php view("components/styledFooter.php"); ?>
