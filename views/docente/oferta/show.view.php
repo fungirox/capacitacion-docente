@@ -63,7 +63,6 @@
                                             ¿Seguro de que desea inscribrise al curso "<?= $nombre ?>"?
                                         </div>
                                         <form class="modal-footer" method="POST">
-                                            <input type="hidden" name="_method" value="DELETE" />
                                             <input type="hidden" name="id" value="<?= $id ?>" />
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Regresar</button>
                                             <button type="submit" class="btn btn-primary">Inscribirse al Curso</button>
