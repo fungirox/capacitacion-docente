@@ -49,13 +49,31 @@
                                 </div>
                             <?php endif; ?>
                         </div>
-                        <div class="d-flex flex-column gap-2">
+                        <form class="d-flex flex-column gap-2" method="POST">
+                            <input type="hidden" name="id" value="<?= $id ?>" />
                             <a type="button" class="btn btn-outline-secondary">Descargar Ficha</a>
-                            <a type="button" class="btn btn-primary">Inscribirse al curso</a>
+                            <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Inscribirse al Curso</a>
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Inscribirse al Curso</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            ¿Seguro de que desea inscribrise al curso "<?= $nombre ?>"?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                            <button type="submit" class="btn btn-primary">Inscribirse</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <?php if (!$isVirtual): ?>
                                 <span class="col text-secondary text-end fst-italic"># Cupos disponibles</span>
                             <?php endif; ?>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
