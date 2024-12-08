@@ -51,7 +51,26 @@
                         </div>
                         <div class="d-flex flex-column gap-2">
                             <a type="button" class="btn btn-outline-secondary">Descargar Ficha</a>
-                            <a type="button" class="btn btn-danger">Salir del curso</a>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Salir del Curso</button>
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Salir del Curso</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            ¿Seguro de que desea cancelar su inscripción al curso "<?= $nombre ?>"?
+                                        </div>
+                                        <form class="modal-footer" method="POST">
+                                            <input type="hidden" name="_method" value="DELETE" />
+                                            <input type="hidden" name="id" value="<?= $id ?>" />
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Regresar</button>
+                                            <button type="submit" class="btn btn-danger">Salir del Curso</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
