@@ -94,7 +94,7 @@
                             <td><?= $acronym ?></td>
                             <td class="text-end">
                                 <div class="dropdown">
-                                    <button class="btn btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <button class="btn btn-sm rounded-pill" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="bi bi-three-dots-vertical"></i>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end">
