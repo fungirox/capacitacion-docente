@@ -2,7 +2,7 @@
 <main role="main" class="container py-5" style="margin-top: 56px">
     <h1><?= $title ?></h1>
     <form class="row pt-4 g-2 justify-content-between" method="GET">
-        <div class="col-12 col-md-9 col-lg-8">
+        <div class="col-12 col-lg-10">
             <div class="row g-2">
                 <div class="col-md-6">
                     <div class="input-group flex-nowrap">
