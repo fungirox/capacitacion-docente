@@ -49,10 +49,9 @@
                                 </div>
                             <?php endif; ?>
                         </div>
-                        <form class="d-flex flex-column gap-2" method="POST">
-                            <input type="hidden" name="id" value="<?= $id ?>" />
+                        <div class="d-flex flex-column gap-2">
                             <a type="button" class="btn btn-outline-secondary">Descargar Ficha</a>
-                            <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Inscribirse al Curso</a>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Inscribirse al Curso</button>
                             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -63,17 +62,19 @@
                                         <div class="modal-body">
                                             ¿Seguro de que desea inscribrise al curso "<?= $nombre ?>"?
                                         </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                            <button type="submit" class="btn btn-primary">Inscribirse</button>
-                                        </div>
+                                        <form class="modal-footer" method="POST">
+                                            <input type="hidden" name="_method" value="DELETE" />
+                                            <input type="hidden" name="id" value="<?= $id ?>" />
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Regresar</button>
+                                            <button type="submit" class="btn btn-primary">Inscribirse al Curso</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
                             <?php if (!$isVirtual): ?>
                                 <span class="col text-secondary text-end fst-italic"># Cupos disponibles</span>
                             <?php endif; ?>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
