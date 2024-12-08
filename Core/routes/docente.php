@@ -13,6 +13,7 @@ $router->get("/inscritos/curso", "docente/inscritos/show.php")->only(DOCENTE);
 
 $router->get("/oferta", "docente/oferta/index.php")->only(DOCENTE);
 $router->get("/oferta/curso", "docente/oferta/show.php")->only(DOCENTE);
+$router->post("/oferta/curso", "docente/oferta/subscribe.php")->only(DOCENTE);
 
 # Inscribirse Curso
 $router->post("/oferta/registroDocenteCurso", "docente/oferta/registroDocenteCurso.php")->only(DOCENTE);
