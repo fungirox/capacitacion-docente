@@ -544,4 +544,19 @@ class CursoRepository extends RepositoryTemplate {
             [$state, $id]
         );
     }
+
+    public function getSubscription($cursoId, $userId) {
+        return $this->query(
+            "SELECT
+                *
+            FROM
+                tblCursoDocente AS curso_docente
+            LEFT JOIN
+                tblDocente AS docente ON curso_docente.DOCENTEID = docente.DOCENTEID
+            WHERE
+                curso_docente.CURSOID = ? AND
+                docente.USERID = ?",
+            [$cursoId, $userId]
+        )->get();
+    }
 }
