@@ -90,8 +90,4 @@ class AreaRepository extends RepositoryTemplate {
             [$state, $id]
         );
     }
-
-    public function delete($id) {
-        return $this->query("DELETE FROM tblArea WHERE AREAID = ?", [$id]);
-    }
 }
