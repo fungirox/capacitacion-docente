@@ -548,7 +548,7 @@ class CursoRepository extends RepositoryTemplate {
     public function getSubscription($cursoId, $userId) {
         return $this->query(
             "SELECT
-                *
+                CURSODOCENTEID
             FROM
                 tblCursoDocente AS curso_docente
             LEFT JOIN
@@ -571,6 +571,14 @@ class CursoRepository extends RepositoryTemplate {
                 ?
             )",
             [$cursoId, $userId, 100]
+        );
+    }
+
+    public function unsubscribe($cursoDocenteId) {
+        return $this->query(
+            "DELETE FROM tblCursoDocente
+            WHERE CURSODOCENTEID = ?",
+            [$cursoDocenteId]
         );
     }
 }
