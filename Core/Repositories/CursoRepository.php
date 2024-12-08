@@ -559,4 +559,18 @@ class CursoRepository extends RepositoryTemplate {
             [$cursoId, $userId]
         )->get();
     }
+
+    public function subscribe($cursoId, $userId) {
+        return $this->query(
+            "INSERT INTO tblCursoDocente (CURSOID, DOCENTEID, CURSODOCENTE_Calificacion)
+            VALUES (
+                ?,
+                (SELECT docente.DOCENTEID
+                FROM tblDocente as docente
+                WHERE USERID = ?),
+                ?
+            )",
+            [$cursoId, $userId, 100]
+        );
+    }
 }
