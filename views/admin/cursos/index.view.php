@@ -87,7 +87,9 @@
         <?php else: ?>
             <span></span>
         <?php endif; ?>
-        <span class="col text-secondary text-end fst-italic"><?= $pagination["totalItems"] ?> cursos encontrados</span>
+        <span class="col text-secondary text-end fst-italic">
+            <?= $pagination["totalItems"] ?> <?= $pagination["totalItems"] == 1 ? "curso encontrado" : "cursos encontrados" ?>
+        </span>
     </div>
     <?php if (empty($allCursos)): ?>
         <?php view("components/emptyList.php") ?>

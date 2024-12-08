@@ -66,7 +66,9 @@
         <?php else: ?>
             <span></span>
         <?php endif; ?>
-        <span class="col text-secondary text-end fst-italic"><?= $pagination["totalItems"] ?> áreas encontradas</span>
+        <span class="col text-secondary text-end fst-italic">
+            <?= $pagination["totalItems"] ?> <?= $pagination["totalItems"] == 1 ? "área encontrada" : "áreas encontradas" ?>
+        </span>
     </div>
     <?php if (empty($allAreas)): ?>
         <?php view("components/emptyList.php") ?>
