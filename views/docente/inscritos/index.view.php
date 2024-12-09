@@ -38,7 +38,7 @@
                                     </a>
                                     <p class="card-text text-secondary-emphasis pt-2"><?= $instructorNombre ?></p>
                                 </div>
-                                <div class="col text-end"><span class="badge text-bg-primary"><?= formatType($tipo) ?></span></div>
+                                <div class="col text-end"><span class="badge text-bg-primary"><?= $tipo ?></span></div>
                             </div>
                         </div>
                         <div class="card-footer rounded-bottom-4 d-flex justify-content-center align-items-center gap-2">

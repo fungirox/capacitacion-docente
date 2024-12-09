@@ -150,11 +150,3 @@ function getAmOrPm($hour) {
 function formattedHourRange($startHour, $endHour) {
     return substr($startHour, 0, 5) . " " . getAmOrPm($startHour) . " - " . substr($endHour, 0, 5) . " " . getAmOrPm($endHour);
 }
-
-function formatType($type) {
-    return match ($type) {
-        "Curso hibrido" => "Curso híbrido",
-        "Taller hibrido" => "Taller híbrido",
-        default => $type
-    };
-}

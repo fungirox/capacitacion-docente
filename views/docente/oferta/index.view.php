@@ -137,7 +137,7 @@
                                     <?php endif; ?>
                                 <?php endforeach; ?>
                             </div>
-                            <span class="text-secondary text-end"><small><?= formatType($tipo) ?></small></span>
+                            <span class="text-secondary text-end"><small><?= $tipo ?></small></span>
                         </div>
                     </div>
                 </div>

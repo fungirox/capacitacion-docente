@@ -17,7 +17,7 @@
                         <span class="badge rounded-pill text-bg-primary"><?= $area ?></span>
                     <?php endforeach; ?>
                 </div>
-                <span class="col text-secondary text-end"><?= formatType($tipo) ?></span>
+                <span class="col text-secondary text-end"><?= $tipo ?></span>
             </div>
             <p class="lh-lg"><?= $descripcion ?></p>
         </div>
