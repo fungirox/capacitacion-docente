@@ -209,33 +209,37 @@ class CursoRepository extends RepositoryTemplate {
 
         $totalCount = $this->query(
             "SELECT COUNT(*) AS total
-            FROM
-                tblCurso AS curso
-            LEFT JOIN
-                tblCursoInstructor AS cursoInstructor ON curso.CURSOID = cursoInstructor.CURSOID
-            LEFT JOIN
-                tblInstructor AS instructor ON instructor.INSTRUCTORID = cursoInstructor.INSTRUCTORID
-            LEFT JOIN
-                tblUsuario AS usuario ON usuario.USERID = instructor.USERID
-            LEFT JOIN
-                tblCursoArea AS cursoArea ON cursoArea.CURSOID = curso.CURSOID
-            LEFT JOIN
-                tblArea AS area ON area.AREAID = cursoArea.AREAID
-            LEFT JOIN
-                tblCursoDocente AS curso_docente ON curso.CURSOID = curso_docente.CURSOID
-                AND curso_docente.DOCENTEID IN (
-                    SELECT DOCENTEID
-                    FROM tblDocente
-                    WHERE USERID = ?
-                )
-            WHERE
-                instructor.USERID != ? AND
-                curso.CURSO_Activo = 1 AND
-                curso.CURSO_En_Progreso = 0 AND
-                curso.CURSO_Archivado = 0 AND
-                curso_docente.CURSOID IS NULL
-                $searchCondition
-                $modalidadCondition",
+            FROM (
+                SELECT DISTINCT
+                    curso.CURSOID as id
+                FROM
+                    tblCurso AS curso
+                LEFT JOIN
+                    tblCursoInstructor AS cursoInstructor ON curso.CURSOID = cursoInstructor.CURSOID
+                LEFT JOIN
+                    tblInstructor AS instructor ON instructor.INSTRUCTORID = cursoInstructor.INSTRUCTORID
+                LEFT JOIN
+                    tblUsuario AS usuario ON usuario.USERID = instructor.USERID
+                LEFT JOIN
+                    tblCursoArea AS cursoArea ON cursoArea.CURSOID = curso.CURSOID
+                LEFT JOIN
+                    tblArea AS area ON area.AREAID = cursoArea.AREAID
+                LEFT JOIN
+                    tblCursoDocente AS curso_docente ON curso.CURSOID = curso_docente.CURSOID
+                    AND curso_docente.DOCENTEID IN (
+                        SELECT DOCENTEID
+                        FROM tblDocente
+                        WHERE USERID = ?
+                    )
+                WHERE
+                    instructor.USERID != ? AND
+                    curso.CURSO_Activo = 1 AND
+                    curso.CURSO_En_Progreso = 0 AND
+                    curso.CURSO_Archivado = 0 AND
+                    curso_docente.CURSOID IS NULL
+                    $searchCondition
+                    $modalidadCondition
+            ) as subquery",
             $countParams
         )->get()["total"];
 
