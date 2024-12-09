@@ -193,6 +193,7 @@ class CursoRepository extends RepositoryTemplate {
         }
 
         $params = [$userId];
+        $params[] = $userId;
 
         if ($search) {
             $searchParam = "%$search%";
@@ -228,6 +229,7 @@ class CursoRepository extends RepositoryTemplate {
                     WHERE USERID = ?
                 )
             WHERE
+                instructor.USERID != ? AND
                 curso.CURSO_Activo = 1 AND
                 curso.CURSO_En_Progreso = 0 AND
                 curso.CURSO_Archivado = 0 AND
@@ -279,6 +281,7 @@ class CursoRepository extends RepositoryTemplate {
                     WHERE USERID = ?
                 )
             WHERE
+                instructor.USERID != ? AND
                 curso.CURSO_Activo = 1 AND
                 curso.CURSO_En_Progreso = 0 AND
                 curso.CURSO_Archivado = 0 AND
@@ -516,6 +519,7 @@ class CursoRepository extends RepositoryTemplate {
                     WHERE USERID = ?
                 )
             WHERE
+                instructor.USERID != ? AND
                 curso.CURSO_Activo = 1 AND
                 curso.CURSO_En_Progreso = 0 AND
                 curso.CURSO_Archivado = 0 AND
@@ -534,7 +538,7 @@ class CursoRepository extends RepositoryTemplate {
                 curso.CURSO_Aula,
                 instructor_usuario.USER_Nombre,
                 instructor_usuario.USER_Apellido",
-            [$userId, $cursoId]
+            [$userId, $userId, $cursoId]
         )->getOrFail();
     }
 
