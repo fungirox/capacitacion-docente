@@ -7,7 +7,7 @@
                 <div class="">
                     <span class="col-12 col-md-auto"><?= $curso["CURSO_Nombre"]; ?></span>
                     <div>
-                    <a href="/admin/reportes-F04PSA19?id=<?= $curso["CURSOID"]?>">Resumen encuesta evaluacion</a>
+                    <a href="/admin/resumenEvaluacion?id=<?= $curso["CURSOID"]?>">Resumen encuesta evaluacion</a>
                 </div>
 
                 </div>
@@ -23,8 +23,9 @@
             <?php foreach ($cursosConcluidos as $key => $curso): ?>
                 <div><?= $curso["CURSO_Nombre"]; ?></div>
                 <div>
-                    <a href="/admin/reportes-F04PSA19?id=<?= $curso["CURSOID"]?>">Resumen encuesta evaluacion</a>
-                    <a href="/admin/reportes-F10PSA19.00?id=<?= $curso["CURSOID"]?>">Resumen encuesta eficacia</a>
+                    <a href="/admin/resumenEvaluacion?id=<?= $curso["CURSOID"]?>">Resumen encuesta evaluacion</a>
+            <!-- pendiente -->
+                    <a href="/admin/reportes-F10PSA19.00?id=<?= $curso["CURSOID"]?>">Resumen encuesta eficacia</a> 
                 </div>
             <?php endforeach; ?>
         <?php else: ?>

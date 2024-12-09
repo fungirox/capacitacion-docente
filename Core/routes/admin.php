@@ -55,5 +55,10 @@ $router->patch("/admin/carreras", "admin/carreras/update.php")->only(ADMIN);
 # Reportes
 
 $router->get("/admin/reportes","admin/reportes/index.php")->only(ADMIN);
-$router->get("/admin/reportes-F04PSA19","admin/reportes/reporte-F04PSA19.php")->only(ADMIN);
-$router->get("/admin/reportes-F10PSA19.00","admin/reportes/reporte-F10PSA19.00.php")->only(ADMIN);
+$router->get("/admin/resumenEvaluacion","admin/reportes/resumenEvaluacion.php")->only(ADMIN);
+$router->get("/admin/resumenEficacia","admin/reportes/resumenEficacia.php")->only(ADMIN);
+
+# Formatos
+
+$router->get("/admin/formatos","admin/formatos/index.php")->only(ADMIN);
+$router->get("/admin/formatos/tecNM","admin/formatos/tecNM.php")->only(ADMIN);

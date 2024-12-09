@@ -2,9 +2,11 @@
 
 namespace Core\Repositories;
 
-class CursoRepository extends RepositoryTemplate {
+class CursoRepository extends RepositoryTemplate
+{
 
-    public function getAll() {
+    public function getAll()
+    {
         return $this->query(
             "SELECT
                 curso.CURSOID,
@@ -37,7 +39,8 @@ class CursoRepository extends RepositoryTemplate {
         )->getAll();
     }
 
-    public function getById($cursoId) {
+    public function getById($cursoId)
+    {
         return $this->query(
             "SELECT
                 curso.CURSOID as id,
@@ -79,7 +82,8 @@ class CursoRepository extends RepositoryTemplate {
         )->getOrFail();
     }
 
-    public function getEvaluacion($cursoId, $userId){
+    public function getEvaluacion($cursoId, $userId)
+    {
         return $this->query(
             "SELECT c.* FROM tblCurso c
                         JOIN tblCursoDocente cd ON c.CURSOID = cd.CURSOID
@@ -91,11 +95,12 @@ class CursoRepository extends RepositoryTemplate {
                         AND c.CURSO_Activo = 0
                         AND c.CURSO_En_Progreso = 0
                         AND cd.CURSODOCENTE_Calificacion > 0;",
-            [$userId,$cursoId]
+            [$userId, $cursoId]
         )->getOrFail();
     }
 
-    public function getEficacia($cursoId, $userId){
+    public function getEficacia($cursoId, $userId)
+    {
         return $this->query(
             "SELECT c.* FROM tblCurso c
                         JOIN tblCursoDocente cd ON c.CURSOID = cd.CURSOID
@@ -108,12 +113,14 @@ class CursoRepository extends RepositoryTemplate {
                         AND c.CURSO_Activo = 0
                         AND c.CURSO_En_Progreso = 0
                         AND cd.CURSODOCENTE_Calificacion > 0;",
-            [$userId,$cursoId]
+            [$userId, $cursoId]
         )->getOrFail();
     }
 
-    public function getCursosNoEvaluados($userId){
-        return $this->query("SELECT c.CURSOID, c.CURSO_Nombre
+    public function getCursosNoEvaluados($userId)
+    {
+        return $this->query(
+            "SELECT c.CURSOID, c.CURSO_Nombre
             FROM tblUsuario u
             JOIN tblDocente d ON u.USERID = d.USERID
             JOIN tblCursoDocente cd ON d.DOCENTEID = cd.DOCENTEID
@@ -124,11 +131,14 @@ class CursoRepository extends RepositoryTemplate {
             AND c.CURSO_Activo = 0
             AND c.CURSO_En_Progreso = 0
             AND cd.CURSODOCENTE_Calificacion > 0;",
-        [$userId])->getAll();
+            [$userId]
+        )->getAll();
     }
 
-    public function getCursosSinEficacia($userId){
-        return $this->query("SELECT 
+    public function getCursosSinEficacia($userId)
+    {
+        return $this->query(
+            "SELECT 
                 c.CURSOID,
                 c.CURSO_Nombre
             FROM tblUsuario u
@@ -140,11 +150,14 @@ class CursoRepository extends RepositoryTemplate {
             AND cd.CURSODOCENTE_EncuestaEficacia IS NULL
             AND c.CURSO_En_Progreso = 0
             AND cd.CURSODOCENTE_Calificacion > 0;",
-        [$userId])->getAll();
+            [$userId]
+        )->getAll();
     }
 
-    public function getCursosConcluidos($userId){
-        return $this->query("SELECT 
+    public function getCursosConcluidos($userId)
+    {
+        return $this->query(
+            "SELECT 
                 c.CURSOID,
                 c.CURSO_Nombre
             FROM tblUsuario u
@@ -156,10 +169,12 @@ class CursoRepository extends RepositoryTemplate {
             AND cd.CURSODOCENTE_EncuestaEficacia = 1
             AND c.CURSO_En_Progreso = 0
             AND cd.CURSODOCENTE_Calificacion > 0;",
-        [$userId])->getAll();
+            [$userId]
+        )->getAll();
     }
 
-    public function getCursosSinEficaciaAdmin(){
+    public function getCursosSinEficaciaAdmin()
+    {
         return $this->query("SELECT 
             c.CURSOID, 
             c.CURSO_Nombre
@@ -175,7 +190,8 @@ class CursoRepository extends RepositoryTemplate {
             c.CURSOID, c.CURSO_Nombre")->getAll();
     }
 
-    public function getCursosConcluidosAdmin(){
+    public function getCursosConcluidosAdmin()
+    {
         return $this->query("SELECT 
                 c.CURSOID, 
                 c.CURSO_Nombre
@@ -191,7 +207,8 @@ class CursoRepository extends RepositoryTemplate {
                 c.CURSOID, c.CURSO_Nombre")->getAll();
     }
 
-    public function getCursoConcluido($cursoId){
+    public function getCursoConcluido($cursoId)
+    {
         return $this->query("SELECT 
             c.CURSOID, 
             c.CURSO_Nombre,
@@ -206,6 +223,59 @@ class CursoRepository extends RepositoryTemplate {
             AND cd.CURSODOCENTE_Calificacion > 0
             AND c.CURSOID = ?
         GROUP BY 
-            c.CURSOID, c.CURSO_Nombre, c.CURSO_Modalidad",[$cursoId])->getOrFail();
+            c.CURSOID, c.CURSO_Nombre, c.CURSO_Modalidad", [$cursoId])->getOrFail();
+    }
+
+    public function getAllReporte()
+    {
+        return $this->query(
+            "SELECT
+            curso.CURSOID,
+            curso.CURSO_Nombre,
+            curso.CURSO_Tipo AS tipo,
+            CASE 
+                WHEN MONTH(curso.CURSO_Fecha_Inicio) >= 1 AND MONTH(curso.CURSO_Fecha_Final) <= 5 THEN 
+                    'Enero-Mayo ' + CAST(YEAR(curso.CURSO_Fecha_Inicio) AS VARCHAR)
+                WHEN MONTH(curso.CURSO_Fecha_Inicio) >= 6 AND MONTH(curso.CURSO_Fecha_Final) <= 7 THEN 
+                    'Verano ' + CAST(YEAR(curso.CURSO_Fecha_Inicio) AS VARCHAR)
+                WHEN MONTH(curso.CURSO_Fecha_Inicio) >= 8 AND MONTH(curso.CURSO_Fecha_Final) <= 12 THEN 
+                    'Agosto-Diciembre ' + CAST(YEAR(curso.CURSO_Fecha_Inicio) AS VARCHAR)
+                ELSE 'Otro periodo'
+            END AS Periodo,
+            curso.CURSO_Activo,
+            curso.CURSO_Perfil,
+            curso.CURSO_Modalidad,
+            usuario.USER_Nombre + ' ' + usuario.USER_Apellido AS instructor_nombre,
+            COUNT(DISTINCT CASE WHEN usuario.USER_Genero = 0 AND cursoDocente.CURSODOCENTE_Calificacion > 70  THEN docente.DOCENTEID END) AS cantidad_docentes_masculinos,
+            COUNT(DISTINCT CASE WHEN usuario.USER_Genero = 1 AND cursoDocente.CURSODOCENTE_Calificacion > 70  THEN docente.DOCENTEID END) AS cantidad_docentes_femeninos,
+            COUNT(DISTINCT CASE WHEN cursoDocente.CURSODOCENTE_Calificacion > 70 THEN docente.DOCENTEID END) AS cantidad_docentes_total
+        FROM
+            tblCurso AS curso
+        LEFT JOIN
+            tblCursoInstructor AS cursoInstructor ON curso.CURSOID = cursoInstructor.CURSOID
+        LEFT JOIN
+            tblInstructor AS instructor ON instructor.INSTRUCTORID = cursoInstructor.INSTRUCTORID
+        LEFT JOIN
+            tblUsuario AS usuario ON usuario.USERID = instructor.USERID
+        LEFT JOIN
+            tblCursoArea AS cursoArea ON cursoArea.CURSOID = curso.CURSOID
+        LEFT JOIN
+            tblCursoDocente AS cursoDocente ON curso.CURSOID = cursoDocente.CURSOID
+        LEFT JOIN
+            tblDocente AS docente ON cursoDocente.DOCENTEID = docente.DOCENTEID
+        LEFT JOIN
+            tblUsuario AS usuarioDocente ON docente.USERID = usuarioDocente.USERID
+        GROUP BY
+            curso.CURSOID,
+            curso.CURSO_Nombre,
+            curso.CURSO_Tipo,
+            curso.CURSO_Activo,
+            curso.CURSO_Perfil,
+            curso.CURSO_Modalidad,
+            usuario.USER_Nombre,
+            curso.CURSO_Fecha_Inicio,
+            curso.CURSO_Fecha_Final,
+            usuario.USER_Apellido;"
+        )->getAll();
     }
 }

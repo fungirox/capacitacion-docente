@@ -13,7 +13,7 @@
     </a>
     <ul class="dropdown-menu">
         <li><a class="dropdown-item" href="/admin/reportes">Reportes</a></li>
-        <li><a class="dropdown-item" href="#">Formatos</a></li>
+        <li><a class="dropdown-item" href="/admin/formatos">Formatos</a></li>
     </ul>
 </li>
 <li class="nav-item dropdown">
