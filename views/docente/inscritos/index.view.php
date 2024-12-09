@@ -13,15 +13,15 @@
                 <?php
                 $id = htmlspecialchars($curso["id"]);
                 $nombre = htmlspecialchars($curso["nombre"]);
-                $tipo = htmlspecialchars($curso["tipo"]);
+                $tipo = htmlspecialchars(ucfirst($curso["tipo"]));
                 $instructorNombre = htmlspecialchars($curso["instructor_nombre"]);
                 $aula = htmlspecialchars($curso["aula"]);
                 $duración = htmlspecialchars(formattedDateRange(formatDate($curso["inicio"]), formatDate($curso["final"])));
                 $dias = htmlspecialchars(shortFormattedDays($curso["dias"]));
                 $hora = htmlspecialchars(formattedHourRange($curso["hora_inicial"], $curso["hora_final"]));
                 ?>
-                <div class="col-12">
-                    <div class="card">
+                <div class="col-12"> 
+                    <div class="card rounded-4">
                         <div class="card-body">
                             <div class="row">
                                 <a class="col-auto" href="/inscritos/curso?id=<?= $id ?>">
@@ -38,10 +38,10 @@
                                     </a>
                                     <p class="card-text text-secondary-emphasis pt-2"><?= $instructorNombre ?></p>
                                 </div>
-                                <div class="col text-end"><span class="badge text-bg-primary text-capitalize"><?= $tipo ?></span></div>
+                                <div class="col text-end"><span class="badge text-bg-primary"><?= formatType($tipo) ?></span></div>
                             </div>
                         </div>
-                        <div class="card-footer d-flex justify-content-center align-items-center gap-2">
+                        <div class="card-footer rounded-bottom-4 d-flex justify-content-center align-items-center gap-2">
                             <?php if ($curso["modalidad"] !== "virtual"): ?>
                                 <span class="text-secondary text-center"><?= $aula ?></span>
                                 <i class="bi bi-dot text-secondary"></i>

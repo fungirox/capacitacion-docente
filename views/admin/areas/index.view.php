@@ -165,7 +165,7 @@
     <div class="d-flex flex-column align-items-center gap-3 pt-3">
         <span class="text-center text-secondary">¿No encuentras el área que buscas?</span>
         <a href="<?= $archivados ? "/admin/areas" : "?archivados=true" ?>" type="btn" class="btn btn-outline-secondary">
-            <?= $archivados ? "Ver Áreas Activas" : "Ver Áreas Archivadas" ?>
+            <?= $archivados ? "Ver áreas activas" : "Ver áreas archivadas" ?>
         </a>
     </div>
 </main>

@@ -17,12 +17,12 @@
                         <span class="badge rounded-pill text-bg-primary"><?= $area ?></span>
                     <?php endforeach; ?>
                 </div>
-                <span class="col text-secondary text-capitalize text-end"><?= $tipo ?></span>
+                <span class="col text-secondary text-end"><?= formatType($tipo) ?></span>
             </div>
             <p class="lh-lg"><?= $descripcion ?></p>
         </div>
         <div class="col-12 col-lg-4">
-            <div class="card">
+            <div class="card rounded-4">
                 <div class="card-body">
                     <div class="d-flex flex-column gap-4">
                         <div class="d-flex flex-column gap-2">
@@ -50,8 +50,8 @@
                             <?php endif; ?>
                         </div>
                         <div class="d-flex flex-column gap-2">
-                            <a type="button" class="btn btn-outline-secondary">Descargar Ficha</a>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Inscribirse al Curso</button>
+                            <a type="button" class="btn btn-outline-secondary">Descargar ficha</a>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Inscribirse al curso</button>
                             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -65,13 +65,13 @@
                                         <form class="modal-footer" method="POST">
                                             <input type="hidden" name="id" value="<?= $id ?>" />
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Regresar</button>
-                                            <button type="submit" class="btn btn-primary">Inscribirse al Curso</button>
+                                            <button type="submit" class="btn btn-primary">Inscribirse al curso</button>
                                         </form>
                                     </div>
                                 </div>
                             </div>
                             <?php if (!$isVirtual): ?>
-                                <span class="col text-secondary text-end fst-italic"># Cupos disponibles</span>
+                                <span class="col text-secondary text-end fst-italic"># cupos disponibles</span>
                             <?php endif; ?>
                         </div>
                     </div>

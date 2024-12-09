@@ -100,17 +100,17 @@
                 $id = htmlspecialchars($curso["id"]);
                 $nombre = htmlspecialchars($curso["nombre"]);
                 $instructorNombre = htmlspecialchars($curso["instructor_nombre"]);
-                $tipo = htmlspecialchars($curso["tipo"]);
+                $tipo = htmlspecialchars(ucfirst($curso["tipo"]));
                 ?>
                 <div class="col">
-                    <div class="card h-100">
+                    <div class="card h-100 rounded-4">
                         <a href="/admin/curso?id=<?= $id ?>">
                             <div class="pt-2 pe-3 shadow-sm" style="position: absolute; right: 0">
                                 <span class="badge bg-success">En progreso</span>
                             </div>
                             <img
                                 src="https://plus.unsplash.com/premium_photo-1682125773446-259ce64f9dd7?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                                class="card-img-top"
+                                class="card-img-top rounded-top-4"
                                 height="160px"
                                 style="object-fit: cover"
                                 alt="Portada del curso">
@@ -170,15 +170,15 @@
                             </form>
                             <p class="card-text text-secondary-emphasis pt-1"><?= $instructorNombre ?></p>
                         </div>
-                        <div class="card-footer d-flex justify-content-between align-items-end">
-                            <div>
+                        <div class="card-footer rounded-bottom-4 d-flex justify-content-between align-items-center">
+                            <div class="d-flex gap-2">
                                 <?php foreach ($curso["areas"] as $area): ?>
                                     <?php if (!empty($area)): ?>
                                         <span class="col-auto text-capitalize badge rounded-pill text-bg-primary"> <?= $area ?> </span>
                                     <?php endif; ?>
                                 <?php endforeach; ?>
                             </div>
-                            <span class="text-secondary text-capitalize text-end"><small><?= $tipo ?></small></span>
+                            <span class="text-secondary text-end"><small><?= $tipo ?></small></span>
                         </div>
                     </div>
                 </div>
@@ -209,7 +209,7 @@
     <div class="d-flex flex-column align-items-center gap-3 pt-3">
         <span class="text-center text-secondary">¿No encuentras el curso que buscas?</span>
         <a href="<?= $archivados ? "/admin/cursos" : "?archivados=true" ?>" type="btn" class="btn btn-outline-secondary">
-            <?= $archivados ? "Ver Cursos Activos" : "Ver Cursos Archivados" ?>
+            <?= $archivados ? "Ver cursos activos" : "Ver cursos archivados" ?>
         </a>
     </div>
 </main>

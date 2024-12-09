@@ -52,7 +52,7 @@
                 <div class="d-grid">
                     <a href="carreras/nuevo" type="button" class="btn btn-primary">
                         <i class="bi bi-plus-lg"></i>
-                        <span>Nueva Carrera</span>
+                        <span>Nueva carrera</span>
                     </a>
                 </div>
             </div>
@@ -165,7 +165,7 @@
     <div class="d-flex flex-column align-items-center gap-3 pt-3">
         <span class="text-center text-secondary">¿No encuentras la carrera que buscas?</span>
         <a href="<?= $archivados ? "/admin/carreras" : "?archivados=true" ?>" type="btn" class="btn btn-outline-secondary">
-            <?= $archivados ? "Ver Carreras Activas" : "Ver Carreras Archivadas" ?>
+            <?= $archivados ? "Ver carreras activas" : "Ver carreras archivadas" ?>
         </a>
     </div>
 </main>

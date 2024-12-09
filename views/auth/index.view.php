@@ -57,7 +57,7 @@
                         <?php endif; ?>
                     </div>
                     <div class="d-grid">
-                        <button class="btn btn-primary" type="submit">Iniciar Sesión</button>
+                        <button class="btn btn-primary" type="submit">Iniciar sesión</button>
                     </div>
                 </form>
             </div>

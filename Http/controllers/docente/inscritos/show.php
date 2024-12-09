@@ -10,7 +10,7 @@ return view("docente/inscritos/show.view.php", [
     "id" => htmlspecialchars($curso["id"]),
     "nombre" => htmlspecialchars($curso["nombre"]),
     "descripcion" => htmlspecialchars($curso["descripcion"]),
-    "tipo" => htmlspecialchars($curso["tipo"]),
+    "tipo" => htmlspecialchars(ucfirst($curso["tipo"])),
     "isVirtual" => htmlspecialchars($curso["modalidad"] == "virtual"),
     "areas" => explode(",", htmlspecialchars($curso["areas"])),
     "duracion" => htmlspecialchars($curso["duracion"]),
