@@ -17,7 +17,3 @@ $router->get("/oferta", "docente/oferta/index.php")->only(DOCENTE);
 $router->get("/oferta/curso", "docente/oferta/show.php")->only(DOCENTE);
 
 $router->post("/oferta/curso", "docente/oferta/subscribe.php")->only(DOCENTE);
-
-# Instruyendo
-
-$router->get("/instruyendo", "docente/instruyendo/index.php")->only(DOCENTE);

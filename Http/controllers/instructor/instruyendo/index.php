@@ -1,12 +1,12 @@
 <?php
 
 use Core\App;
-use Core\Database;
+use Core\Repositories\CursoRepository;
+use Core\Session;
 
-$db = App::resolve(Database::class);
+$allCursos = App::resolve(CursoRepository::class)->getAllTeaching(Session::getUser("id"));
 
-// $allAreas = $db->query("SELECT * FROM tblArea")->getAll();
-
-$title = "Cursos Instruyenndo";
-
-require  view("/instructor/instruyendo/index.view.php");
+return view("/instructor/instruyendo/index.view.php", [
+    "title" => "Cursos Instruyendo",
+    "allCursos" => $allCursos,
+]);
