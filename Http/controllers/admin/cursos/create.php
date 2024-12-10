@@ -1,42 +1,14 @@
 <?php
 
 use Core\App;
-use Core\Database;
+use Core\Repositories\AreaRepository;
+use Core\Repositories\InstructorRepository;
 
-$db = App::resolve(Database::class);
-
-$teachers = $db->query(
-    "SELECT i.INSTRUCTORID, u.USERID, u.USER_Nombre, u.USER_Apellido
-    FROM tblUsuario u
-    JOIN tblInstructor i ON u.USERID = i.USERID;
-    "
-)->getAll();
-
-$areas = $db->query("SELECT * FROM dbo.tblArea")->getAll();
-
-$todayDate = new DateTime();
-$formattedToday = $todayDate->format('Y-m-d');
-$tomorrowDate = new DateTime('tomorrow');
-$formattedTomorrow = $tomorrowDate->format('Y-m-d');
-
-$weekdays = [
-    'lunes' => 'Lunes',
-    'martes' => 'Martes',
-    'miercoles' => 'Miércoles',
-    'jueves' => 'Jueves',
-    'viernes' => 'Viernes'
-];
-
-$title = "Registrar Curso";
+$instructores = App::resolve(InstructorRepository::class)->getAll();
+$areas = App::resolve(AreaRepository::class)->getAll();
 
 return view("admin/cursos/create.view.php", [
-    "title" => "Registrar Curso",
-    "db" => $db,
-    "teachers" => $teachers,
+    "title" => "Registrar Servicio",
+    "instructores" => $instructores,
     "areas" => $areas,
-    "todayDate" => $todayDate,
-    "formattedToday" => $formattedToday,
-    "tomorrowDate" => $tomorrowDate,
-    "formattedTomorrow" => $formattedTomorrow,
-    "weekdays" => $weekdays
 ]);
