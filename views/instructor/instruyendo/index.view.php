@@ -33,7 +33,7 @@
                                         style="object-fit: cover; aspect-ratio: 1"
                                         alt="Portada del curso">
                                     <div>
-                                        <a class="h4 card-title link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="/inscritos/curso?id=<?= $id ?>">
+                                        <a class="h4 card-title link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="/instruyendo/curso?id=<?= $id ?>">
                                             <?= $nombre ?>
                                         </a>
                                         <p class="card-text text-secondary-emphasis pt-2">
