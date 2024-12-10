@@ -226,6 +226,20 @@ class CursoRepository extends RepositoryTemplate
             c.CURSOID, c.CURSO_Nombre, c.CURSO_Modalidad", [$cursoId])->getOrFail();
     }
 
+    public function getCursoConstancia($userId,$cursoId)
+    {
+        return $this->query("SELECT c.CURSOID,c.CURSO_Nombre,c.CURSO_Fecha_Final,CURSO_Tipo FROM tblCurso c
+            JOIN tblCursoDocente cd ON c.CURSOID = cd.CURSOID
+            JOIN tblDocente d ON cd.DOCENTEID = d.DOCENTEID
+            JOIN tblUsuario u ON d.USERID = u.USERID
+            WHERE u.USERID = ?
+            AND c.CURSOID = ?
+            AND cd.CURSODOCENTE_EncuestaEvaluacion = 1
+            AND c.CURSO_Activo = 0
+            AND cd.CURSODOCENTE_Calificacion > 0;", 
+            [$userId,$cursoId])->getOrFail();
+    }
+
     public function getAllReporte()
     {
         return $this->query(

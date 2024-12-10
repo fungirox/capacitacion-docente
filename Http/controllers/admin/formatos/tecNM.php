@@ -14,6 +14,9 @@ header("Content-Disposition: attachment; Filename=FD_AP_2022 Formato TecNM ".$fo
 ?>
 <html>
 <style type="text/css">
+    body {
+        font-family: Helvetica, sans-serif;
+    }
     .tg {
         border-collapse: collapse;
         border-spacing: 0;

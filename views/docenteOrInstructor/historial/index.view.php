@@ -61,6 +61,10 @@
                                     <input type="hidden" name="CURSOID" value="<?= $curso["CURSOID"] ?>">
                                     <button type="submit" class="btn btn-outline-primary">Evaluar curso</button>
                                 </form>
+                                <form class="d-grid col-12 col-md-auto" action="/historial/constanciaDocente" method="GET">
+                                    <input type="hidden" name="id" value="<?= $curso["CURSOID"] ?>">
+                                    <button type="submit" class="btn btn-outline-primary">Descargar constancia</button>
+                                </form>
                             </div>
                             <?php if ($key < count($cursosSinSegundaEncuesta) - 1): ?>
                                 <hr class="text-body-tertiary" />
@@ -86,6 +90,10 @@
                     <?php if (!empty($cursosConcluidos)): ?>
                         <?php foreach ($cursosConcluidos as $key => $curso): ?>
                             <div><?= $curso["CURSO_Nombre"]; ?></div>
+                            <form class="d-grid col-12 col-md-auto" action="/historial/constanciaDocente" method="GET">
+                                <input type="hidden" name="id" value="<?= $curso["CURSOID"] ?>">
+                                <button type="submit" class="btn btn-outline-primary">Descargar constancia</button>
+                            </form>
                             <?php if ($key < count($cursosConcluidos) - 1): ?>
                                 <hr class="text-body-tertiary" />
                             <?php endif; ?>
