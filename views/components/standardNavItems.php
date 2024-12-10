@@ -21,3 +21,8 @@ use Core\Session;
 <li class="nav-item">
     <a href="/historial" class="nav-link <?= urlIs("/historial") ? "active" : null ?>" aria-current="<?= urlIs("/historial") ? "page" : null ?>" id="historial">Historial</a>
 </li>
+<?php if (Session::role() === Roles::DOCENTE_AND_INSTRUCTOR || Session::role() === Roles::DOCENTE): ?>
+    <li class="nav-item">
+        <a href="/constancias" class="nav-link <?= urlIs("/constancias") ? "active" : null ?>" aria-current="<?= urlIs("/constancias") ? "page" : null ?>" id="constancias">Constancias</a>
+    </li>
+<?php endif; ?>
