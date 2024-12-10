@@ -33,7 +33,6 @@ if ($curso) {
         <head>
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title><?= $encuesta['ENCUESTA_Nombre'] ?></title>
                 <style>
                         body {
                                 font-family: Helvetica, sans-serif;

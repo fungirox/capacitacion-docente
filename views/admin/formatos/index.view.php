@@ -3,10 +3,7 @@
     <h1><?= $title ?></h1>
     <div class="">
         <a href="/admin/formatos/tecNM">FD_AP_2022 Formato TecNM</a>
-    </div>
-
-    <div class="">
-        
+        <a href="/admin/formatos/F06PSA19.02">Formato ITESCA</a>
     </div>
 </main>
 <?php view("components/styledFooter.php"); ?>

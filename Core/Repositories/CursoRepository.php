@@ -226,9 +226,10 @@ class CursoRepository extends RepositoryTemplate
             c.CURSOID, c.CURSO_Nombre, c.CURSO_Modalidad", [$cursoId])->getOrFail();
     }
 
-    public function getCursoConstancia($userId,$cursoId)
+    public function getCursoConstancia($userId, $cursoId)
     {
-        return $this->query("SELECT c.CURSOID,c.CURSO_Nombre,c.CURSO_Fecha_Final,CURSO_Tipo FROM tblCurso c
+        return $this->query(
+            "SELECT c.CURSOID,c.CURSO_Nombre,c.CURSO_Fecha_Final,CURSO_Tipo FROM tblCurso c
             JOIN tblCursoDocente cd ON c.CURSOID = cd.CURSOID
             JOIN tblDocente d ON cd.DOCENTEID = d.DOCENTEID
             JOIN tblUsuario u ON d.USERID = u.USERID
@@ -236,11 +237,12 @@ class CursoRepository extends RepositoryTemplate
             AND c.CURSOID = ?
             AND cd.CURSODOCENTE_EncuestaEvaluacion = 1
             AND c.CURSO_Activo = 0
-            AND cd.CURSODOCENTE_Calificacion > 0;", 
-            [$userId,$cursoId])->getOrFail();
+            AND cd.CURSODOCENTE_Calificacion > 0;",
+            [$userId, $cursoId]
+        )->getOrFail();
     }
 
-    public function getAllReporte()
+    public function getAllReporteTECNM()
     {
         return $this->query(
             "SELECT
@@ -290,6 +292,55 @@ class CursoRepository extends RepositoryTemplate
             curso.CURSO_Fecha_Inicio,
             curso.CURSO_Fecha_Final,
             usuario.USER_Apellido;"
+        )->getAll();
+    }
+
+    public function getAllReporteITESCA()
+    {
+        return $this->query(
+            "SELECT
+                curso.CURSOID,
+                curso.CURSO_Nombre,
+                CASE 
+                    WHEN MONTH(curso.CURSO_Fecha_Inicio) >= 1 AND MONTH(curso.CURSO_Fecha_Final) <= 5 THEN 
+                        'Enero-Mayo ' + CAST(YEAR(curso.CURSO_Fecha_Inicio) AS VARCHAR)
+                    WHEN MONTH(curso.CURSO_Fecha_Inicio) >= 6 AND MONTH(curso.CURSO_Fecha_Final) <= 7 THEN 
+                        'Verano ' + CAST(YEAR(curso.CURSO_Fecha_Inicio) AS VARCHAR)
+                    WHEN MONTH(curso.CURSO_Fecha_Inicio) >= 8 AND MONTH(curso.CURSO_Fecha_Final) <= 12 THEN 
+                        'Agosto-Diciembre ' + CAST(YEAR(curso.CURSO_Fecha_Inicio) AS VARCHAR)
+                    ELSE 'Otro periodo'
+                END AS Periodo,
+                COUNT(DISTINCT CASE WHEN cursoDocente.CURSODOCENTE_Calificacion > 70 THEN docente.DOCENTEID END) AS cantidad_docentes_total,
+                AVG(COALESCE(cursoDocente.CURSODOCENTE_Calificacion, 0)) AS promedio_calificacion,
+                curso.CURSO_Total_Horas AS total_horas
+            FROM
+                tblCurso AS curso
+            LEFT JOIN
+                tblCursoInstructor AS cursoInstructor ON curso.CURSOID = cursoInstructor.CURSOID
+            LEFT JOIN
+                tblInstructor AS instructor ON instructor.INSTRUCTORID = cursoInstructor.INSTRUCTORID
+            LEFT JOIN
+                tblUsuario AS usuario ON usuario.USERID = instructor.USERID
+            LEFT JOIN
+                tblCursoArea AS cursoArea ON cursoArea.CURSOID = curso.CURSOID
+            LEFT JOIN
+                tblCursoDocente AS cursoDocente ON curso.CURSOID = cursoDocente.CURSOID
+            LEFT JOIN
+                tblDocente AS docente ON cursoDocente.DOCENTEID = docente.DOCENTEID
+            LEFT JOIN
+                tblUsuario AS usuarioDocente ON docente.USERID = usuarioDocente.USERID
+            GROUP BY
+                curso.CURSOID,
+                curso.CURSO_Nombre,
+                curso.CURSO_Tipo,
+                curso.CURSO_Activo,
+                curso.CURSO_Perfil,
+                curso.CURSO_Modalidad,
+                usuario.USER_Nombre,
+                curso.CURSO_Fecha_Inicio,
+                curso.CURSO_Fecha_Final,
+                curso.CURSO_Total_Horas,
+                usuario.USER_Apellido;"
         )->getAll();
     }
 }

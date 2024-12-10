@@ -4,7 +4,7 @@ use Core\App;
 use Core\Session;
 use Core\Repositories\CursoRepository;
 
-$allCursos = App::resolve(CursoRepository::class)->getAllReporte();
+$allCursos = App::resolve(CursoRepository::class)->getAllReporteTECNM();
 date_default_timezone_set('America/Hermosillo');
 $todayDate = new DateTime();
 $formattedToday = $todayDate->format('d-m-Y');
@@ -14,9 +14,6 @@ header("Content-Disposition: attachment; Filename=FD_AP_2022 Formato TecNM ".$fo
 ?>
 <html>
 <style type="text/css">
-    body {
-        font-family: Helvetica, sans-serif;
-    }
     .tg {
         border-collapse: collapse;
         border-spacing: 0;
@@ -136,10 +133,3 @@ header("Content-Disposition: attachment; Filename=FD_AP_2022 Formato TecNM ".$fo
 
 </html>
 
-
-/*
-return view("/admin/formatos/tecNM.view.php", [
-"title" => "TECNM",
-"allCursos" => $allCursos
-]);
-*/

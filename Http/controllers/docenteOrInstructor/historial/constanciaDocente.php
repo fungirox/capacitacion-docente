@@ -20,8 +20,8 @@ if ($curso) {
         $tipo = strtoupper($curso["CURSO_Tipo"]);
         require base_path("vendor/autoload.php");
         $mpdf = new \Mpdf\Mpdf();
-        $mpdf->SetHTMLFooter('<img style="text-align: center;" src="C:\xampp\htdocs\capacitacion-docente\public\assets\images\footer.jpg" alt="Logo de la SEP" height="64" />');
-        $mpdf->SetHTMLHeader('<img style="text-align: center;" src="C:\xampp\htdocs\capacitacion-docente\public\assets\images\header.jpg" alt="Logo de la SEP" height="64" />');
+        $mpdf->SetHTMLFooter('<img style="text-align: center;" src="C:\xampp\htdocs\capacitacion-docente\public\assets\images\footer.jpg" alt="Logo de la SEP y TECNM" height="64" />');
+        $mpdf->SetHTMLHeader('<img style="text-align: center;" src="C:\xampp\htdocs\capacitacion-docente\public\assets\images\header.jpg" alt="Logo ITESCA" height="64" />');
         ob_start();
 ?>
         <html>
@@ -29,7 +29,6 @@ if ($curso) {
         <head>
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title><?= $encuesta['ENCUESTA_Nombre'] ?></title>
                 <style>
                         body {
                                 font-family: Arial, sans-serif;
@@ -39,23 +38,29 @@ if ($curso) {
                                 color: #595959;
                                 text-align: center;
                         }
+
                         h1 {
                                 font-size: 42px;
                         }
+
                         h2 {
                                 font-size: xx-large;
                         }
+
                         h4 {
                                 font-size: x-large;
                                 font-weight: lighter;
                         }
-                        h4{
+
+                        h4 {
                                 font-size: large;
                                 font-weight: lighter;
                         }
+
                         .container {
                                 margin: 12px;
                         }
+
                         .title,
                         .subtitle {
                                 display: inline;
@@ -93,7 +98,7 @@ if ($curso) {
                 <div class="container">
                         <h4>CD. OBREGÓN SONORA A <b><?= $fechaFormateada ?></b></h4>
                 </div>
-                <br><br>        
+                <br><br>
                 <div class="container">
                         <h4 class="title">LIC. MARGARITA VÉLEZ DE LA ROCHA</h4>
                         <p class="subtitle">DIRECTORA GENERAL</p>
@@ -102,11 +107,9 @@ if ($curso) {
 
         </html>
 <?php
-
         $html_code = ob_get_clean();
-
         $mpdf->WriteHTML($html_code);
-        $fileName = "constancia.pdf";
+        $fileName = $userData["USER_Nombre"] . " " . $userData["USER_Apellido"] . " - Constancia " .  $cursoId . ".pdf";
         $mpdf->Output($fileName, 'D');
         redirect("/admin/reportes");
         exit();
