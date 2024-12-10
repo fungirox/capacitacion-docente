@@ -73,7 +73,7 @@
                 <div class="d-grid">
                     <a href="cursos/nuevo" type="button" class="btn btn-primary">
                         <i class="bi bi-plus-lg"></i>
-                        <span>Nuevo curso</span>
+                        <span>Nuevo servicio</span>
                     </a>
                 </div>
             </div>
