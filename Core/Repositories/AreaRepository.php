@@ -4,7 +4,16 @@ namespace Core\Repositories;
 
 class AreaRepository extends RepositoryTemplate {
 
-    public function getAll($archivado = 0, $page = 1, $limit = 15, $search = "", $sortBy = "AREA_Nombre", $sortOrder = "ASC") {
+    public function getAll() {
+        return $this->query(
+            "SELECT AREAID AS id, AREA_Nombre AS nombre
+            FROM tblArea
+            WHERE AREA_Archivado = 0
+            ORDER BY AREA_Nombre ASC"
+        )->getAll();
+    }
+
+    public function getAllWithParams($archivado = 0, $page = 1, $limit = 15, $search = "", $sortBy = "AREA_Nombre", $sortOrder = "ASC") {
         $allowedSortColumns = ['AREA_Nombre', 'AREA_Siglas'];
 
         $sortBy = in_array($sortBy, $allowedSortColumns) ? $sortBy : 'AREA_Nombre';
