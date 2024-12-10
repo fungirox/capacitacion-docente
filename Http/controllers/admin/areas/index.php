@@ -12,7 +12,7 @@ $sortParts = explode('-', $sortInput);
 $sortBy = $sortParts[0];
 $sortOrder = $sortParts[1];
 
-$areasData = App::resolve(AreaRepository::class)->getAll(
+$areasData = App::resolve(AreaRepository::class)->getAllWithParams(
     $archivados ? 1 : 0,
     $page,
     15,
