@@ -1,144 +1,225 @@
-<?php view("components/styledHeader.php"); ?>
-<main role="main" class="container py-5" style="margin-top: 56px">
-    <h1 class="mb-4">Registrar Curso</h1>
-    <form action="/admin/cursos" method="POST" class="row g-3 my-4">
-        <!--- Nombre del Curso --->
-        <div class="form-group">
-            <label for="service-name" class="form-label fw-bold">Nombre del Curso</label>
-            <input type="text" class="form-control" required placeholder="Nombre del curso" id="service-name" name="service-name" />
+<?php view("components/styledHeader.php", ["title" => $title]); ?>
+<script defer>
+    $(document).ready(() => {
+        const modalidadPresencial = $('#modalidad-presencial');
+        const modalidadMixto = $('#modalidad-mixto');
+        const modalidadVirtual = $('#modalidad-virtual');
 
-            <label for="service-description" class="form-label mt-2 fw-bold">Descripción del curso</label>
-            <textarea class="form-control" required placeholder="Descripción del curso" id="service-description" name="service-description"> </textarea>
+        const horesPresencialesContainer = $('#horas-presenciales-container');
+        const aulaContainer = $('#aula-container');
+        const diasLabel = $('#dias-label-container');
+        const diasContainer = $('#dias-container');
+        const horaInicialContainer = $('#hora-inicial-container');
+        const horaFlecha = $('#hora-flecha');
+        const horaFinalContainer = $('#hora-final-container');
+        const limiteContainer = $('#limite-container');
+
+        const toggleInputs = () => {
+            if (modalidadVirtual.prop('checked')) {
+                aulaContainer.hide();
+                diasLabel.hide();
+                diasContainer.hide();
+                horaInicialContainer.hide();
+                horaFlecha.hide();
+                horaFinalContainer.hide();
+                limiteContainer.hide();
+            } else {
+                aulaContainer.show();
+                diasLabel.show();
+                diasContainer.show();
+                horaInicialContainer.show();
+                horaFlecha.show();
+                horaFinalContainer.show();
+                limiteContainer.show();
+            }
+            if (modalidadMixto.prop('checked')) {
+                horesPresencialesContainer.show()
+            } else {
+                horesPresencialesContainer.hide();
+            }
+        }
+
+        $('input[name="modalidad"]').on('change', () => {
+            toggleInputs();
+        });
+
+        toggleInputs();
+    });
+</script>
+<main role="main" class="container pt-5" style="margin-top: 56px">
+    <?php view("components/nestedTitle.php", ["url" => "/admin/cursos", "title" => $title]) ?>
+    <form class="row py-4" method="POST" action="/admin/usuarios">
+        <h2 class="mb-4">Información Básica</h2>
+        <div class="d-flex justify-content-center mb-3">
+            <div class="col-12 col-md-8 col-lg-6 btn-group" name="tipo" role="group">
+                <input type="radio" class="btn-check" name="tipo" id="tipo-curso" value="curso" autocomplete="off" <?= cleanOld("rol", "curso") === "curso" ? "checked" : "" ?>>
+                <label class="btn btn-outline-primary" for="tipo-curso">Curso</label>
+                <input type="radio" class="btn-check" name="tipo" id="tipo-taller" value="taller" autocomplete="off" <?= cleanOld("rol") === "taller" ? "checked" : "" ?>>
+                <label class="btn btn-outline-primary" for="tipo-taller">Taller</label>
+                <input type="radio" class="btn-check" name="tipo" id="tipo-diplomado" value="diplomado" autocomplete="off" <?= cleanOld("rol") === "diplomado" ? "checked" : "" ?>>
+                <label class="btn btn-outline-primary" for="tipo-diplomado">Diplomado</label>
+            </div>
         </div>
-        <!--- Tipo de Curso: curso, taller y diplomado --->
-        <div class="form-group">
-            <label class="form-label fw-bold">Tipo de servicio</label>
-            <div class="form-check">
-                <input type="radio" class="form-check-input" required name="service-type" id="curso" value="curso" checked="checked" />
-                <label class="form-check-label" for="curso">Curso</label>
-            </div>
-            <div class="form-check">
-                <input type="radio" class="form-check-input" required name="service-type" id="taller" value="taller" />
-                <label class="form-check-label" for="taller">Taller</label>
-            </div>
-            <div class="form-check">
-                <input type="radio" class="form-check-input" required name="service-type" id="diplomado" value="diplomado" />
-                <label class="form-check-label" for="diplomado" class="form-label">Diplomado</label>
+        <div class="col-12 mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control <?= isValidInput($errors, "nombre") ?>" id="nombre" name="nombre" value="<?= cleanOld("nombre") ?>">
+            <div class="invalid-feedback">
+                <?= $errors['nombre'] ?>
             </div>
         </div>
-        <!--- Tipo de servicio: interno, externo --->
-        <div class="form-group">
-            <label class="form-label fw-bold">Categoría de servicio</label>
-            <div class="form-check">
-                <input type="radio" class="form-check-input" required name="service-category" id="interno" value="0" checked="checked" />
-                <label class="form-check-label" for="interno" class="form-label">Interno</label>
-            </div>
-            <div class="form-check">
-                <input type="radio" class="form-check-input" required name="service-category" id="externo" value="1" />
-                <label class="form-check-label" for="externo" class="form-label">Externo</label>
+        <div class="col-12 mb-3">
+            <label for="descripcion" class="form-label">Descripción</label>
+            <textarea class="form-control <?= isValidInput($errors, "descripcion") ?>" rows="3" id="descripcion" name="descripcion" value="<?= cleanOld("descripcion") ?>"></textarea>
+            <div class="invalid-feedback">
+                <?= $errors['descripcion'] ?>
             </div>
         </div>
-        <!--- Seleccionar instructor --->
-        <div class="form-group">
-            <label for="teachers" class="form-label fw-bold">Instructores</label>
-            <select class="form-control" name="teachers" id="teachers">
-                <?php foreach ($teachers as $row) : ?>
-                    <?php
-                    $instructorID = htmlspecialchars($row["INSTRUCTORID"], ENT_QUOTES, "UTF-8");
-                    $userID = htmlspecialchars($row["USERID"], ENT_QUOTES, "UTF-8");
-                    $userFirstName = htmlspecialchars($row["USER_Nombre"], ENT_QUOTES, "UTF-8");
-                    $userLastName = htmlspecialchars($row["USER_Apellido"], ENT_QUOTES, "UTF-8");
-                    ?>
-                    <option value="<?= $instructorID ?>"><?= $userFirstName ?> <?= $userLastName ?></option>
-                <?php endforeach; ?>
-            </select>
-            <div class="text-end">
-                <button type="button" class="btn btn-link mt-2">Registrar instructor</button>
+        <div class="col-12 mb-3">
+            <label for="instructor" class="form-label">Instructor</label>
+            <div class="input-group">
+                <input class="form-control <?= isValidInput($errors, "instructor") ?>" list="instructores-list" id="instructor" name="instructor" placeholder="Buscar instructor...">
+                <datalist id="instructores-list">
+                    <?php foreach ($instructores as $instructor): ?>
+                        <option data-value="<?= $instructor["id"] ?>"><?= $instructor["nombre"] ?></option>
+                    <?php endforeach; ?>
+                </datalist>
+                <a href="#" class="btn btn-outline-secondary" type="button" id="button-addon2">Agregar instructor</a>
+            </div>
+            <div class="invalid-feedback">
+                <?= $errors['Instructor'] ?>
             </div>
         </div>
-        <!--- Áreas --->
-        <div class="form-group">
-            <label class="form-label fw-bold">Áreas</label>
-            <?php foreach ($areas as $row) : ?>
-                <?php
-                $areaSiglas = htmlspecialchars($row['AREA_Siglas'], ENT_QUOTES, 'UTF-8');
-                $areaID = htmlspecialchars($row['AREAID'], ENT_QUOTES, 'UTF-8');
-                ?>
+        <div class="col-12">
+            <label class="form-label">Áreas</label>
+            <?php foreach ($areas as $area): ?>
                 <div class="form-check">
-                    <input type="checkbox" class="form-check-input" name="areas[]" value="<?= $areaID ?>" id="<?= $areaID ?>">
-                    <label class="form-check-label" for="<?= $areaID ?>"><?= $areaSiglas ?></label>
+                    <input class="form-check-input" type="checkbox" id="area-<?= $area["id"] ?>" name="areas[]" value="<?= $area["id"] ?>">
+                    <label class="form-check-label" for="area-<?= $area["id"] ?>">
+                        <?= $area["nombre"] ?>
+                    </label>
                 </div>
             <?php endforeach; ?>
-        </div>
-        <!-- Horario -->
-        <div class="form-group">
-            <label for="physical-hours" class="form-label fw-bold">Horas presenciales</label>
-            <input type="number" class="form-control" min="0" required value="" id="physical-hours" name="physical-hours" />
-            <label for="virtual-hours" class="form-label fw-bold mt-2"">Horas virtuales</label>
-            <input type=" number" class="form-control" min="0" required value="" id="virtual-hours" name="virtual-hours" />
-        </div>
-        <!-- Fechas -->
-        <div class="form-group">
-            <label for="start-date" class="form-label fw-bold">Fecha de inicio</label>
-            <input type="date" class="form-control" id="start-date" name="start-date" min="<?= $formattedToday; ?>" value="<?= $formattedToday; ?>">
-            <label for="finish-date" class="mt-2  fw-bold" class="form-label">Fecha de finalización</label>
-            <input type="date" class="form-control" id="finish-date" name="finish-date" min="<?= $formattedToday; ?>" value="<?= $formattedTomorrow; ?>">
-        </div>
-        <!--- Aula -->
-        <div class="form-group">
-            <label for="classroom" class="form-label fw-bold">Aula</label>
-            <input type="number" class="form-control" min="0" id="classroom" name="classroom" />
-        </div>
-
-        <!--- Modalidad de servicio: presencial, virtual --->
-        <div class="form-group">
-            <label class="form-label fw-bold">Modalidad</label>
-            <div class="form-check">
-                <input type="radio" class="form-check-input" required name="service-category" id="presencial" value="0" checked="checked" />
-                <label class="form-check-label" for="presencial" class="form-label">Presencial</label>
-            </div>
-            <div class="form-check">
-                <input type="radio" class="form-check-input" required name="service-category" id="virtual" value="1" />
-                <label class="form-check-label" for="virtual" class="form-label">Virtual</label>
+            <div class="invalid-feedback">
+                <?= $errors['username'] ?>
             </div>
         </div>
-        <!--- Días de la semana -->
-        <div class="form-group">
-        <label class="form-label fw-bold">Horario</label>
-            <!-- Hora Inicio y Hora Final al inicio -->
-            <div class="d-flex align-items-center mb-4">
-                <div class="me-4">
-                    <label for="start-time" class="form-label fw-bold">Hora Inicio</label>
-                    <input type="time" id="horaInicio" name="horaInicio" class="form-control form-control-sm">
-                </div>
-                <div>
-                    <label for="end-time" class="form-label fw-bold">Hora Final</label>
-                    <input type="time" id="horaFinal" name="horaFinal" class="form-control form-control-sm">
-                </div>
+        <h2 class="mt-4 mb-3">Horario</h2>
+        <div class="col-12 d-flex justify-content-center mb-3">
+            <div class="col-12 col-md-8 col-lg-6 btn-group" name="modalidad" role="group">
+                <input type="radio" class="btn-check" name="modalidad" id="modalidad-presencial" value="presencial" autocomplete="off" <?= cleanOld("rol", "presencial") === "presencial" ? "checked" : "" ?>>
+                <label class="btn btn-outline-primary" for="modalidad-presencial">Presencial</label>
+                <input type="radio" class="btn-check" name="modalidad" id="modalidad-mixto" value="mixto" autocomplete="off" <?= cleanOld("rol") === "mixto" ? "checked" : "" ?>>
+                <label class="btn btn-outline-primary" for="modalidad-mixto">Mixto</label>
+                <input type="radio" class="btn-check" name="modalidad" id="modalidad-virtual" value="virtual" autocomplete="off" <?= cleanOld("rol") === "virtual" ? "checked" : "" ?>>
+                <label class="btn btn-outline-primary" for="modalidad-virtual">Virtual</label>
             </div>
-
-            <!-- Lista de días con checkboxes -->
-            <label class="fw-bold mb-2">Días de la semana</label>
-            <?php foreach ($weekdays as $id => $name) : ?>
-                <div class="form-check mb-2">
-                    <input type="checkbox" class="form-check-input" id="checkbox-<?= $id ?>" name="weekdays[]" value="<?= $id ?>">
-                    <label class="form-check-label" for="checkbox-<?= $id ?>"><?= $name ?></label>
-                </div>
-            <?php endforeach; ?>
         </div>
-
-        <div class="form-group">
-            <button type="submit" class="btn btn-success">Añadir</button>
+        <div class="w-100"></div>
+        <div class="col mb-3">
+            <label for="fecha-inicial" class="form-label">Fecha inicial</label>
+            <input type="date" class="form-control <?= isValidInput($errors, "fecha-inicial") ?>" id="fecha-inicial" name="fecha-inicial" value="<?= cleanOld("fecha-inicial") ?>">
+            <div class="invalid-feedback">
+                <?= $errors['fecha-inicial'] ?>
+            </div>
+        </div>
+        <div class="col-auto mb-3 d-flex align-items-end pb-2">
+            <i class="bi bi-arrow-right"></i>
+        </div>
+        <div class="col mb-3">
+            <label for="fecha-final" class="form-label">Fecha final</label>
+            <input type="date" class="form-control <?= isValidInput($errors, "fecha-final") ?>" id="fecha-final" name="fecha-final" value="<?= cleanOld("fecha-final") ?>">
+            <div class="invalid-feedback">
+                <?= $errors['fecha-final'] ?>
+            </div>
+        </div>
+        <div class="w-100"></div>
+        <div class="col mb-3">
+            <label for="horas-total" class="form-label">Horas en total</label>
+            <input type="number" class="form-control <?= isValidInput($errors, "horas-total") ?>" id="horas-total" name="horas-total" value="<?= cleanOld("horas-total") ?>">
+            <div class="invalid-feedback">
+                <?= $errors['horas-total'] ?>
+            </div>
+        </div>
+        <div id="horas-presenciales-container" class="col mb-3">
+            <label for="horas-presenciales" class="form-label">Horas presenciales</label>
+            <input type="number" class="form-control <?= isValidInput($errors, "horas-presenciales") ?>" id="horas-presenciales" name="horas-presenciales" value="<?= cleanOld("horas-presenciales") ?>">
+            <div class="invalid-feedback">
+                <?= $errors['horas-presenciales'] ?>
+            </div>
+        </div>
+        <div id="aula-container" class="col-12 mb-3">
+            <label for="aula" class="form-label">Aula</label>
+            <input type="text" class="form-control <?= isValidInput($errors, "aula") ?>" id="aula" name="aula" value="<?= cleanOld("aula") ?>">
+            <div class="invalid-feedback">
+                <?= $errors['aula'] ?>
+            </div>
+        </div>
+        <label id="dias-label-container" class="form-label">Días</label>
+        <div id="dias-container" class="btn-group mb-3" role="group" aria-label="Basic checkbox toggle button group" id="dias">
+            <input type="checkbox" class="btn-check" id="lunes" name="dias[]" value="lunes" autocomplete="off">
+            <label class="btn btn-outline-secondary" for="lunes">
+                <span class="d-block d-md-none">LU</span>
+                <span class="d-none d-md-block">Lunes</span>
+            </label>
+            <input type="checkbox" class="btn-check" id="martes" name="dias[]" value="martes" autocomplete="off">
+            <label class="btn btn-outline-secondary" for="martes">
+                <span class="d-block d-md-none">MA</span>
+                <span class="d-none d-md-block">Martes</span>
+            </label>
+            <input type="checkbox" class="btn-check" id="miercoles" name="dias[]" value="miercoles" autocomplete="off">
+            <label class="btn btn-outline-secondary" for="miercoles">
+                <span class="d-block d-md-none">MI</span>
+                <span class="d-none d-md-block">Miércoles</span>
+            </label>
+            <input type="checkbox" class="btn-check" id="jueves" name="dias[]" value="jueves" autocomplete="off">
+            <label class="btn btn-outline-secondary" for="jueves">
+                <span class="d-block d-md-none">JU</span>
+                <span class="d-none d-md-block">Jueves</span>
+            </label>
+            <input type="checkbox" class="btn-check" id="viernes" name="dias[]" value="viernes" autocomplete="off">
+            <label class="btn btn-outline-secondary" for="viernes">
+                <span class="d-block d-md-none">VI</span>
+                <span class="d-none d-md-block">Viernes</span>
+            </label>
+        </div>
+        <div class="w-100"></div>
+        <div id="hora-inicial-container" class="col mb-3">
+            <label for="hora-inicial" class="form-label">Hora inicial</label>
+            <input type="time" class="form-control <?= isValidInput($errors, "hora-inicial") ?>" id="hora-inicial" name="hora-inicial" value="<?= cleanOld("hora-inicial") ?>">
+            <div class="invalid-feedback">
+                <?= $errors['hora-inicial'] ?>
+            </div>
+        </div>
+        <div id="hora-flecha" class="col-auto row pb-2 mb-3 align-items-end">
+            <i class="col bi bi-arrow-right"></i>
+        </div>
+        <div id="hora-final-container" class="col mb-3">
+            <label for="hora-final" class="form-label">Hora final</label>
+            <input type="time" class="form-control <?= isValidInput($errors, "hora-final") ?>" id="hora-final" name="hora-final" value="<?= cleanOld("hora-final") ?>">
+            <div class="invalid-feedback">
+                <?= $errors['hora-final'] ?>
+            </div>
+        </div>
+        <div class="w-100"></div>
+        <div id="limite-container" class="col-12 mb-3">
+            <label for="limite" class="form-label">Límite de estudiantes</label>
+            <input type="number" class="form-control <?= isValidInput($errors, "limite") ?>" id="limite" name="limite" value="<?= cleanOld("limite") ?>">
+            <div class="invalid-feedback">
+                <?= $errors['limite'] ?>
+            </div>
+        </div>
+        <div id="externo-switch">
+            <div class="form-check mb-4">
+                <input class="form-check-input" type="checkbox" role="switch" name="externo" id="externo" value="1" <?= cleanOld("externo", "0") === "1" ? "checked" : "" ?>>
+                <label class="form-check-label" for="externo">El servicio es externo</label>
+            </div>
+        </div>
+        <div class="order-2 order-md-1 col-md-auto col-12 ms-md-auto mb-3">
+            <div class="d-grid"><a href="/admin/cursos" class="btn btn-outline-secondary">Cancelar</a></div>
+        </div>
+        <div class="order-1 order-md-2 col-md-auto col-12 mb-3">
+            <div class="d-grid"><button type="submit" class="btn btn-primary">Agregar</button></div>
         </div>
     </form>
-
-    <script>
-        $(document).ready(function() {
-            $('#teachers').select2({
-                placeholder: "Selecciona un instructor",
-                allowClear: true
-            });
-        });
-    </script>
 </main>
 <?php view("components/styledFooter.php"); ?>
