@@ -20,25 +20,28 @@
                 $dias = htmlspecialchars(shortFormattedDays($curso["dias"]));
                 $hora = htmlspecialchars(formattedHourRange($curso["hora_inicial"], $curso["hora_final"]));
                 ?>
-                <div class="col-12"> 
+                <div class="col-12">
                     <div class="card rounded-4">
                         <div class="card-body">
-                            <div class="row">
-                                <a class="col-auto" href="/inscritos/curso?id=<?= $id ?>">
+                            <div class="row justify-content-between align-items-center gap-3">
+                                <div class="col d-flex gap-3 align-items-center">
                                     <img
                                         src="https://plus.unsplash.com/premium_photo-1682125773446-259ce64f9dd7?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                                        height="100px"
-                                        width="100px"
-                                        style="object-fit: cover; aspect-ratio: 1; border-radius: 4px"
+                                        height="80vh"
+                                        width="80vh"
+                                        class="img-fluid rounded-3"
+                                        style="object-fit: cover; aspect-ratio: 1"
                                         alt="Portada del curso">
-                                </a>
-                                <div class="col-6">
-                                    <a class="h4 card-title link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="/inscritos/curso?id=<?= $id ?>">
-                                        <?= $nombre ?>
-                                    </a>
-                                    <p class="card-text text-secondary-emphasis pt-2"><?= $instructorNombre ?></p>
+                                    <div>
+                                        <a class="h4 card-title link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="/inscritos/curso?id=<?= $id ?>">
+                                            <?= $nombre ?>
+                                        </a>
+                                        <p class="card-text text-secondary-emphasis pt-2"><?= $instructorNombre ?></p>
+                                    </div>
                                 </div>
-                                <div class="col text-end"><span class="badge text-bg-primary"><?= $tipo ?></span></div>
+                                <div class="col-auto align-self-start">
+                                    <span class="badge text-bg-primary"><?= $tipo ?></span>
+                                </div>
                             </div>
                         </div>
                         <div class="card-footer rounded-bottom-4 d-flex justify-content-center align-items-center gap-2">
