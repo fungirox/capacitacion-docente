@@ -19,6 +19,11 @@ class Validator {
         return strlen($value) === 5 && ctype_alpha($value);
     }
 
+    public static function servicio($servicio) {
+        $servicios = array("curso", "taller", "diplomado");
+        return in_array($servicio, $servicios);
+    }
+
     public static function inArray($value, $array) {
         return in_array($value, $array);
     }
