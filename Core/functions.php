@@ -147,6 +147,10 @@ function getAmOrPm($hour) {
     return $hour < 12 ? "AM" : "PM";
 }
 
+function formatTime($time) {
+    return substr($time, 0, 5) . " " . getAmOrPm($time);
+}
+
 function formattedHourRange($startHour, $endHour) {
-    return substr($startHour, 0, 5) . " " . getAmOrPm($startHour) . " - " . substr($endHour, 0, 5) . " " . getAmOrPm($endHour);
+    return  formatTime($startHour) . " - " . formatTime($endHour);
 }

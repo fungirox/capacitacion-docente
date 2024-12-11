@@ -15,9 +15,12 @@
                 $tipo = htmlspecialchars(ucfirst($curso["tipo"]));
                 $modalidad = $curso["modalidad"];
                 $aula = htmlspecialchars($curso["aula"]);
-                $duración = htmlspecialchars(formattedDateRange(formatDate($curso["inicio"]), formatDate($curso["final"])));
+                $fechaInicio = htmlspecialchars(formatDate($curso["inicio"]));
+                $fechaFinal = htmlspecialchars(formatDate($curso["final"]));
+                $duración = htmlspecialchars(formattedDateRange($fechaInicio, $fechaFinal));
                 $dias = htmlspecialchars(shortFormattedDays($curso["dias"]));
-                $hora = htmlspecialchars(formattedHourRange($curso["hora_inicial"], $curso["hora_final"]));
+                $horaInicial = htmlspecialchars(formatTime($curso["hora_inicial"]));
+                $horaFinal = htmlspecialchars(formatTime($curso["hora_final"]));
                 $enProgreso = $curso["en_progreso"] == 1;
                 ?>
                 <div class="col-12">
@@ -51,16 +54,26 @@
                                 <?php endif; ?>
                             </div>
                         </div>
-                        <div class="card-footer rounded-bottom-4 d-flex justify-content-center align-items-center gap-2">
-                            <?php if ($curso["modalidad"] !== "virtual"): ?>
-                                <span class="text-secondary text-center"><?= $aula ?></span>
-                                <i class="bi bi-dot text-secondary"></i>
-                                <span class="text-secondary text-center"><?= $dias ?></span>
-                                <i class="bi bi-dot text-secondary"></i>
-                                <span class="text-secondary text-center"><?= $hora ?></span>
-                                <i class="bi bi-dot text-secondary"></i>
-                            <?php endif ?>
-                            <span class="text-secondary text-center"><?= $duración ?></span>
+                        <div class="card-footer rounded-bottom-4">
+                            <div class="d-flex gap-md-3 justify-content-center align-items-center">
+                                <?php if ($curso["modalidad"] !== "virtual"): ?>
+                                    <small class="text-secondary text-center fs-6">
+                                        <?= $aula ?>
+                                    </small>
+                                    <i class="bi bi-dot text-secondary"></i>
+                                    <small class="text-secondary text-center fs-6"><?= $dias ?></small>
+                                    <i class="bi bi-dot text-secondary"></i>
+                                    <small class="text-secondary text-center">
+                                        <span class="d-none d-md-block"><?= "$horaInicial - $horaFinal" ?></span>
+                                        <span class="d-block d-md-none"><?= $horaInicial ?><br /><?= $horaFinal ?></span>
+                                    </small>
+                                    <i class="bi bi-dot text-secondary"></i>
+                                <?php endif ?>
+                                <small class="text-secondary text-center">
+                                    <span class="d-none d-md-block"><?= $duración ?></span>
+                                    <span class="d-block d-md-none"><?= $fechaInicio ?><br /><?= $fechaFinal ?></span>
+                                </small>
+                            </div>
                         </div>
                     </div>
                 </div>
