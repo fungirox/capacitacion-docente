@@ -1,6 +1,30 @@
 <?php view("components/styledHeader.php", ["title" => $title]); ?>
-<script defer>
+<script>
     $(document).ready(() => {
+        const $dropdown = $('#instructorDropdown');
+        const $search = $('#instructor-search');
+        const $hiddenInput = $('#instructor-selected');
+        const $dropdownItems = $('.dropdown-item');
+
+        $search.on('keyup', function() {
+            const searchTerm = $(this).val().toLowerCase();
+            $dropdownItems.each(function() {
+                const text = $(this).text().toLowerCase();
+                $(this).toggle(text.includes(searchTerm));
+            });
+        });
+
+        $dropdownItems.on('click', function() {
+            const instructorName = $(this).text();
+            const instructorId = $(this).data('value');
+
+            $dropdown.text(instructorName);
+
+            $hiddenInput.val(instructorId);
+
+            $dropdown.dropdown('toggle');
+        });
+
         const modalidadPresencial = $('#modalidad-presencial');
         const modalidadMixto = $('#modalidad-mixto');
         const modalidadVirtual = $('#modalidad-virtual');
@@ -48,7 +72,7 @@
 </script>
 <main role="main" class="container pt-5" style="margin-top: 56px">
     <?php view("components/nestedTitle.php", ["url" => "/admin/cursos", "title" => $title]) ?>
-    <form class="row py-4" method="POST" action="/admin/usuarios">
+    <form class="row py-4" method="POST" action="/admin/cursos">
         <h2 class="mb-4">Información Básica</h2>
         <div class="d-flex justify-content-center mb-3">
             <div class="col-12 col-md-8 col-lg-6 btn-group" name="tipo" role="group">
@@ -60,6 +84,9 @@
                 <label class="btn btn-outline-primary" for="tipo-diplomado">Diplomado</label>
             </div>
         </div>
+        <?php if (isset($errors['tipo'])): ?>
+            <small class="text-danger-emphasis mb-3"><?= $errors['tipo'] ?></small>
+        <?php endif; ?>
         <div class="col-12 mb-3">
             <label for="nombre" class="form-label">Nombre</label>
             <input type="text" class="form-control <?= isValidInput($errors, "nombre") ?>" id="nombre" name="nombre" value="<?= cleanOld("nombre") ?>">
@@ -75,18 +102,24 @@
             </div>
         </div>
         <div class="col-12 mb-3">
-            <label for="instructor" class="form-label">Instructor</label>
-            <div class="input-group">
-                <input class="form-control <?= isValidInput($errors, "instructor") ?>" list="instructores-list" id="instructor" name="instructor" placeholder="Buscar instructor...">
-                <datalist id="instructores-list">
-                    <?php foreach ($instructores as $instructor): ?>
-                        <option data-value="<?= $instructor["id"] ?>"><?= $instructor["nombre"] ?></option>
-                    <?php endforeach; ?>
-                </datalist>
-                <a href="#" class="btn btn-outline-secondary" type="button" id="button-addon2">Agregar instructor</a>
-            </div>
-            <div class="invalid-feedback">
-                <?= $errors['Instructor'] ?>
+            <div class="dropdown">
+                <label for="descripcion" class="form-label">Descripción</label>
+                <button class="form-select text-start" id="instructorDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    Seleccionar Instructor...
+                </button>
+                <div class="dropdown-menu w-100 shadow" aria-labelledby="instructorDropdown">
+                    <div class="px-2">
+                        <input type="text" class="form-control" id="instructor-search" placeholder="Buscar instructor...">
+                    </div>
+                    <div class="instructor-list pt-2">
+                        <?php foreach ($instructores as $instructor): ?>
+                            <button class="dropdown-item" type="button" data-value="<?= $instructor["id"] ?>">
+                                <?= $instructor["nombre"] ?>
+                            </button>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+                <input type="hidden" id="instructor-selected" name="instructor" />
             </div>
         </div>
         <div class="col-12">
