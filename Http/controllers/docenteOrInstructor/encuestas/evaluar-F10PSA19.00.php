@@ -17,9 +17,9 @@ $courseID = $_POST["CURSOID"];
 
 $docenteId = App::resolve(DocenteRepository::class) -> getDocenteId($userId);
 App::resolve(CursoDocenteRepository::class) -> updateEncuestaEvaluacion($docenteId["DOCENTEID"],$courseID);
-App::resolve(RespuestaRepository::class) -> setRespuesta($docenteId["DOCENTEID"],1,$courseID);
+App::resolve(RespuestaRepository::class) -> setRespuesta($docenteId["DOCENTEID"],2,$courseID);
 $respuestasId = App::resolve(RespuestaRepository::class) -> getUltimoId();
-$preguntasIds = App::resolve(PreguntaRepository::class) -> getPreguntas(1);
+$preguntasIds = App::resolve(PreguntaRepository::class) -> getPreguntas(2);
 
 foreach ($preguntasIds as $row) {
     $preguntaId = $row["PREGUNTAID"];

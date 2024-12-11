@@ -1,5 +1,5 @@
 <?php view("components/styledHeader.php"); ?>
-<main role="main" class="container py-5" style="margin-top: 56px">
+<main role="main" class="container py-4" style="margin-top: 56px">
     <div class="d-flex flex-column align-items-start gap-2 pb-4">
         <div class="row align-items-center">
             <a class="col-12 col-md-auto" href="/historial"><i class="bi bi-arrow-left-circle" style="font-size: 1.5rem;"></i></a>
@@ -7,29 +7,19 @@
         </div>
         <span class="badge rounded-pill text-bg-primary"><span class="fw-normal"><?= $instructorNombre ?></span></span>
     </div>
-    <span>Por favor, responda el siguiente cuestionario de la manera más objetiva. Coloque un número del 1 al 5 considerando
-        que uno es muy malo y 5 excelente, anote el que mejor describa su percepción del evento.</span>
+    <span>Esta encuesta busca conocer la eficacia de los cursos de actualización y capacitación docente.
+        Agradecemos que con sinceridad marque la respuesta que a su juicio corresponde a la
+        afirmación realizada con base en la siguiente escala:</span>
     <div class="pt-4">
-        <form action="/historial/evaluarCurso/F04PSA19" method="POST">
+        <form action="/historial/evaluarCurso/F08PSA19.00" method="POST">
             <input type="hidden" name="CURSOID" value="<?= $courseId ?>">
             <div class="d-flex flex-column gap-3">
-                <?php 
-                    $mostrarSubtituloInstructor = true;
-                    $mostrarSubtituloOrganizacion = true;
+                <?php
                     foreach ($questions as $row):
                         $questionID = htmlspecialchars($row["PREGUNTAID"], ENT_QUOTES, "UTF-8");
                         $questionText = htmlspecialchars($row["PREGUNTA_Texto"], ENT_QUOTES, "UTF-8");
                         $options = range(1, 5);
                 ?>
-                <?php if ($mostrarSubtituloInstructor && strpos($questionText, $preguntaInstructor) !== false): ?>
-                    <h2>Evaluación de instructor</h2>
-                    <?php $mostrarSubtituloInstructor = false; // Evita mostrar el subtítulo más de una vez ?>
-                <?php endif; ?>
-
-                <?php if ($mostrarSubtituloOrganizacion && strpos($questionText, $preguntaOrganizacion) !== false): ?>
-                    <h2>Evaluación de organización y logística</h2>
-                    <?php $mostrarSubtituloOrganizacion = false; // Evita mostrar el subtítulo más de una vez ?>
-                <?php endif; ?>
                 <div class="row g-2 align-items-start">
                     <label for="<?= $questionID ?>" class="col-12 col-md-8"><?= $questionText ?></label>
                     <div class="btn-group col-12 col-md-4" role="group">

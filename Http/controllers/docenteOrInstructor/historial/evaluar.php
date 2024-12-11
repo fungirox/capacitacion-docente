@@ -2,40 +2,41 @@
 
 use Core\App;
 use Core\Database;
+use Core\Repositories\CursoRepository;
+use Core\Repositories\PreguntaRepository;
+use Core\Repositories\UsuarioRepository;
 use Core\Roles\Roles;
 use Core\Session;
 
 $db = App::resolve(Database::class);
 
 $isDocenteAndInstructor = Session::role() === Roles::DOCENTE_AND_INSTRUCTOR;
+$userId = Session::getUser("id");
+$cursoId = $_GET["CURSOID"];
+$curso = App::resolve(CursoRepository::class)->getEvaluacion($cursoId,$userId);
 
-$instructorName = $db->query("SELECT u.USER_Nombre + ' ' + u.USER_Apellido as nombre
-     FROM tblCurso c
-     JOIN tblCursoInstructor ci ON c.CURSOID = ci.CURSOID
-     JOIN tblInstructor i ON ci.INSTRUCTORID = i.INSTRUCTORID
-     JOIN tblUsuario u ON i.USERID = u.USERID
-     WHERE c.CURSOID = ?", [$_POST["CURSOID"]])->get();
+if($curso){
+    $instructorName = App::resolve(UsuarioRepository::class)->getInstructorFullName($cursoId);
+    $courseName = $curso["CURSO_Nombre"];
+    if($curso["CURSO_Modalidad"] === "virtual"){
+        return view("/docenteOrInstructor/encuestas/evaluarCurso-F10PSA19.00.view.php", [
+            "title" => "Evaluar Curso",
+            "courseName" => $courseName,
+            "instructorNombre" => $instructorName["nombre"],
+            "questions" => App::resolve(PreguntaRepository::class)->getPreguntas(2),
+            "courseId" => $cursoId
+        ]);
+    }
+    else{
+        return view("/docenteOrInstructor/encuestas/evaluarCurso-F04PSA19.view.php", [
+            "title" => "Evaluar Curso",
+            "courseName" => $courseName,
+            "instructorNombre" => $instructorName["nombre"],
+            "questions" => App::resolve(PreguntaRepository::class)->getPreguntas(1),
+            "preguntaInstructor" => "La o el instructor inició en los primeros 10 minutos",
+            "preguntaOrganizacion" => "La organización del evento fue",
+            "courseId" => $cursoId
+        ]);
+    }
+}
 
-$courseName = $db->query("SELECT c.CURSO_Nombre
-    FROM tblCurso c
-    WHERE c.CURSOID = ?", [$_POST["CURSOID"]])->get();
-
-// Esta es la pregunta clave que inicia la evaluación del instructor
-$preguntaInstructor = "La o el instructor inició en los primeros 10 minutos";
-
-// Esta es la pregunta clave que inicia la evaluación de la organización
-$preguntaOrganizacion = "La organización del evento fue";
-
-// # Aquí necesitamos el id del curso que elegimos desde la interfaz de "historial" por ahora dejaré cursoid = 1
-$questions = $db->query("SELECT *
-FROM tblPregunta
-WHERE ENCUESTAID = '1'")->getAll();
-
-return view("/docenteOrInstructor/encuestas/evaluarCurso-F04PSA19.view.php", [
-    "title" => "Evaluar Curso",
-    "courseName" => $courseName,
-    "instructorNombre" => $instructorName["nombre"],
-    "questions" => $questions,
-    "preguntaInstructor" => $preguntaInstructor,
-    "preguntaOrganizacion" => $preguntaOrganizacion
-]);
