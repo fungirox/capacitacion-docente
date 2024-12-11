@@ -4,7 +4,7 @@ use Core\App;
 use Core\Database;
 use Core\Roles\Roles;
 use Core\Session;
-use Core\Repositories\CursoRepository;
+use Core\Repositories\PreguntaRepository;
 use Core\Repositories\DocenteRepository;
 use Core\Repositories\CursoDocenteRepository;
 use Core\Repositories\RespuestaRepository;
@@ -19,20 +19,14 @@ $docenteId = App::resolve(DocenteRepository::class) -> getDocenteId($userId);
 App::resolve(CursoDocenteRepository::class) -> updateEncuestaEficacia($docenteId["DOCENTEID"],$courseID);
 App::resolve(RespuestaRepository::class) -> setRespuesta($docenteId["DOCENTEID"],3,$courseID);
 $respuestasId = App::resolve(RespuestaRepository::class) -> getUltimoId();
+$preguntasIds = App::resolve(PreguntaRepository::class) -> getPreguntas(3);
 
-$preguntasIds = $_POST["questions"];
-
-$preguntasIdsConsulta = [];
-foreach ($preguntasIds as $row){
-    $string = $row["PREGUNTAID"];
-    $preguntasIdsConsulta[] = htmlspecialchars($_POST[$string]);
-}
-
-foreach ($preguntasIds as $index => $row) {
+foreach ($preguntasIds as $row) {
     $preguntaId = $row["PREGUNTAID"];
     $respuestaTexto = htmlspecialchars($_POST[$preguntaId]);
-    App::resolve(RespuestaPreguntaRepository::class) -> setRespuestas($respuestaTexto,$respuestasId,$preguntaId);
+    App::resolve(RespuestaPreguntaRepository::class)->setRespuestas($respuestaTexto, $respuestasId["RESPUESTAID"], $preguntaId);
 }
 
 header("location: /historial");
 die();
+ 

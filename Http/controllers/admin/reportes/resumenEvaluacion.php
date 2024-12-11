@@ -11,7 +11,7 @@ use Core\Repositories\CursoDocenteRepository;
 
 $db = App::resolve(Database::class);
 $cursoId = $_GET["id"];
-$curso = App::resolve(CursoRepository::class)->getCursoConcluido($cursoId);
+$curso = App::resolve(CursoRepository::class)->getCursoEvaluado($cursoId);
 if ($curso) {
         $modalidad = $curso["CURSO_Modalidad"] === "virtual";
         $encuesta = App::resolve(EncuestaRepository::class)->getById($modalidad ? 2 : 1);
@@ -27,9 +27,15 @@ if ($curso) {
         $summatoryInstructor = 0;
         $summatoryOrganizacion = 0;
 
+        if (!$modalidad) {
+                $columna1 = array_slice($questions, 0, 9); // Preguntas 1 a 9
+                $columna2 = array_slice($questions, 9, 5); // Preguntas 10 a 14
+                $totalRows = max(count($columna1), count($columna2));
+        }
         ob_start();
 ?>
         <html>
+
         <head>
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,6 +45,7 @@ if ($curso) {
                         }
                 </style>
         </head>
+
         <body>
                 <div class="document_header">
                         <div class="document_description">
@@ -152,7 +159,7 @@ if ($curso) {
                                                         </td>
                                                 </tr>
                                                 <tr>
-                                                        <?php if ($modalidad == False): ?>
+                                                        <?php if (!$modalidad): ?>
                                                                 <td class="tg-v0hj" colspan="2">Instructor</td>
                                                                 <td class="tg-v0hj" colspan="2">Organización y logística</td>
                                                         <?php else: ?>
@@ -160,7 +167,7 @@ if ($curso) {
                                                         <?php endif; ?>
                                                 </tr>
                                                 <tr>
-                                                        <?php if ($modalidad == False): ?>
+                                                        <?php if (!$modalidad): ?>
                                                                 <td class="tg-v0hj">Rasgo a evaluar</td>
                                                                 <td class="tg-v0hj">Eval.</td>
                                                                 <td class="tg-v0hj">Rasgo a evaluar</td>
@@ -170,11 +177,8 @@ if ($curso) {
                                                                 <td class="tg-v0hj" colspan="1">Eval.</td>
                                                         <?php endif; ?>
                                                 </tr>
-                                                <?php if ($modalidad == False): ?>
-                                                        <?php 
-                                                        $columna1 = array_slice($questions, 0, 9); // Preguntas 1 a 9
-                                                        $columna2 = array_slice($questions, 9, 5); // Preguntas 10 a 14
-                                                        $totalRows = max(count($columna1), count($columna2));
+                                                <?php if (!$modalidad): ?>
+                                                        <?php
                                                         for ($i = 0; $i < $totalRows; $i++): ?>
                                                                 <tr>
                                                                         <?php if (isset($columna1[$i])):
@@ -212,18 +216,22 @@ if ($curso) {
                                                         <?php endforeach; ?>
                                                 <?php endif; ?>
                                                 <tr>
-                                                        <?php if ($modalidad == False): ?>
+                                                        <?php if (!$modalidad): ?>
                                                                 <td class="tg-9ck0">Evaluación promedio</td>
                                                                 <td class="tg-0pky" style="text-align: center"><?php $evaluacionInstructor = round($summatoryInstructor / count($columna1));  ?><?= $evaluacionInstructor ?></td>
                                                                 <td class="tg-9ck0">Evaluación promedio</td>
                                                                 <td class="tg-0pky" style="text-align: center"><?php $evaluacionOrganizacion = round($summatoryOrganizacion / count($columna2)); ?><?= $evaluacionOrganizacion ?></td>
                                                         <?php else: ?>
+                                                                <?php if (count($questions) > 0) {
+                                                                        $summatoryInstructor = round($summatoryInstructor / count($questions));
+                                                                }
+                                                                ?>
                                                                 <td class="tg-9ck0" colspan="3">Evaluación promedio</td>
-                                                                <td class="tg-0pky" colspan="1" style="text-align: center">"placeholder"</td>
+                                                                <td class="tg-0pky" colspan="1" style="text-align: center"><?= $summatoryInstructor ?></td>
                                                         <?php endif; ?>
 
                                                 </tr>
-                                                <?php if ($modalidad == False): ?>
+                                                <?php if (!$modalidad): ?>
                                                         <tr>
                                                                 <td class="tg-9ck0" colspan="3">Evaluación general</td>
                                                                 <td class="tg-0pky" style="text-align: center"><?= ($evaluacionInstructor + $evaluacionOrganizacion) / 2 ?></td>

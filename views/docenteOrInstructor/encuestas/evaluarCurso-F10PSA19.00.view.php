@@ -12,7 +12,6 @@
     <div class="pt-4">
         <form action="/historial/evaluarCurso/F10PSA19.00" method="POST">
             <input type="hidden" name="CURSOID" value="<?= $courseId ?>">
-            <input type="hidden" name="questions" value="<?= $questions ?>">
             <div class="d-flex flex-column gap-3">
                 <?php
                     foreach ($questions as $row):

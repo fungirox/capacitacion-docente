@@ -92,8 +92,8 @@ class CursoRepository extends RepositoryTemplate
                         WHERE u.USERID = ?
                         AND c.CURSOID = ?
                         AND cd.CURSODOCENTE_EncuestaEvaluacion IS NULL
-                        AND c.CURSO_Activo = 0
                         AND c.CURSO_En_Progreso = 0
+                        AND c.CURSO_Archivado = 0
                         AND cd.CURSODOCENTE_Calificacion > 0;",
             [$userId, $cursoId]
         )->getOrFail();
@@ -110,8 +110,8 @@ class CursoRepository extends RepositoryTemplate
                         AND c.CURSOID = ?
                         AND cd.CURSODOCENTE_EncuestaEvaluacion = 1
                         AND cd.CURSODOCENTE_EncuestaEficacia IS NULL
-                        AND c.CURSO_Activo = 0
                         AND c.CURSO_En_Progreso = 0
+                        AND c.CURSO_Archivado = 0
                         AND cd.CURSODOCENTE_Calificacion > 0;",
             [$userId, $cursoId]
         )->getOrFail();
@@ -128,8 +128,8 @@ class CursoRepository extends RepositoryTemplate
             WHERE u.USERID = ?
             AND cd.CURSODOCENTE_EncuestaEvaluacion IS NULL
             AND cd.CURSODOCENTE_EncuestaEficacia IS NULL
-            AND c.CURSO_Activo = 0
             AND c.CURSO_En_Progreso = 0
+            AND c.CURSO_Archivado = 0
             AND cd.CURSODOCENTE_Calificacion > 0;",
             [$userId]
         )->getAll();
@@ -149,6 +149,7 @@ class CursoRepository extends RepositoryTemplate
             AND cd.CURSODOCENTE_EncuestaEvaluacion = 1
             AND cd.CURSODOCENTE_EncuestaEficacia IS NULL
             AND c.CURSO_En_Progreso = 0
+            AND c.CURSO_Archivado = 0
             AND cd.CURSODOCENTE_Calificacion > 0;",
             [$userId]
         )->getAll();
@@ -168,6 +169,7 @@ class CursoRepository extends RepositoryTemplate
             AND cd.CURSODOCENTE_EncuestaEvaluacion = 1
             AND cd.CURSODOCENTE_EncuestaEficacia = 1
             AND c.CURSO_En_Progreso = 0
+            AND c.CURSO_Archivado = 0
             AND cd.CURSODOCENTE_Calificacion > 0;",
             [$userId]
         )->getAll();
@@ -210,20 +212,39 @@ class CursoRepository extends RepositoryTemplate
     public function getCursoConcluido($cursoId)
     {
         return $this->query("SELECT 
-            c.CURSOID, 
-            c.CURSO_Nombre,
-            c.CURSO_Modalidad
-        FROM 
-            tblCurso c
-        JOIN 
-            tblCursoDocente cd ON c.CURSOID = cd.CURSOID
-        WHERE 
-            cd.CURSODOCENTE_EncuestaEvaluacion = 1
-            AND cd.CURSODOCENTE_EncuestaEficacia = 1
-            AND cd.CURSODOCENTE_Calificacion > 0
-            AND c.CURSOID = ?
-        GROUP BY 
-            c.CURSOID, c.CURSO_Nombre, c.CURSO_Modalidad", [$cursoId])->getOrFail();
+                c.CURSOID, 
+                c.CURSO_Nombre
+            FROM 
+                tblCurso c
+            JOIN 
+                tblCursoDocente cd ON c.CURSOID = cd.CURSOID
+            WHERE 
+                cd.CURSODOCENTE_EncuestaEvaluacion = 1
+                AND cd.CURSODOCENTE_EncuestaEficacia = 1
+                AND cd.CURSODOCENTE_Calificacion > 0
+                AND c.CURSOID = ?
+            GROUP BY 
+                c.CURSOID, c.CURSO_Nombre", 
+            [$cursoId])->getOrFail();
+    }
+
+    public function getCursoEvaluado($cursoId)
+    {
+        return $this->query("SELECT 
+                c.CURSOID, 
+                c.CURSO_Nombre,
+                c.CURSO_Modalidad
+            FROM 
+                tblCurso c
+            JOIN 
+                tblCursoDocente cd ON c.CURSOID = cd.CURSOID
+            WHERE 
+                cd.CURSODOCENTE_EncuestaEvaluacion = 1
+                AND cd.CURSODOCENTE_Calificacion > 0
+                AND c.CURSOID = ?
+            GROUP BY 
+                c.CURSOID, c.CURSO_Nombre, c.CURSO_Modalidad", 
+            [$cursoId])->getOrFail();
     }
 
     public function getCursoConstancia($userId, $cursoId)
@@ -236,7 +257,7 @@ class CursoRepository extends RepositoryTemplate
             WHERE u.USERID = ?
             AND c.CURSOID = ?
             AND cd.CURSODOCENTE_EncuestaEvaluacion = 1
-            AND c.CURSO_Activo = 0
+            AND c.CURSO_Archivado = 0
             AND cd.CURSODOCENTE_Calificacion > 0;",
             [$userId, $cursoId]
         )->getOrFail();

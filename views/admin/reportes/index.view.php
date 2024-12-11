@@ -12,7 +12,7 @@
 
                 </div>
                 
-            <?php endforeach; ?>
+            <?php endforeach; ?> 
         <?php else: ?>
             <span class="text-secondary">No hay cursos evaluados.</span>
         <?php endif; ?>
@@ -25,7 +25,7 @@
                 <div>
                     <a href="/admin/resumenEvaluacion?id=<?= $curso["CURSOID"]?>">Resumen encuesta evaluacion</a>
             <!-- pendiente -->
-                    <a href="/admin/reportes-F10PSA19.00?id=<?= $curso["CURSOID"]?>">Resumen encuesta eficacia</a> 
+                    <a href="/admin/resumenEficacia?id=<?= $curso["CURSOID"]?>">Resumen encuesta eficacia</a> 
                 </div>
             <?php endforeach; ?>
         <?php else: ?>

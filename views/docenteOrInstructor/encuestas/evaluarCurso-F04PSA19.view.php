@@ -12,9 +12,8 @@
     <div class="pt-4">
         <form action="/historial/evaluarCurso/F04PSA19" method="POST">
             <input type="hidden" name="CURSOID" value="<?= $courseId ?>">
-            <input type="hidden" name="questions" value="<?= $questions ?>">
             <div class="d-flex flex-column gap-3">
-                <?php
+                <?php 
                     $mostrarSubtituloInstructor = true;
                     $mostrarSubtituloOrganizacion = true;
                     foreach ($questions as $row):

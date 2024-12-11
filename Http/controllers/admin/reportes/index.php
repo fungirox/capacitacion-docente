@@ -9,3 +9,4 @@ return view("/admin/reportes/index.view.php", [
     "cursosConcluidos" => App::resolve(CursoRepository::class)->getCursosConcluidosAdmin(),
     "cursosSinEficacia" => App::resolve(CursoRepository::class)->getCursosSinEficaciaAdmin()
 ]);
+ 

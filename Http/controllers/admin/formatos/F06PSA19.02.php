@@ -17,12 +17,16 @@ ob_start();
 $totalHoras = 0;
 $totalDocentes = 0;
 $totalCalificaciones = 0;
-
-foreach ($resultados as $curso) {
-    $totalHoras += $curso['CURSO_Total_Horas'];
-    $totalDocentes += $curso['cantidad_docentes_total'];
-    $totalCalificaciones += $curso['promedio_calificacion'];
+if(count($allCursos)>0){
+    foreach ($allCursos as $curso) {
+        $totalHoras += $curso['CURSO_Total_Horas'];
+        $totalDocentes += $curso['cantidad_docentes_total'];
+        $totalCalificaciones += $curso['promedio_calificacion'];
+    }
+    $totalCalificaciones = round($totalCalificaciones / count($curso));
 }
+
+
 ?>
 <html>
 <style type="text/css">
