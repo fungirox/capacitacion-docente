@@ -15,4 +15,17 @@ class InstructorRepository extends RepositoryTemplate {
             ORDER BY USER_Nombre + ' ' + USER_Apellido ASC"
         )->getAll();
     }
+
+    public function getAllIds($instructorId) {
+        return $this->query(
+            "SELECT 
+                INSTRUCTORID as id
+            FROM tblInstructor AS instructor
+            LEFT JOIN tblUsuario AS usuario ON instructor.USERID = usuario.USERID
+            WHERE USER_Activo = 1 AND
+            INSTRUCTORID = ?
+            ORDER BY USER_Nombre + ' ' + USER_Apellido ASC",
+            [$instructorId]
+        )->getAll();
+    }
 }
