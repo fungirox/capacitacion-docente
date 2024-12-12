@@ -104,7 +104,7 @@
                 ?>
                 <div class="col">
                     <div class="card h-100 rounded-4">
-                        <a href="/admin/curso?id=<?= $id ?>">
+                        <a href="/admin/cursos/curso?id=<?= $id ?>">
                             <div class="pt-2 pe-3 shadow-sm" style="position: absolute; right: 0">
                                 <span class="badge bg-success">En progreso</span>
                             </div>
