@@ -682,28 +682,6 @@ class CursoRepository extends RepositoryTemplate {
         )->get();
     }
 
-    public function subscribe($cursoId, $userId) {
-        return $this->query(
-            "INSERT INTO tblCursoDocente (CURSOID, DOCENTEID, CURSODOCENTE_Calificacion)
-            VALUES (
-                ?,
-                (SELECT docente.DOCENTEID
-                FROM tblDocente as docente
-                WHERE USERID = ?),
-                ?
-            )",
-            [$cursoId, $userId, 100]
-        );
-    }
-
-    public function unsubscribe($cursoDocenteId) {
-        return $this->query(
-            "DELETE FROM tblCursoDocente
-            WHERE CURSODOCENTEID = ?",
-            [$cursoDocenteId]
-        );
-    }
-
     public function getEvaluacion($cursoId, $userId) {
         return $this->query(
             "SELECT c.* FROM tblCurso c
@@ -977,5 +955,67 @@ class CursoRepository extends RepositoryTemplate {
                 curso.CURSO_Total_Horas,
                 usuario.USER_Apellido;"
         )->getAll();
+    }
+
+    public function subscribe($cursoId, $userId) {
+        return $this->query(
+            "INSERT INTO tblCursoDocente (CURSOID, DOCENTEID, CURSODOCENTE_Calificacion)
+            VALUES (
+                ?,
+                (SELECT docente.DOCENTEID
+                FROM tblDocente as docente
+                WHERE USERID = ?),
+                ?
+            )",
+            [$cursoId, $userId, 100]
+        );
+    }
+
+    public function unsubscribe($cursoDocenteId) {
+        return $this->query(
+            "DELETE FROM tblCursoDocente
+            WHERE CURSODOCENTEID = ?",
+            [$cursoDocenteId]
+        );
+    }
+
+    public function addServicioVirtual($tipo, $nombre, $descripcion, $instructorId, $areas, $perfil, $modalidad, $fechaInicio, $fechaFinal, $horas, $externo) {
+        $this->query(
+            "INSERT INTO tblCurso (
+                CURSO_Tipo,
+                CURSO_Nombre,
+                CURSO_Descripcion,
+                CURSO_Perfil,
+                CURSO_Modalidad,
+                CURSO_Fecha_Inicio,
+                CURSO_Fecha_Final,
+                CURSO_Total_Horas,
+                CURSO_Externo
+            )
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            [$tipo, $nombre, $descripcion, $perfil, $modalidad, $fechaInicio, $fechaFinal, $horas, $externo]
+        );
+
+        $cursoId = $this->getDatabase()->lastInsertId();
+
+        $this->query(
+            "INSERT INTO tblCursoInstructor (CURSOID, INSTRUCTORID) VALUES (?, ?)",
+            [$cursoId, $instructorId]
+        );
+
+        $placeholders = implode(',', array_fill(0, count($areas), '(?, ?)'));
+
+        $params = [];
+        foreach ($areas as $areaId) {
+            $params[] = $cursoId;
+            $params[] = $areaId;
+        }
+
+        $this->query(
+            "INSERT INTO tblCursoArea (CURSOID, AREAID) VALUES $placeholders",
+            $params
+        );
+
+        return $cursoId;
     }
 }
