@@ -1,14 +1,44 @@
 <?php
 
+use Core\App;
+use Core\Repositories\CursoRepository;
 use Http\Forms\ServicioForm;
 
 ServicioForm::validate($attributes = [
     "tipo" => trim($_POST["tipo"]),
     "nombre" => trim($_POST["nombre"]),
     "descripcion" => trim($_POST["descripcion"]),
+    "instructor" => trim($_POST["instructor"]),
+    "areas" => $_POST["areas"],
+    "perfil" => trim($_POST["perfil"]),
+    "modalidad" => trim($_POST["modalidad"]),
+    "fechaInicial" => trim($_POST["fecha-inicial"]),
+    "fechaFinal" => trim($_POST["fecha-final"]),
+    "horasTotal" => trim($_POST["horas-total"]),
+    "horasPresenciales" => trim($_POST["horas-presenciales"]),
+    "aula" => trim($_POST["aula"]),
+    "dias" => isset($_POST["dias"]) ? $_POST["dias"] : null,
+    "horaInicial" => trim($_POST["hora-inicial"]),
+    "horaFinal" => trim($_POST["hora-final"]),
+    "limite" => trim($_POST["limite"]),
+    "externo" => isset($_POST["externo"]) ? $_POST["externo"] : "0"
 ]);
 
-redirect("/admin/cursos");
+$newCursoId = App::resolve(CursoRepository::class)->addServicioVirtual(
+    $attributes["tipo"],
+    $attributes["nombre"],
+    $attributes["descripcion"],
+    $attributes["instructor"],
+    $attributes["areas"],
+    $attributes["perfil"],
+    $attributes["modalidad"],
+    $attributes["fechaInicial"],
+    $attributes["fechaFinal"],
+    $attributes["horasTotal"],
+    $attributes["externo"],
+);
+
+redirect("/admin/cursos/curso?id=$newCursoId");
 
 // use Core\App;
 // use Core\Database;
