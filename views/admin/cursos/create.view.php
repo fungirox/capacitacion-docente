@@ -76,11 +76,11 @@
         <h2 class="mb-4">Información Básica</h2>
         <div class="d-flex justify-content-center mb-3">
             <div class="col-12 col-md-8 col-lg-6 btn-group" name="tipo" role="group">
-                <input type="radio" class="btn-check" name="tipo" id="tipo-curso" value="curso" autocomplete="off" <?= cleanOld("rol", "curso") === "curso" ? "checked" : "" ?>>
+                <input type="radio" class="btn-check" name="tipo" id="tipo-curso" value="curso" autocomplete="off" <?= cleanOld("tipo", "curso") === "curso" ? "checked" : "" ?>>
                 <label class="btn btn-outline-primary" for="tipo-curso">Curso</label>
-                <input type="radio" class="btn-check" name="tipo" id="tipo-taller" value="taller" autocomplete="off" <?= cleanOld("rol") === "taller" ? "checked" : "" ?>>
+                <input type="radio" class="btn-check" name="tipo" id="tipo-taller" value="taller" autocomplete="off" <?= cleanOld("tipo") === "taller" ? "checked" : "" ?>>
                 <label class="btn btn-outline-primary" for="tipo-taller">Taller</label>
-                <input type="radio" class="btn-check" name="tipo" id="tipo-diplomado" value="diplomado" autocomplete="off" <?= cleanOld("rol") === "diplomado" ? "checked" : "" ?>>
+                <input type="radio" class="btn-check" name="tipo" id="tipo-diplomado" value="diplomado" autocomplete="off" <?= cleanOld("tipo") === "diplomado" ? "checked" : "" ?>>
                 <label class="btn btn-outline-primary" for="tipo-diplomado">Diplomado</label>
             </div>
         </div>
@@ -96,17 +96,20 @@
         </div>
         <div class="col-12 mb-3">
             <label for="descripcion" class="form-label">Descripción</label>
-            <textarea class="form-control <?= isValidInput($errors, "descripcion") ?>" rows="3" id="descripcion" name="descripcion" value="<?= cleanOld("descripcion") ?>"></textarea>
+            <textarea class="form-control <?= isValidInput($errors, "descripcion") ?>" rows="3" id="descripcion" name="descripcion"><?= cleanOld("descripcion") ?></textarea>
             <div class="invalid-feedback">
                 <?= $errors['descripcion'] ?>
             </div>
         </div>
         <div class="col-12 mb-3">
             <div class="dropdown">
-                <label for="descripcion" class="form-label">Descripción</label>
-                <button class="form-select text-start" id="instructorDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <label for="descripcion" class="form-label">Instructor</label>
+                <button class="form-select text-start <?= isValidInput($errors, "instructor") ?>" id="instructorDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                     Seleccionar Instructor...
                 </button>
+                <div class="invalid-feedback">
+                    <?= $errors['instructor'] ?>
+                </div>
                 <div class="dropdown-menu w-100 shadow" aria-labelledby="instructorDropdown">
                     <div class="px-2">
                         <input type="text" class="form-control" id="instructor-search" placeholder="Buscar instructor...">
@@ -122,7 +125,7 @@
                 <input type="hidden" id="instructor-selected" name="instructor" />
             </div>
         </div>
-        <div class="col-12">
+        <div class="col-12 mb-3">
             <label class="form-label">Áreas</label>
             <?php foreach ($areas as $area): ?>
                 <div class="form-check">
@@ -133,8 +136,15 @@
                 </div>
             <?php endforeach; ?>
             <div class="invalid-feedback">
-                <?= $errors['username'] ?>
+                <?= $errors['areas'] ?>
             </div>
+        </div>
+        <div class="col-12">
+            <label for="perfil" class="form-label">Tipo de perfil</label>
+            <select name="perfil" id="perfil" class="form-select" aria-label="Perfil">
+                <option value="0" selected>Actualización profesinal</option>
+                <option value="1">Formación docente</option>
+            </select>
         </div>
         <h2 class="mt-4 mb-3">Horario</h2>
         <div class="col-12 d-flex justify-content-center mb-3">
@@ -242,7 +252,7 @@
             </div>
         </div>
         <div id="externo-switch">
-            <div class="form-check mb-4">
+            <div class="form-check mb-2">
                 <input class="form-check-input" type="checkbox" role="switch" name="externo" id="externo" value="1" <?= cleanOld("externo", "0") === "1" ? "checked" : "" ?>>
                 <label class="form-check-label" for="externo">El servicio es externo</label>
             </div>
