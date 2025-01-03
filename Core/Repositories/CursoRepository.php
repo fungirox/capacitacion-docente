@@ -395,10 +395,25 @@ class CursoRepository extends RepositoryTemplate {
                     FROM tblHorarioCurso AS horario
                     WHERE horario.CURSOID = curso.CURSOID
                 ) AS hora_final,
+                (
+                    CASE
+                        WHEN curso.CURSO_Perfil = 0
+                        THEN 'Actualización profesional'
+                        ELSE 'Formación docente'
+                    END
+                ) AS perfil,
+                (
+                    CASE
+                        WHEN curso.CURSO_Externo = 0
+                        THEN 'Servicio interno'
+                        ELSE 'Servicio externo'
+                    END
+                ) AS origen,
                 curso.CURSO_Total_Horas as duracion,
                 curso.CURSO_Fecha_Inicio as inicio,
                 curso.CURSO_Fecha_Final as final,
                 curso.CURSO_Aula as aula,
+                curso.CURSO_Limite as limite,
                 usuario.USER_Nombre + ' ' + usuario.USER_Apellido AS instructor_nombre
             FROM
                 tblCurso AS curso
@@ -420,10 +435,13 @@ class CursoRepository extends RepositoryTemplate {
                 CAST(curso.CURSO_Descripcion AS VARCHAR(MAX)),
                 curso.CURSO_Tipo,
                 curso.CURSO_Modalidad,
+                curso.CURSO_Externo,
+                curso.CURSO_Perfil,
                 curso.CURSO_Total_Horas,
                 curso.CURSO_Fecha_Inicio,
                 curso.CURSO_Fecha_Final,
                 curso.CURSO_Aula,
+                curso.CURSO_Limite,
                 usuario.USER_Nombre,
                 usuario.USER_Apellido",
             [$cursoId]
@@ -466,10 +484,25 @@ class CursoRepository extends RepositoryTemplate {
                     FROM tblHorarioCurso AS horario
                     WHERE horario.CURSOID = curso.CURSOID
                 ) AS hora_final,
+                (
+                    CASE
+                        WHEN curso.CURSO_Perfil = 0
+                        THEN 'Actualización profesional'
+                        ELSE 'Formación docente'
+                    END
+                ) AS perfil,
+                (
+                    CASE
+                        WHEN curso.CURSO_Externo = 0
+                        THEN 'Servicio interno'
+                        ELSE 'Servicio externo'
+                    END
+                ) AS origen,
                 curso.CURSO_Total_Horas as duracion,
                 curso.CURSO_Fecha_Inicio as inicio,
                 curso.CURSO_Fecha_Final as final,
                 curso.CURSO_Aula as aula,
+                curso.CURSO_Limite as limite,
                 instructor_usuario.USER_Nombre + ' ' + instructor_usuario.USER_Apellido AS instructor_nombre
             FROM
                 tblCurso AS curso
@@ -497,10 +530,13 @@ class CursoRepository extends RepositoryTemplate {
                 CAST(curso.CURSO_Descripcion AS VARCHAR(MAX)),
                 curso.CURSO_Tipo,
                 curso.CURSO_Modalidad,
+                curso.CURSO_Externo,
+                curso.CURSO_Perfil,
                 curso.CURSO_Total_Horas,
                 curso.CURSO_Fecha_Inicio,
                 curso.CURSO_Fecha_Final,
                 curso.CURSO_Aula,
+                curso.CURSO_Limite,
                 instructor_usuario.USER_Nombre,
                 instructor_usuario.USER_Apellido",
             [$cursoId, $userId]
@@ -543,10 +579,25 @@ class CursoRepository extends RepositoryTemplate {
                     FROM tblHorarioCurso AS horario
                     WHERE horario.CURSOID = curso.CURSOID
                 ) AS hora_final,
+                (
+                    CASE
+                        WHEN curso.CURSO_Perfil = 0
+                        THEN 'Actualización profesional'
+                        ELSE 'Formación docente'
+                    END
+                ) AS perfil,
+                (
+                    CASE
+                        WHEN curso.CURSO_Externo = 0
+                        THEN 'Servicio interno'
+                        ELSE 'Servicio externo'
+                    END
+                ) AS origen,
                 curso.CURSO_Total_Horas as duracion,
                 curso.CURSO_Fecha_Inicio as inicio,
                 curso.CURSO_Fecha_Final as final,
                 curso.CURSO_Aula as aula,
+                curso.CURSO_Limite as limite,
                 instructor_usuario.USER_Nombre + ' ' + instructor_usuario.USER_Apellido AS instructor_nombre
             FROM
                 tblCurso AS curso
@@ -581,10 +632,13 @@ class CursoRepository extends RepositoryTemplate {
                 CAST(curso.CURSO_Descripcion AS VARCHAR(MAX)),
                 curso.CURSO_Tipo,
                 curso.CURSO_Modalidad,
+                curso.CURSO_Externo,
+                curso.CURSO_Perfil,
                 curso.CURSO_Total_Horas,
                 curso.CURSO_Fecha_Inicio,
                 curso.CURSO_Fecha_Final,
                 curso.CURSO_Aula,
+                curso.CURSO_Limite,
                 instructor_usuario.USER_Nombre,
                 instructor_usuario.USER_Apellido",
             [$userId, $userId, $cursoId]
@@ -626,10 +680,25 @@ class CursoRepository extends RepositoryTemplate {
                     FROM tblHorarioCurso AS horario
                     WHERE horario.CURSOID = curso.CURSOID
                 ) AS hora_final,
+                (
+                    CASE
+                        WHEN curso.CURSO_Perfil = 0
+                        THEN 'Actualización profesional'
+                        ELSE 'Formación docente'
+                    END
+                ) AS perfil,
+                (
+                    CASE
+                        WHEN curso.CURSO_Externo = 0
+                        THEN 'Servicio interno'
+                        ELSE 'Servicio externo'
+                    END
+                ) AS origen,
                 curso.CURSO_Total_Horas as duracion,
                 curso.CURSO_Fecha_Inicio as inicio,
                 curso.CURSO_Fecha_Final as final,
                 curso.CURSO_Aula as aula,
+                curso.CURSO_Limite as limite,
                 usuario.USER_Nombre + ' ' + usuario.USER_Apellido AS instructor_nombre
             FROM
                 tblCurso AS curso
@@ -650,10 +719,13 @@ class CursoRepository extends RepositoryTemplate {
                 CAST(curso.CURSO_Descripcion AS VARCHAR(MAX)),
                 curso.CURSO_Tipo,
                 curso.CURSO_Modalidad,
+                curso.CURSO_Externo,
+                curso.CURSO_Perfil,
                 curso.CURSO_Total_Horas,
                 curso.CURSO_Fecha_Inicio,
                 curso.CURSO_Fecha_Final,
                 curso.CURSO_Aula,
+                curso.CURSO_Limite,
                 usuario.USER_Nombre,
                 usuario.USER_Apellido",
             [$cursoId, $userId]
