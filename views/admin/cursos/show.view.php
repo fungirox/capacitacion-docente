@@ -44,7 +44,15 @@
             <div class="card rounded-4">
                 <div class="card-body">
                     <div class="d-flex flex-column gap-4">
-                        <div class="d-flex flex-column gap-2">
+                        <div class="d-flex flex-column gap-3">
+                            <div class="d-flex gap-3 align-items-center">
+                                <i class="bi bi-mortarboard fs-4 text-secondary-emphasis"></i>
+                                <span class="text-secondary-emphasis"><?= $origen ?></span>
+                            </div>
+                            <div class="d-flex gap-3 align-items-center">
+                                <i class="bi bi-book fs-4 text-secondary-emphasis"></i>
+                                <span class="text-secondary-emphasis"><?= $perfil ?></span>
+                            </div>
                             <div class="d-flex gap-3 align-items-center">
                                 <i class="bi bi-stopwatch fs-4 text-secondary-emphasis"></i>
                                 <span class="text-secondary-emphasis"><?= $duracion . " Horas" ?></span>
@@ -72,7 +80,7 @@
                             <div type="button" class="btn btn-outline-secondary">Descargar ficha</div>
                             <div type="button" class="btn btn-primary">Entrar al curso</div>
                             <?php if (!$isVirtual): ?>
-                                <span class="col text-secondary text-end fst-italic"># cupos disponibles</span>
+                                <span class="col text-secondary text-end fst-italic"><?= $limite ?> cupos disponibles</span>
                             <?php endif; ?>
                         </div>
                     </div>

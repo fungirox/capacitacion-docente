@@ -25,7 +25,15 @@
             <div class="card rounded-4">
                 <div class="card-body">
                     <div class="d-flex flex-column gap-4">
-                        <div class="d-flex flex-column gap-2">
+                        <div class="d-flex flex-column gap-3">
+                            <div class="d-flex gap-3 align-items-center">
+                                <i class="bi bi-mortarboard fs-4 text-secondary-emphasis"></i>
+                                <span class="text-secondary-emphasis"><?= $origen ?></span>
+                            </div>
+                            <div class="d-flex gap-3 align-items-center">
+                                <i class="bi bi-book fs-4 text-secondary-emphasis"></i>
+                                <span class="text-secondary-emphasis"><?= $perfil ?></span>
+                            </div>
                             <div class="d-flex gap-3 align-items-center">
                                 <i class="bi bi-stopwatch fs-4 text-secondary-emphasis"></i>
                                 <span class="text-secondary-emphasis"><?= $duracion . " Horas" ?></span>
