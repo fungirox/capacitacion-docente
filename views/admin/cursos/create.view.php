@@ -142,7 +142,7 @@
         <div class="col-12">
             <label for="perfil" class="form-label">Tipo de perfil</label>
             <select name="perfil" id="perfil" class="form-select" aria-label="Perfil">
-                <option value="0" selected>Actualización profesinal</option>
+                <option value="0" selected>Actualización profesional</option>
                 <option value="1">Formación docente</option>
             </select>
         </div>
