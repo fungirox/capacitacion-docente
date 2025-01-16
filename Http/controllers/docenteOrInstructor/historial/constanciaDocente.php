@@ -20,7 +20,7 @@ if ($curso) {
         $tipo = strtoupper($curso["CURSO_Tipo"]);
         require base_path("vendor/autoload.php");
         $mpdf = new \Mpdf\Mpdf();
-        $mpdf->SetHTMLFooter('<img style="text-align: center;" src="C:\xampp\htdocs\capacitacion-docente\public\assets\images\footer.jpg" alt="Logo de la SEP y TECNM" height="64" />');
+        $mpdf->SetHTMLFooter('<img style="text-align: center;" src="C:\xampp\htdocs\capacitacion-docente\public\assets\images\footer.jpg" alt="Logo de la SEP y TECNM" height="64" /><br><p style="text-align: left;">folio constancia</p>');
         $mpdf->SetHTMLHeader('<img style="text-align: center;" src="C:\xampp\htdocs\capacitacion-docente\public\assets\images\header.jpg" alt="Logo ITESCA" height="64" />');
         ob_start();
 ?>
@@ -96,7 +96,7 @@ if ($curso) {
                         <h2><?= $curso["CURSO_Nombre"] ?></h2>
                 </div>
                 <div class="container">
-                        <h4>CD. OBREGÓN SONORA A <b><?= $fechaFormateada ?></b></h4>
+                        <h4>IMPARTIDO DEL <b><?= $fechaFormateada ?></b> DE <b>segunda fecha</b> EN EL INSTITUTO TECNOLÓGICO SUPERIOR DE CAJEME, CON UNA DURACIÓN DE <b>horas</b> EN LA MODALIDAD <b>modalidad</b>.</h4>
                 </div>
                 <br><br>
                 <div class="container">
