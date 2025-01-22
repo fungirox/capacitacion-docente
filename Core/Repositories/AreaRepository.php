@@ -99,4 +99,8 @@ class AreaRepository extends RepositoryTemplate {
             [$state, $id]
         );
     }
+
+    public function getAllIds() {
+        return $this->query("SELECT AREAID FROM TblArea WHERE TblArea.AREA_Archivado = 0")->getAll();
+    }
 }
