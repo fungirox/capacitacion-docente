@@ -138,7 +138,7 @@
             <label class="form-label">Áreas</label>
             <?php foreach ($areas as $area): ?>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="area-<?= $area["id"] ?>" name="areas[]" value="<?= $area["id"] ?>">
+                    <input class="form-check-input" <?= in_array($area["id"], old("areas", [])) ? "checked" : "" ?> type="checkbox" id="area-<?= $area["id"] ?>" name="areas[]" value="<?= $area["id"] ?>">
                     <label class="form-check-label" for="area-<?= $area["id"] ?>">
                         <?= $area["nombre"] ?>
                     </label>
