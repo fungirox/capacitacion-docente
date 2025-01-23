@@ -6,6 +6,15 @@
         const $hiddenInput = $('#instructor-selected');
         const $dropdownItems = $('.dropdown-item');
 
+        const previousInstructorId = '<?= cleanOld("instructor") ?>';
+        if (previousInstructorId) {
+            const $selectedItem = $(`.dropdown-item[data-value="${previousInstructorId}"]`);
+            if ($selectedItem.length) {
+                $dropdown.text($selectedItem.text());
+                $hiddenInput.val(previousInstructorId);
+            }
+        }
+
         $search.on('keyup', function() {
             const searchTerm = $(this).val().toLowerCase();
             $dropdownItems.each(function() {
