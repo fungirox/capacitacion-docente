@@ -3,6 +3,7 @@
 namespace Http\Forms;
 
 use Core\Validator;
+use DateTime;
 
 class ServicioForm extends FormTemplate {
 
@@ -37,10 +38,22 @@ class ServicioForm extends FormTemplate {
 
         if (!Validator::date($this->attributes["fechaInicial"])) {
             $this->errors["fechaInicial"] = "Favor de introducir una fecha de inicio válida.";
+        } else {
+            $fechaInicial = new DateTime($this->attributes["fechaInicial"]);
+            $currentDate = new DateTime();
+            if ($fechaInicial < $currentDate) {
+                $this->errors["fechaInicial"] = "La fecha de inicio no puede ser una fecha pasada.";
+            }
         }
 
         if (!Validator::date($this->attributes["fechaFinal"])) {
             $this->errors["fechaFinal"] = "Favor de introducir una fecha de finalización válida.";
+        } else {
+            $fechaInicial = new DateTime($this->attributes["fechaInicial"]);
+            $fechaFinal = new DateTime($this->attributes["fechaFinal"]);
+            if ($fechaFinal <= $fechaInicial) {
+                $this->errors["fechaFinal"] = "La fecha de finalización debe ser posterior a la fecha de inicio.";
+            }
         }
 
         if (!Validator::numeric($this->attributes["horasTotal"])) {
@@ -51,7 +64,7 @@ class ServicioForm extends FormTemplate {
             $this->errors["externo"] = "Favor de seleccionar un valor válido para el campo externo.";
         }
 
-        if (strcmp($this->attributes["modalidad"], "presencial") == 0) {
+        if (strcmp($this->attributes["modalidad"], "virtual") !== 0) {
             if (!Validator::string($this->attributes["aula"], 1)) {
                 $this->errors["aula"] = "Favor de introducir un aula válida.";
             }
@@ -66,6 +79,12 @@ class ServicioForm extends FormTemplate {
 
             if (!Validator::time($this->attributes["horaFinal"])) {
                 $this->errors["horaFinal"] = "Favor de introducir una hora de finalización válida.";
+            } else {
+                $horaInicial = new DateTime($this->attributes["horaInicial"]);
+                $horaFinal = new DateTime($this->attributes["horaFinal"]);
+                if ($horaFinal <= $horaInicial) {
+                    $this->errors["horaFinal"] = "La hora de finalización debe ser posterior a la hora de inicio.";
+                }
             }
 
             if (!Validator::numeric($this->attributes["limite"])) {
@@ -73,9 +92,13 @@ class ServicioForm extends FormTemplate {
             }
         }
 
-        if (strcmp($this->attributes["modalidad"], "mixto") == 0) {
+        if (strcmp($this->attributes["modalidad"], "mixto") === 0) {
             if (!Validator::numeric($this->attributes["horasPresenciales"])) {
                 $this->errors["horasPresenciales"] = "Favor de introducir un número de horas presenciales válido.";
+            } else {
+                if ($this->attributes["horasPresenciales"] > $this->attributes["horasTotal"]) {
+                    $this->errors["horasPresenciales"] = "Las horas presenciales no pueden ser mayores al total de horas.";
+                }
             }
         }
     }
