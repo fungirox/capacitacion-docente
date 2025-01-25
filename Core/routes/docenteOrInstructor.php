@@ -13,3 +13,7 @@ $router->get("/historial/constanciaDocente", "docenteOrInstructor/historial/cons
 $router->post("/historial/evaluarCurso/F04PSA19", "docenteOrInstructor/encuestas/evaluar-F04PSA19.php")->only(DOCENTE_OR_INSTRUCTOR);
 $router->post("/historial/evaluarCurso/F10PSA19.00", "docenteOrInstructor/encuestas/evaluar-F10PSA19.00.php")->only(DOCENTE_OR_INSTRUCTOR);
 $router->post("/historial/evaluarCurso/F08PSA19.00", "docenteOrInstructor/encuestas/evaluar-F08PSA19.00.php")->only(DOCENTE_OR_INSTRUCTOR);
+
+# Constancias
+
+$router->get("/constancias", "docenteOrInstructor/constancias/index.php")->only(DOCENTE_OR_INSTRUCTOR);

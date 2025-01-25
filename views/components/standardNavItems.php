@@ -19,7 +19,7 @@ use Core\Session;
     </li>
 <?php endif; ?>
 <li class="nav-item">
-    <a href="/historial" class="nav-link <?= urlIs("/historial") ? "active" : null ?>" aria-current="<?= urlIs("/historial") ? "page" : null ?>" id="historial">Historial</a>
+    <a href="/historial" class="nav-link <?= urlIs("/historial") ? "active" : null ?>" aria-current="<?= urlIs("/historial") ? "page" : null ?>" id="historial">Evaluaciones</a>
 </li>
 <?php if (Session::role() === Roles::DOCENTE_AND_INSTRUCTOR || Session::role() === Roles::DOCENTE): ?>
     <li class="nav-item">

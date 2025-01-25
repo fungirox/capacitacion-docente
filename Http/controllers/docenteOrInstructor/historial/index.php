@@ -13,12 +13,10 @@ $userId = Session::getUser("id");
 
 $cursosNoEvaluados = App::resolve(CursoRepository::class)->getCursosNoEvaluados($userId);
 $cursosSinEficacia = App::resolve(CursoRepository::class)-> getCursosSinEficacia($userId);
-$cursosConcluidos = App::resolve(CursoRepository::class)->getCursosConcluidos($userId);
 
 return view("/docenteOrInstructor/historial/index.view.php", [
     "title" => "Historial de Cursos",
     "isDocenteAndInstructor" => $isDocenteAndInstructor,
     "cursosNoEvaluados" => $cursosNoEvaluados,
-    "cursosSinSegundaEncuesta" => $cursosSinEficacia,
-    "cursosConcluidos" => $cursosConcluidos
+    "cursosSinSegundaEncuesta" => $cursosSinEficacia
 ]);
