@@ -2,6 +2,8 @@
 
 namespace Core\Repositories;
 
+use DateTime;
+
 class CursoRepository extends RepositoryTemplate {
 
     public function getAll($archivado = 0, $page = 1, $limit = 15, $search = "", $sortBy = "CURSOID", $sortOrder = "DESC", $filterBy = null) {
@@ -916,7 +918,7 @@ class CursoRepository extends RepositoryTemplate {
 
     public function getCursoConstancia($userId, $cursoId) {
         return $this->query(
-            "SELECT c.CURSOID,c.CURSO_Nombre,c.CURSO_Fecha_Final,CURSO_Tipo FROM tblCurso c
+            "SELECT c.CURSOID,c.CURSO_Nombre,c.CURSO_Fecha_Final,c.CURSO_Fecha_Inicio,CURSO_Tipo,c.CURSO_Modalidad,c.CURSO_Total_Horas FROM tblCurso c
             JOIN tblCursoDocente cd ON c.CURSOID = cd.CURSOID
             JOIN tblDocente d ON cd.DOCENTEID = d.DOCENTEID
             JOIN tblUsuario u ON d.USERID = u.USERID
@@ -1051,7 +1053,84 @@ class CursoRepository extends RepositoryTemplate {
         );
     }
 
-    public function addServicioVirtual($tipo, $nombre, $descripcion, $instructorId, $areas, $perfil, $modalidad, $fechaInicio, $fechaFinal, $horas, $externo) {
+    public function addServicio($attributes) {
+        switch ($attributes["modalidad"]) {
+            case "presencial":
+                $this->addServicioPresencial($attributes);
+                break;
+            case "mixto":
+                $this->addServicioMixto($attributes);
+                break;
+            case "virtual":
+                $this->addServicioVirtual($attributes);
+                break;
+        }
+
+        $cursoId = $this->getDatabase()->lastInsertId();
+
+        $this->addCursoInstructor($cursoId, $attributes["instructor"]);
+        $this->addCursoArea($cursoId, $attributes["areas"]);
+
+        if (strcmp($attributes["modalidad"], "virtual") !== 0) {
+            $this->addCursoSchedule(
+                $cursoId,
+                $attributes["dias"],
+                $attributes["horaInicial"],
+                $attributes["horaFinal"]
+            );
+        }
+
+        return $cursoId;
+    }
+
+    private function addServicioPresencial($attributes) {
+        extract($attributes);
+
+        $this->query(
+            "INSERT INTO tblCurso (
+                CURSO_Tipo,
+                CURSO_Nombre,
+                CURSO_Descripcion,
+                CURSO_Perfil,
+                CURSO_Modalidad,
+                CURSO_Fecha_Inicio,
+                CURSO_Fecha_Final,
+                CURSO_Total_Horas,
+                CURSO_Aula,
+                CURSO_Limite,
+                CURSO_Externo
+            )
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            [$tipo, $nombre, $descripcion, $perfil, $modalidad, $fechaInicial, $fechaFinal, $horasTotal, $aula, $limite, $externo]
+        );
+    }
+
+    private function addServicioMixto($attributes) {
+        extract($attributes);
+
+        $this->query(
+            "INSERT INTO tblCurso (
+                CURSO_Tipo,
+                CURSO_Nombre,
+                CURSO_Descripcion,
+                CURSO_Perfil,
+                CURSO_Modalidad,
+                CURSO_Fecha_Inicio,
+                CURSO_Fecha_Final,
+                CURSO_Total_Horas,
+                CURSO_Horas_Presenciales,
+                CURSO_Aula,
+                CURSO_Limite,
+                CURSO_Externo
+            )
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            [$tipo, $nombre, $descripcion, $perfil, $modalidad, $fechaInicial, $fechaFinal, $horasTotal, $horasPresenciales, $aula, $limite, $externo]
+        );
+    }
+
+    private function addServicioVirtual($attributes) {
+        extract($attributes);
+
         $this->query(
             "INSERT INTO tblCurso (
                 CURSO_Tipo,
@@ -1065,16 +1144,18 @@ class CursoRepository extends RepositoryTemplate {
                 CURSO_Externo
             )
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-            [$tipo, $nombre, $descripcion, $perfil, $modalidad, $fechaInicio, $fechaFinal, $horas, $externo]
+            [$tipo, $nombre, $descripcion, $perfil, $modalidad, $fechaInicial, $fechaFinal, $horasTotal, $externo]
         );
+    }
 
-        $cursoId = $this->getDatabase()->lastInsertId();
-
+    private function addCursoInstructor($cursoId, $instructorId) {
         $this->query(
             "INSERT INTO tblCursoInstructor (CURSOID, INSTRUCTORID) VALUES (?, ?)",
             [$cursoId, $instructorId]
         );
+    }
 
+    private function addCursoArea($cursoId, $areas) {
         $placeholders = implode(',', array_fill(0, count($areas), '(?, ?)'));
 
         $params = [];
@@ -1083,11 +1164,26 @@ class CursoRepository extends RepositoryTemplate {
             $params[] = $areaId;
         }
 
+        $this->query("INSERT INTO tblCursoArea (CURSOID, AREAID) VALUES $placeholders", $params);
+    }
+
+    private function addCursoSchedule($cursoId, $dias, $horaInicial, $horaFinal) {
+        $placeholders = implode(',', array_fill(0, count($dias), '(?, ?, ?, ?, ?)'));
+
+        $params = [];
+        foreach ($dias as $dia) {
+            $params[] = $cursoId;
+            $params[] = $dia;
+            $params[] = $horaInicial;
+            $params[] = $horaFinal;
+            $params[] = (new DateTime($horaFinal))->diff(new DateTime($horaInicial))->h;
+        }
+
         $this->query(
-            "INSERT INTO tblCursoArea (CURSOID, AREAID) VALUES $placeholders",
+            "INSERT INTO tblHorarioCurso
+                (CURSOID, HORARIOCURSO_Dia_Semana, HORARIOCURSO_Hora_Inicio, HORARIOCURSO_Hora_Final, HORARIOCURSO_Horas)
+            VALUES $placeholders",
             $params
         );
-
-        return $cursoId;
     }
 }

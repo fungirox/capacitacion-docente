@@ -14,6 +14,8 @@ use Core\Repositories\PreguntaRepository;
 use Core\Repositories\RespuestaPreguntaRepository;
 use Core\Repositories\RespuestaRepository;
 use Core\Repositories\UsuarioRepository;
+use Core\Repositories\ConstanciaRepository;
+use Core\Repositories\PersonalRepository;
 
 $container = new Container();
 
@@ -63,6 +65,14 @@ $container->bind("Core\Repositories\RespuestaRepository", function () {
 
 $container->bind("Core\Repositories\UsuarioRepository", function () {
     return new UsuarioRepository(App::resolve(Database::class));
+});
+
+$container->bind("Core\Repositories\ConstanciaRepository", function () {
+    return new ConstanciaRepository(App::resolve(Database::class));
+});
+
+$container->bind("Core\Repositories\PersonalRepository", function () {
+    return new PersonalRepository(App::resolve(Database::class));
 });
 
 App::setContainer($container);

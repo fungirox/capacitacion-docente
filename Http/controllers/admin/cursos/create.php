@@ -13,4 +13,11 @@ return view("admin/cursos/create.view.php", [
     "errors" => Session::get("errors"),
     "instructores" => $instructores,
     "areas" => $areas,
+    "days" => [
+        'lunes' => 'Lunes',
+        'martes' => 'Martes',
+        'miercoles' => 'Miércoles',
+        'jueves' => 'Jueves',
+        'viernes' => 'Viernes'
+    ]
 ]);

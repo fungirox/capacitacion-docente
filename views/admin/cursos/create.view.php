@@ -6,6 +6,15 @@
         const $hiddenInput = $('#instructor-selected');
         const $dropdownItems = $('.dropdown-item');
 
+        const previousInstructorId = '<?= cleanOld("instructor") ?>';
+        if (previousInstructorId) {
+            const $selectedItem = $(`.dropdown-item[data-value="${previousInstructorId}"]`);
+            if ($selectedItem.length) {
+                $dropdown.text($selectedItem.text());
+                $hiddenInput.val(previousInstructorId);
+            }
+        }
+
         $search.on('keyup', function() {
             const searchTerm = $(this).val().toLowerCase();
             $dropdownItems.each(function() {
@@ -129,40 +138,46 @@
             <label class="form-label">Áreas</label>
             <?php foreach ($areas as $area): ?>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="area-<?= $area["id"] ?>" name="areas[]" value="<?= $area["id"] ?>">
+                    <input class="form-check-input" <?= in_array($area["id"], old("areas", [])) ? "checked" : "" ?> type="checkbox" id="area-<?= $area["id"] ?>" name="areas[]" value="<?= $area["id"] ?>">
                     <label class="form-check-label" for="area-<?= $area["id"] ?>">
                         <?= $area["nombre"] ?>
                     </label>
                 </div>
             <?php endforeach; ?>
-            <div class="invalid-feedback">
-                <?= $errors['areas'] ?>
-            </div>
+            <?php if (isset($errors['areas'])): ?>
+                <small class="text-danger-emphasis mb-3"><?= $errors['areas'] ?></small>
+            <?php endif; ?>
         </div>
         <div class="col-12">
             <label for="perfil" class="form-label">Tipo de perfil</label>
-            <select name="perfil" id="perfil" class="form-select" aria-label="Perfil">
-                <option value="0" selected>Actualización profesional</option>
-                <option value="1">Formación docente</option>
+            <select name="perfil" id="perfil" class="form-select <?= isValidInput($errors, "perfil") ?>" aria-label="Perfil">
+                <option value="0" <?= cleanOld("perfil", "0") === "0" ? "selected" : "" ?>>Actualización profesional</option>
+                <option value="1" <?= cleanOld("perfil") === "1" ? "selected" : "" ?>>Formación docente</option>
             </select>
+            <div class="invalid-feedback">
+                <?= $errors['perfil'] ?>
+            </div>
         </div>
         <h2 class="mt-4 mb-3">Horario</h2>
         <div class="col-12 d-flex justify-content-center mb-3">
             <div class="col-12 col-md-8 col-lg-6 btn-group" name="modalidad" role="group">
-                <input type="radio" class="btn-check" name="modalidad" id="modalidad-presencial" value="presencial" autocomplete="off" <?= cleanOld("rol", "presencial") === "presencial" ? "checked" : "" ?>>
+                <input type="radio" class="btn-check" name="modalidad" id="modalidad-presencial" value="presencial" autocomplete="off" <?= cleanOld("modalidad", "presencial") === "presencial" ? "checked" : "" ?>>
                 <label class="btn btn-outline-primary" for="modalidad-presencial">Presencial</label>
-                <input type="radio" class="btn-check" name="modalidad" id="modalidad-mixto" value="mixto" autocomplete="off" <?= cleanOld("rol") === "mixto" ? "checked" : "" ?>>
+                <input type="radio" class="btn-check" name="modalidad" id="modalidad-mixto" value="mixto" autocomplete="off" <?= cleanOld("modalidad") === "mixto" ? "checked" : "" ?>>
                 <label class="btn btn-outline-primary" for="modalidad-mixto">Mixto</label>
-                <input type="radio" class="btn-check" name="modalidad" id="modalidad-virtual" value="virtual" autocomplete="off" <?= cleanOld("rol") === "virtual" ? "checked" : "" ?>>
+                <input type="radio" class="btn-check" name="modalidad" id="modalidad-virtual" value="virtual" autocomplete="off" <?= cleanOld("modalidad") === "virtual" ? "checked" : "" ?>>
                 <label class="btn btn-outline-primary" for="modalidad-virtual">Virtual</label>
             </div>
         </div>
+        <?php if (isset($errors['modalidad'])): ?>
+            <small class="text-danger-emphasis mb-3"><?= $errors['modalidad'] ?></small>
+        <?php endif; ?>
         <div class="w-100"></div>
         <div class="col mb-3">
             <label for="fecha-inicial" class="form-label">Fecha inicial</label>
-            <input type="date" class="form-control <?= isValidInput($errors, "fecha-inicial") ?>" id="fecha-inicial" name="fecha-inicial" value="<?= cleanOld("fecha-inicial") ?>">
+            <input type="date" class="form-control <?= isValidInput($errors, "fechaInicial") ?>" id="fecha-inicial" name="fecha-inicial" value="<?= cleanOld("fechaInicial") ?>">
             <div class="invalid-feedback">
-                <?= $errors['fecha-inicial'] ?>
+                <?= $errors['fechaInicial'] ?>
             </div>
         </div>
         <div class="col-auto mb-3 d-flex align-items-end pb-2">
@@ -170,24 +185,24 @@
         </div>
         <div class="col mb-3">
             <label for="fecha-final" class="form-label">Fecha final</label>
-            <input type="date" class="form-control <?= isValidInput($errors, "fecha-final") ?>" id="fecha-final" name="fecha-final" value="<?= cleanOld("fecha-final") ?>">
+            <input type="date" class="form-control <?= isValidInput($errors, "fechaFinal") ?>" id="fecha-final" name="fecha-final" value="<?= cleanOld("fechaFinal") ?>">
             <div class="invalid-feedback">
-                <?= $errors['fecha-final'] ?>
+                <?= $errors['fechaFinal'] ?>
             </div>
         </div>
         <div class="w-100"></div>
         <div class="col mb-3">
             <label for="horas-total" class="form-label">Horas en total</label>
-            <input type="number" class="form-control <?= isValidInput($errors, "horas-total") ?>" id="horas-total" name="horas-total" value="<?= cleanOld("horas-total") ?>">
+            <input type="number" class="form-control <?= isValidInput($errors, "horasTotal") ?>" id="horas-total" name="horas-total" value="<?= cleanOld("horasTotal") ?>">
             <div class="invalid-feedback">
-                <?= $errors['horas-total'] ?>
+                <?= $errors['horasTotal'] ?>
             </div>
         </div>
         <div id="horas-presenciales-container" class="col mb-3">
             <label for="horas-presenciales" class="form-label">Horas presenciales</label>
-            <input type="number" class="form-control <?= isValidInput($errors, "horas-presenciales") ?>" id="horas-presenciales" name="horas-presenciales" value="<?= cleanOld("horas-presenciales") ?>">
+            <input type="number" class="form-control <?= isValidInput($errors, "horasPresenciales") ?>" id="horas-presenciales" name="horas-presenciales" value="<?= cleanOld("horasPresenciales") ?>">
             <div class="invalid-feedback">
-                <?= $errors['horas-presenciales'] ?>
+                <?= $errors['horasPresenciales'] ?>
             </div>
         </div>
         <div id="aula-container" class="col-12 mb-3">
@@ -199,38 +214,23 @@
         </div>
         <label id="dias-label-container" class="form-label">Días</label>
         <div id="dias-container" class="btn-group mb-3" role="group" aria-label="Basic checkbox toggle button group" id="dias">
-            <input type="checkbox" class="btn-check" id="lunes" name="dias[]" value="lunes" autocomplete="off">
-            <label class="btn btn-outline-secondary" for="lunes">
-                <span class="d-block d-md-none">LU</span>
-                <span class="d-none d-md-block">Lunes</span>
-            </label>
-            <input type="checkbox" class="btn-check" id="martes" name="dias[]" value="martes" autocomplete="off">
-            <label class="btn btn-outline-secondary" for="martes">
-                <span class="d-block d-md-none">MA</span>
-                <span class="d-none d-md-block">Martes</span>
-            </label>
-            <input type="checkbox" class="btn-check" id="miercoles" name="dias[]" value="miercoles" autocomplete="off">
-            <label class="btn btn-outline-secondary" for="miercoles">
-                <span class="d-block d-md-none">MI</span>
-                <span class="d-none d-md-block">Miércoles</span>
-            </label>
-            <input type="checkbox" class="btn-check" id="jueves" name="dias[]" value="jueves" autocomplete="off">
-            <label class="btn btn-outline-secondary" for="jueves">
-                <span class="d-block d-md-none">JU</span>
-                <span class="d-none d-md-block">Jueves</span>
-            </label>
-            <input type="checkbox" class="btn-check" id="viernes" name="dias[]" value="viernes" autocomplete="off">
-            <label class="btn btn-outline-secondary" for="viernes">
-                <span class="d-block d-md-none">VI</span>
-                <span class="d-none d-md-block">Viernes</span>
-            </label>
+            <?php foreach ($days as $day => $dayName): ?>
+                <input type="checkbox" class="btn-check" <?= in_array($day, old("dias", [])) ? "checked" : "" ?> id="<?= $day ?>" name="dias[]" value="<?= $day ?>" autocomplete="off">
+                <label class="btn btn-outline-secondary" for="<?= $day ?>">
+                    <span class="d-block d-md-none"><?= strtoupper(substr($dayName, 0, 2)) ?></span>
+                    <span class="d-none d-md-block"><?= $dayName ?></span>
+                </label>
+            <?php endforeach; ?>
         </div>
+        <?php if (isset($errors['dias'])): ?>
+            <small class="text-danger-emphasis mb-3"><?= $errors['dias'] ?></small>
+        <?php endif; ?>
         <div class="w-100"></div>
         <div id="hora-inicial-container" class="col mb-3">
             <label for="hora-inicial" class="form-label">Hora inicial</label>
-            <input type="time" class="form-control <?= isValidInput($errors, "hora-inicial") ?>" id="hora-inicial" name="hora-inicial" value="<?= cleanOld("hora-inicial") ?>">
+            <input type="time" class="form-control <?= isValidInput($errors, "horaInicial") ?>" id="hora-inicial" name="hora-inicial" value="<?= cleanOld("horaInicial") ?>">
             <div class="invalid-feedback">
-                <?= $errors['hora-inicial'] ?>
+                <?= $errors['horaInicial'] ?>
             </div>
         </div>
         <div id="hora-flecha" class="col-auto row pb-2 mb-3 align-items-end">
@@ -238,9 +238,9 @@
         </div>
         <div id="hora-final-container" class="col mb-3">
             <label for="hora-final" class="form-label">Hora final</label>
-            <input type="time" class="form-control <?= isValidInput($errors, "hora-final") ?>" id="hora-final" name="hora-final" value="<?= cleanOld("hora-final") ?>">
+            <input type="time" class="form-control <?= isValidInput($errors, "horaFinal") ?>" id="hora-final" name="hora-final" value="<?= cleanOld("horaFinal") ?>">
             <div class="invalid-feedback">
-                <?= $errors['hora-final'] ?>
+                <?= $errors['horaFinal'] ?>
             </div>
         </div>
         <div class="w-100"></div>
@@ -253,8 +253,11 @@
         </div>
         <div id="externo-switch">
             <div class="form-check mb-2">
-                <input class="form-check-input" type="checkbox" role="switch" name="externo" id="externo" value="1" <?= cleanOld("externo", "0") === "1" ? "checked" : "" ?>>
                 <label class="form-check-label" for="externo">El servicio es externo</label>
+                <input class="form-check-input <?= isValidInput($errors, "externo") ?>" type="checkbox" role="switch" name="externo" id="externo" value="1" <?= cleanOld("externo", "0") === "1" ? "checked" : "" ?>>
+                <div class="invalid-feedback">
+                    <?= $errors['externo'] ?>
+                </div>
             </div>
         </div>
         <div class="order-2 order-md-1 col-md-auto col-12 ms-md-auto mb-3">

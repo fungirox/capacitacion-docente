@@ -143,14 +143,18 @@ function formattedDateRange($startDate, $endDate) {
     return $startDate . " - " - $endDate;
 }
 
-function getAmOrPm($hour) {
-    return $hour < 12 ? "AM" : "PM";
-}
-
 function formatTime($time) {
-    return substr($time, 0, 5) . " " . getAmOrPm($time);
+    $hour = intval(substr($time, 0, 2));
+    $minutes = substr($time, 3, 2);
+
+    $formattedHour = $hour % 12;
+    $formattedHour = $formattedHour === 0 ? 12 : $formattedHour;
+
+    $amPm = $hour < 12 ? "AM" : "PM";
+
+    return sprintf("%d:%02d %s", $formattedHour, $minutes, $amPm);
 }
 
 function formattedHourRange($startHour, $endHour) {
-    return  formatTime($startHour) . " - " . formatTime($endHour);
+    return formatTime($startHour) . " - " . formatTime($endHour);
 }

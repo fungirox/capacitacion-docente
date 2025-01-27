@@ -2,9 +2,15 @@
 
 namespace Core;
 
+use Core\Repositories\AreaRepository;
 use Core\Repositories\InstructorRepository;
+use DateTime;
 
 class Validator {
+    public static function bit($value) {
+        return $value == 0 || $value == 1;
+    }
+
     public static function string($value, $min = 1, $max = INF) {
         return strlen($value) >= $min && strlen($value) <= $max;
     }
@@ -14,7 +20,15 @@ class Validator {
     }
 
     public static function date($value) {
-        return (bool)strtotime($value);
+        $format = "Y-m-d";
+        $date = DateTime::createFromFormat($format, $value);
+        return $date && $date->format($format) === $value;
+    }
+
+    public static function time($value) {
+        $format = "H:i";
+        $time = DateTime::createFromFormat($format, $value);
+        return $time && $time->format($format) === $value;
     }
 
     public static function email($value) {
@@ -35,5 +49,30 @@ class Validator {
 
     public static function isValidInstructor($instructorId) {
         return !empty(App::resolve(InstructorRepository::class)->getAllIds($instructorId));
+    }
+
+    public static function areasAreValid($areas) {
+        if (empty($areas)) {
+            return false;
+        }
+
+        $areasRaw = App::resolve(AreaRepository::class)->getAllIds();
+        $areasIds = array_column($areasRaw, "AREAID");
+        $missingElements = array_diff($areas, $areasIds);
+
+        return empty($missingElements);
+    }
+
+    public static function modalidadIsValid($modalidad) {
+        return in_array($modalidad, array("presencial", "mixto", "virtual"));
+    }
+
+    public static function daysAreValid($days) {
+        if (empty($days)) {
+            return false;
+        }
+
+        $validDays = array("lunes", "martes", "miercoles", "jueves", "viernes", "sabado", "domingo");
+        return empty(array_diff($days, $validDays));
     }
 }
