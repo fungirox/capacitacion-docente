@@ -20,10 +20,10 @@
                             <i class="bi bi-flag pe-2"></i>
                             <span>Iniciar curso</span>
                         </button>
-                        <button type="button" class="col-12 col-md-auto btn btn-outline-primary">
+                        <a href="/admin/cursos/editar?id=<?= $id ?>" class="col-12 col-md-auto btn btn-outline-primary">
                             <i class="bi bi-pencil pe-2"></i>
                             <span>Editar</span>
-                        </button>
+                        </a>
                         <button type="button" class="col-12 col-md-auto btn btn-outline-warning">
                             <i class="bi bi-archive pe-2"></i>
                             <span>Archivar</span>
