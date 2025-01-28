@@ -158,7 +158,7 @@
                 <?= $errors['perfil'] ?>
             </div>
         </div>
-        <h2 class="mt-4 mb-3">Horario</h2>
+        <h2 class="mt-4 mb-3">Modalidad y Horario</h2>
         <div class="col-12 d-flex justify-content-center mb-3">
             <div class="col-12 col-md-8 col-lg-6 btn-group" name="modalidad" role="group">
                 <input type="radio" class="btn-check" name="modalidad" id="modalidad-presencial" value="presencial" autocomplete="off" <?= cleanOld("modalidad", "presencial") === "presencial" ? "checked" : "" ?>>
