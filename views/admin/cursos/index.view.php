@@ -126,7 +126,7 @@
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end">
                                         <li>
-                                            <a class="dropdown-item" href="/admin/cursos/activar<?= $id ?>">
+                                            <a class="dropdown-item" href="/admin/cursos/activar?id=<?= $id ?>">
                                                 <i class="bi bi-flag"></i>
                                                 <span class="ms-2">Iniciar curso</span>
                                             </a>
