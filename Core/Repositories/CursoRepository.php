@@ -450,6 +450,76 @@ class CursoRepository extends RepositoryTemplate {
         )->getOrFail();
     }
 
+    public function getByIdForEdit($cursoId) {
+        return $this->query(
+            "SELECT
+                curso.CURSOID AS id,
+                CURSO_Nombre AS nombre,
+                CAST(curso.CURSO_Descripcion AS VARCHAR(MAX)) as descripcion,
+                instructor.INSTRUCTORID AS instructor_id,
+                (
+                    SELECT STRING_AGG(CAST(AREAID AS VARCHAR), ',') WITHIN GROUP (ORDER BY AREAID)
+                    FROM (
+                        SELECT DISTINCT area.AREAID
+                        FROM tblCursoArea AS cursoArea
+                        JOIN tblArea AS area ON area.AREAID = cursoArea.AREAID
+                        WHERE cursoArea.CURSOID = curso.CURSOID
+                    ) AS distinct_areas
+                ) AS areas,
+                CURSO_Perfil AS perfil,
+                CURSO_Modalidad AS modalidad,
+                CURSO_Fecha_Inicio AS fecha_inicio,
+                CURSO_Fecha_Final AS fecha_final,
+                CURSO_Total_Horas AS horas_total,
+                CURSO_Horas_Presenciales AS horas_presenciales,
+                CURSO_Aula AS aula,
+                (
+                    SELECT STRING_AGG(HORARIOCURSO_Dia_Semana, ',') WITHIN GROUP (ORDER BY HORARIOCURSO_Dia_Semana)
+                    FROM (
+                        SELECT DISTINCT horario.HORARIOCURSO_Dia_Semana
+                        FROM tblHorarioCurso AS horario
+                        WHERE horario.CURSOID = curso.CURSOID
+                    ) AS distinct_dias
+                ) AS dias,
+                CONVERT(
+                    varchar(5), (
+                        SELECT TOP 1 horario.HORARIOCURSO_Hora_Inicio
+                        FROM tblHorarioCurso AS horario 
+                        WHERE horario.CURSOID = curso.CURSOID), 
+                        108
+                    ) AS hora_inicial,
+                CONVERT(
+                    varchar(5), (
+                        SELECT TOP 1 horario.HORARIOCURSO_Hora_Final 
+                        FROM tblHorarioCurso AS horario
+                        WHERE horario.CURSOID = curso.CURSOID),
+                        108
+                    ) AS hora_final,
+                CURSO_Limite AS limite,
+                CURSO_Externo AS externo
+            FROM tblCurso as curso
+            LEFT JOIN tblCursoInstructor AS instructor ON curso.CURSOID = instructor.CURSOID
+            LEFT JOIN tblCursoArea AS curso_area ON curso_area.CURSOID = curso.CURSOID
+            LEFT JOIN tblArea AS area ON area.AREAID = curso_area.AREAID
+            WHERE curso.CURSOID = ?
+            GROUP BY
+                curso.CURSOID,
+                CURSO_Nombre,
+                CAST(curso.CURSO_Descripcion AS VARCHAR(MAX)),
+                instructor.INSTRUCTORID,
+                CURSO_Perfil,
+                CURSO_Modalidad,
+                CURSO_Fecha_Inicio,
+                CURSO_Fecha_Final,
+                CURSO_Total_Horas,
+                CURSO_Horas_Presenciales,
+                CURSO_Aula,
+                CURSO_Limite,
+                CURSO_Externo",
+            [$cursoId]
+        )->getOrFail();
+    }
+
     public function getSubscribedById($cursoId, $userId) {
         return $this->query(
             "SELECT
