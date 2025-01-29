@@ -17,6 +17,12 @@ $router->delete("/admin/cursos", "admin/cursos/archive.php")->only(ADMIN);
 
 $router->patch("/admin/cursos", "admin/cursos/update.php")->only(ADMIN);
 
+## Usuarios
+
+# Administradores
+
+$router->get("/admin/administradores", "admin/administradores/index.php")->only(ADMIN);
+
 # Usuarios
 
 $router->get("/admin/usuarios", "admin/usuarios/index.php")->only(ADMIN);
