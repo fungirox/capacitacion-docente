@@ -3,6 +3,7 @@
 use Core\App;
 use Core\Container;
 use Core\Database;
+use Core\Repositories\AdministradorRepository;
 use Core\Repositories\AreaRepository;
 use Core\Repositories\CarreraRepository;
 use Core\Repositories\CursoDocenteRepository;
@@ -19,6 +20,10 @@ $container = new Container();
 
 $container->bind("Core\Database", function () {
     return new Database();
+});
+
+$container->bind("Core\Repositories\AdministradorRepository", function () {
+    return new AdministradorRepository(App::resolve(Database::class));
 });
 
 $container->bind("Core\Repositories\AreaRepository", function () {
