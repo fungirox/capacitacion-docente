@@ -5,7 +5,7 @@
         <?php if ($archivados): ?>
             <input type="hidden" name="archivados" value="true">
         <?php endif; ?>
-        <div class="col-12 col-md-9 col-lg-8">
+        <div class="col-12 col-md-8">
             <div class="row g-2">
                 <div class="col-md-6">
                     <div class="input-group flex-nowrap">
@@ -70,7 +70,7 @@
                 <div class="d-grid">
                     <a href="administradores/nuevo" type="button" class="btn btn-primary">
                         <i class="bi bi-plus-lg"></i>
-                        <span>Nuevo admin</span>
+                        <span>Nuevo administrador</span>
                     </a>
                 </div>
             </div>
