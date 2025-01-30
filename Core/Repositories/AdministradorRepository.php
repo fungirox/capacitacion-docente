@@ -3,12 +3,12 @@
 namespace Core\Repositories;
 
 class AdministradorRepository extends RepositoryTemplate {
-    
+
     public function getAllWithParams($archivado = 0, $page = 1, $limit = 15, $search = "", $sortBy = "usuario.USERID-DESC", $sortOrder = "ASC") {
         $allowedSortColumns = ['usuario.USERID', 'USER_NombreUsuario', 'USER_Nombre', 'USER_Apellido', 'USER_Email'];
 
         $sortBy = in_array($sortBy, $allowedSortColumns) ? $sortBy : 'usuario.USERID';
-        $sortOrder = in_array($sortOrder, $this->validOrders) ? $sortOrder : 'ASC';
+        $sortOrder = in_array($sortOrder, $this->validOrders) ? $sortOrder : 'DESC';
 
         $searchCondition = $search ? "AND (USER_NombreUsuario LIKE ? OR USER_Nombre + ' ' + USER_Apellido LIKE ? OR USER_Email LIKE ?)" : "";
 
@@ -69,6 +69,28 @@ class AdministradorRepository extends RepositoryTemplate {
                 "currentPage" => $page,
             ]
         ];
+    }
+
+    public function create($attributes) {
+        $this->query(
+            "INSERT INTO tblUsuario (USER_NombreUsuario, USER_Nombre, USER_Apellido, USER_Email, USER_Genero, USER_Password, USER_Activo)
+            VALUES (?, ?, ?, ?, ?, ?, 1)",
+            [
+                $attributes["username"],
+                $attributes["nombre"],
+                $attributes["apellido"],
+                $attributes["email"],
+                $attributes["genero"],
+                password_hash($attributes["password"], PASSWORD_BCRYPT)
+            ]
+        );
+
+        $userId = $this->getDatabase()->lastInsertId();
+
+        return $this->query(
+            "INSERT INTO tblAdmin (USERID) VALUES (?)",
+            [$userId]
+        );
     }
 
     public function archive($id, $state) {
