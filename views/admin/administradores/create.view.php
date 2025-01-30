@@ -11,7 +11,7 @@
     <div class="my-4 alert alert-danger" role="alert">
         <strong>Precaución</strong>, al agregar un usuario administrador, este tendrá acceso a toda la información del sistema y será capáz de agregar a más usuarios.
     </div>
-    <form class="row" method="POST" action="/admin/areas">
+    <form class="row" method="POST" action="/admin/administradores">
         <div class="col-6 mb-3">
             <label for="nombre" class="form-label">Nombres</label>
             <input type="text" class="form-control <?= isValidInput($errors, "nombre") ?>" id="nombre" name="nombre" value="<?= cleanOld("nombre") ?>">
