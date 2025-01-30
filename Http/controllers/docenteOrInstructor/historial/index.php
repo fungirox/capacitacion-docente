@@ -11,11 +11,11 @@ $db = App::resolve(Database::class);
 $isDocenteAndInstructor = Session::role() === Roles::DOCENTE_AND_INSTRUCTOR;
 $userId = Session::getUser("id");
 
-$cursosNoEvaluados = App::resolve(CursoRepository::class)->getCursosNoEvaluados($userId);
+$cursosNoEvaluados = App::resolve(CursoRepository::class)-> getCursosNoEvaluados($userId);
 $cursosSinEficacia = App::resolve(CursoRepository::class)-> getCursosSinEficacia($userId);
 
 return view("/docenteOrInstructor/historial/index.view.php", [
-    "title" => "Historial de Cursos",
+    "title" => "Evaluaciones Pendientes",
     "isDocenteAndInstructor" => $isDocenteAndInstructor,
     "cursosNoEvaluados" => $cursosNoEvaluados,
     "cursosSinSegundaEncuesta" => $cursosSinEficacia

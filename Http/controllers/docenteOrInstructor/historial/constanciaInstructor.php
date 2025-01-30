@@ -115,7 +115,7 @@ if ($constancia) {
                         <h1><?= $userData["USER_Nombre"] ?> <?= $userData["USER_Apellido"] ?></h1>
                 </div>
                 <div class="container">
-                        <h4>POR HABER APROBADO SATISFACTORIAMENTE EL <?= $tipo ?>:</h4>
+                        <h4>POR HABER IMPARTIDO EL <?= $tipo ?>:</h4>
                 </div>
                 <div class="container">
                         <h2><?= $curso["CURSO_Nombre"] ?></h2>

@@ -13,7 +13,7 @@ class ConstanciaRepository extends RepositoryTemplate
     private $docenteAndInstructor = Roles::DOCENTE_AND_INSTRUCTOR;
     private $guest = Roles::GUEST;
 
-    public function getAllByUserId($userId)
+    public function getAllAsDocente($userId)
     {
         return $this->query(
             "SELECT 
@@ -24,10 +24,31 @@ class ConstanciaRepository extends RepositoryTemplate
             JOIN 
                 tblCurso cu ON c.CURSOID = cu.CURSOID
             WHERE 
-                c.USERID = ?",
+                c.USERID = ?
+            AND 
+                c.CONSTANCIA_Docente = 1",
             [$userId]
         )->getAll();
     }
+
+    public function getAllAsInstructor($userId)
+    {
+        return $this->query(
+            "SELECT 
+            c.*,
+            cu.CURSO_Nombre 
+            FROM 
+                tblConstancia c
+            JOIN 
+                tblCurso cu ON c.CURSOID = cu.CURSOID
+            WHERE 
+                c.USERID = ?
+            AND 
+                c.CONSTANCIA_Docente = 0",
+            [$userId]
+        )->getAll();
+    }
+
     public function getById($constanciaId)
     {
         return $this->query(
@@ -39,5 +60,29 @@ class ConstanciaRepository extends RepositoryTemplate
                 c.CONSTANCIAID = ?",
             [$constanciaId]
         )->getOrFail();
+    }
+
+    public function getUltimoId(){
+        return $this->query(
+            "SELECT TOP 1 CONSTANCIAID FROM tblConstancia ORDER BY CONSTANCIAID DESC;"
+        )->get();
+    }
+
+    public function setConstancia($cursoId, $personalId, $usuarioId, $docente)
+    {
+        return $this->query(
+            "INSERT INTO tblConstancia (CURSOID,
+                PERSONALID, USERID, CONSTANCIA_Docente) 
+            VALUES (?, ?, ?, ?)",
+            [$cursoId, $personalId, $usuarioId, $docente]
+        );
+    }
+
+    public function setFolio($id, $folio)
+    {
+        return $this->query(
+            "UPDATE tblConstancia SET CONSTANCIA_Folio = ? WHERE CONSTANCIAID = ?",
+            [$folio, $id]
+        );
     }
 }
