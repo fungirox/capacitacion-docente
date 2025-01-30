@@ -9,9 +9,9 @@
         Usuarios
     </a>
     <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#">Docentes</a></li>
-        <li><a class="dropdown-item" href="#">Instructores</a></li>
-        <li><a class="dropdown-item" href="#">Administradores</a></li>
+        <li><a class="dropdown-item" href="/admin/docentes">Docentes</a></li>
+        <li><a class="dropdown-item" href="/admin/instructores">Instructores</a></li>
+        <li><a class="dropdown-item" href="/admin/administradores">Administradores</a></li>
     </ul>
 </li>
 <li class="nav-item dropdown">
