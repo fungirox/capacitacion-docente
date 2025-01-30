@@ -19,6 +19,10 @@ class Validator {
         return is_numeric($value);
     }
 
+    public static function username($value) {
+        return preg_match("/^[A-Za-z0-9]+(?:[_-][A-Za-z0-9]+)*$/", $value);
+    }
+
     public static function date($value) {
         $format = "Y-m-d";
         $date = DateTime::createFromFormat($format, $value);
