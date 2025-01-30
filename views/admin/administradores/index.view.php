@@ -30,10 +30,10 @@
                             <i class="bi bi-sort-down"></i>
                         </span>
                         <select name="sortBy" class="form-select" aria-label="Ordenar por" onchange="this.form.submit()">
-                            <option value="usuario.USERID-ASC" <?= $sortBy . '-' . $sortOrder == 'usuario.USERID-ASC' ? 'selected' : '' ?>>
+                            <option value="usuario.USERID-DESC" <?= $sortBy . '-' . $sortOrder == 'usuario.USERID-DESC' ? 'selected' : '' ?>>
                                 ↓ Más recientes
                             </option>
-                            <option value="usuario.USERID-DESC" <?= $sortBy . '-' . $sortOrder == 'usuario.USERID-DESC' ? 'selected' : '' ?>>
+                            <option value="usuario.USERID-ASC" <?= $sortBy . '-' . $sortOrder == 'usuario.USERID-ASC' ? 'selected' : '' ?>>
                                 ↓ Más antiguos
                             </option>
                             <option value="USER_NombreUsuario-ASC" <?= $sortBy . '-' . $sortOrder == 'USER_NombreUsuario-ASC' ? 'selected' : '' ?>>
