@@ -22,6 +22,14 @@ $router->patch("/admin/cursos", "admin/cursos/update.php")->only(ADMIN);
 # Administradores
 
 $router->get("/admin/administradores", "admin/administradores/index.php")->only(ADMIN);
+$router->get("/admin/administradores/editar", "admin/administradores/edit.php")->only(ADMIN);
+$router->get("/admin/administradores/nuevo", "admin/administradores/create.php")->only(ADMIN);
+
+$router->post("/admin/administradores", "admin/administradores/store.php")->only(ADMIN);
+
+$router->delete("/admin/administradores", "admin/administradores/archive.php")->only(ADMIN);
+
+$router->patch("/admin/administradores", "admin/administradores/update.php")->only(ADMIN);
 
 # Usuarios
 
