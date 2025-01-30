@@ -7,10 +7,7 @@
     });
 </script>
 <main role="main" class="container py-5" style="margin-top: 56px">
-    <div class="row align-items-center">
-        <a class="col-12 col-md-auto" href="/admin/areas"><i class="bi bi-arrow-left-circle" style="font-size: 1.5rem;"></i></a>
-        <h1 class="col-12 col-md-10"><?= $title ?></h1>
-    </div>
+    <?php view("components/nestedTitle.php", ["url" => "/admin/administradores", "title" => $title]) ?>
     <div class="my-4 alert alert-danger" role="alert">
         <strong>Precaución</strong>, al agregar un usuario administrador, este tendrá acceso a toda la información del sistema y será capáz de agregar a más usuarios.
     </div>
@@ -54,14 +51,14 @@
                 <?= $errors['genero'] ?>
             </div>
         </div>
-        <div class="col-6 mb-3">
+        <div class="col-6 mb-4">
             <label for="password" class="form-label">Contraseña</label>
             <input type="password" class="form-control <?= isValidInput($errors, "password") ?>" id="password" name="password">
             <div class="invalid-feedback">
                 <?= $errors['password'] ?>
             </div>
         </div>
-        <div class="col-6 mb-3">
+        <div class="col-6 mb-4">
             <label for="confirm-password" class="form-label">Confirmar contraseña</label>
             <input type="password" class="form-control <?= isValidInput($errors, "confirmPassword") ?>" id="confirm-password" name="confirm-password">
             <div class="invalid-feedback">
