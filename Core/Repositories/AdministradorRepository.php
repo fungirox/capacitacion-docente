@@ -70,4 +70,11 @@ class AdministradorRepository extends RepositoryTemplate {
             ]
         ];
     }
+
+    public function archive($id, $state) {
+        return $this->query(
+            "UPDATE tblUsuario SET USER_Activo = ? WHERE USERID = ?",
+            [$state, $id]
+        );
+    }
 }
