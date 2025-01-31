@@ -99,4 +99,11 @@ class AdministradorRepository extends RepositoryTemplate {
             [$state, $id]
         );
     }
+
+    public function userAlreadyExists($username) {
+        return $this->query(
+            "SELECT COUNT(*) as total FROM tblUsuario WHERE USER_NombreUsuario = ?",
+            [$username]
+        )->get()['total'] > 0;
+    }
 }
