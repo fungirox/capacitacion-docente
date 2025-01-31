@@ -24,6 +24,10 @@ class Validator {
         return !App::resolve(AdministradorRepository::class)->userAlreadyExists($value);
     }
 
+    public static function updateUsername($id, $value) {
+        return !App::resolve(AdministradorRepository::class)->userAlreadyExistsForUpdate($id, $value);
+    }
+
     public static function date($value) {
         $format = "Y-m-d";
         $date = DateTime::createFromFormat($format, $value);
