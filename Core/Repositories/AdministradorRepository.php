@@ -71,6 +71,22 @@ class AdministradorRepository extends RepositoryTemplate {
         ];
     }
 
+    public function getById($id) {
+        return $this->query(
+            "SELECT
+                usuario.USERID AS id,
+                USER_Nombre AS nombre,
+                USER_Apellido AS apellido,
+                USER_NombreUsuario AS username,
+                USER_Email AS email,
+                USER_Genero AS genero
+            FROM tblUsuario AS usuario
+            INNER JOIN tblAdmin AS admin ON admin.USERID = usuario.USERID
+            WHERE usuario.USERID = ?",
+            [$id]
+        )->get();
+    }
+
     public function create($attributes) {
         $this->query(
             "INSERT INTO tblUsuario (USER_NombreUsuario, USER_Nombre, USER_Apellido, USER_Email, USER_Genero, USER_Password, USER_Activo)
@@ -93,6 +109,48 @@ class AdministradorRepository extends RepositoryTemplate {
         );
     }
 
+    public function update($attributes) {
+        return $this->query(
+            "UPDATE tblUsuario
+            SET USER_Nombre = ?,
+                USER_Apellido = ?,
+                USER_NombreUsuario = ?,
+                USER_Email = ?,
+                USER_Genero = ?
+            WHERE USERID = ?",
+            [
+                $attributes["nombre"],
+                $attributes["apellido"],
+                $attributes["username"],
+                $attributes["email"],
+                $attributes["genero"],
+                $attributes["id"]
+            ]
+        );
+    }
+
+    public function updateWithPassword($attributes) {
+        return $this->query(
+            "UPDATE tblUsuario
+            SET USER_Nombre = ?,
+                USER_Apellido = ?,
+                USER_NombreUsuario = ?,
+                USER_Email = ?,
+                USER_Genero = ?,
+                USER_Password = ?
+            WHERE USERID = ?",
+            [
+                $attributes["nombre"],
+                $attributes["apellido"],
+                $attributes["username"],
+                $attributes["email"],
+                $attributes["genero"],
+                password_hash($attributes["password"], PASSWORD_BCRYPT),
+                $attributes["id"]
+            ]
+        );
+    }
+
     public function archive($id, $state) {
         return $this->query(
             "UPDATE tblUsuario SET USER_Activo = ? WHERE USERID = ?",
@@ -104,6 +162,13 @@ class AdministradorRepository extends RepositoryTemplate {
         return $this->query(
             "SELECT COUNT(*) as total FROM tblUsuario WHERE USER_NombreUsuario = ?",
             [$username]
+        )->get()['total'] > 0;
+    }
+
+    public function userAlreadyExistsForUpdate($id, $username) {
+        return $this->query(
+            "SELECT COUNT(*) as total FROM tblUsuario WHERE USERID != ? AND USER_NombreUsuario = ?",
+            [$id, $username]
         )->get()['total'] > 0;
     }
 }
