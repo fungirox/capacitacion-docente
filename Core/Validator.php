@@ -2,6 +2,7 @@
 
 namespace Core;
 
+use Core\Repositories\AdministradorRepository;
 use Core\Repositories\AreaRepository;
 use Core\Repositories\InstructorRepository;
 use DateTime;
@@ -20,7 +21,7 @@ class Validator {
     }
 
     public static function username($value) {
-        return preg_match("/^[A-Za-z0-9]+(?:[_-][A-Za-z0-9]+)*$/", $value);
+        return !App::resolve(AdministradorRepository::class)->userAlreadyExists($value);
     }
 
     public static function date($value) {
