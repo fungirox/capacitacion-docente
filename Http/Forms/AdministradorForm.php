@@ -17,6 +17,8 @@ class AdministradorForm extends FormTemplate {
 
         if (!Validator::string($this->attributes["username"])) {
             $this->errors['username'] = "Favor de introducir un nombre de usuario válido.";
+        } else if (!Validator::username($this->attributes["username"])) {
+            $this->errors['username'] = "Un usuario con ese nombre de usuario ya existe.";
         }
 
         if (!Validator::email($this->attributes["email"])) {
