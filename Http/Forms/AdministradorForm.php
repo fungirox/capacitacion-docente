@@ -17,8 +17,16 @@ class AdministradorForm extends FormTemplate {
 
         if (!Validator::string($this->attributes["username"])) {
             $this->errors['username'] = "Favor de introducir un nombre de usuario válido.";
-        } else if (!Validator::username($this->attributes["username"])) {
-            $this->errors['username'] = "Un usuario con ese nombre de usuario ya existe.";
+        }
+
+        if ($this->attributes["edit"]) {
+            if (!Validator::updateUsername($this->attributes["id"], $this->attributes["username"])) {
+                $this->errors['username'] = "Un usuario con ese nombre de usuario ya existe.";
+            }
+        } else {
+            if (!Validator::username($this->attributes["username"])) {
+                $this->errors['username'] = "Un usuario con ese nombre de usuario ya existe.";
+            }
         }
 
         if (!Validator::email($this->attributes["email"])) {
@@ -29,12 +37,14 @@ class AdministradorForm extends FormTemplate {
             $this->errors['genero'] = "Favor de seleccionar un género válido.";
         }
 
-        if (!Validator::string($this->attributes["password"], 5)) {
-            $this->errors['password'] = "La contraseña debe tener al menos 5 caracteres.";
-        }
+        if (!$this->attributes["edit"] || $this->attributes["edit"] && $this->attributes["updatePassword"]) {
+            if (!Validator::string($this->attributes["password"], 5)) {
+                $this->errors['password'] = "La contraseña debe tener al menos 5 caracteres.";
+            }
 
-        if ($this->attributes["password"] !== $this->attributes["confirmPassword"]) {
-            $this->errors['confirmPassword'] = "Las contraseñas no coinciden.";
+            if ($this->attributes["password"] !== $this->attributes["confirmPassword"]) {
+                $this->errors['confirmPassword'] = "Las contraseñas no coinciden.";
+            }
         }
     }
 }
