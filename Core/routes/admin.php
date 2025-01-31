@@ -61,5 +61,5 @@ $router->get("/admin/resumenEficacia","admin/reportes/resumenEficacia.php")->onl
 # Formatos
 
 $router->get("/admin/formatos","admin/formatos/index.php")->only(ADMIN);
-$router->get("/admin/formatos/tecNM","admin/formatos/tecNM.php")->only(ADMIN);
-$router->get("/admin/formatos/F06PSA19.02","admin/formatos/F06PSA19.02.php")->only(ADMIN);
+$router->post("/admin/formatos/tecNM","admin/formatos/tecNM.php")->only(ADMIN);
+$router->post("/admin/formatos/F06PSA19.02","admin/formatos/F06PSA19.02.php")->only(ADMIN);

@@ -4,12 +4,40 @@ use Core\App;
 use Core\Session;
 use Core\Repositories\CursoRepository;
 
-$allCursos = App::resolve(CursoRepository::class)->getAllReporteTECNM();
-date_default_timezone_set('America/Hermosillo');
-$todayDate = new DateTime();
-$formattedToday = $todayDate->format('d-m-Y');
+$periodo = $_POST["periodo"];
+$year = $_POST["year"];
+$periodoNombre = "";
+switch ($periodo) {
+    case '0':
+        $fechaInicial = $year . "-01-01";
+        $fechaFinal = $year . "-05-31";
+        $periodoNombre = "de Enero a Mayo " . $year;
+        break;
+    case '1':
+        $fechaInicial = $year . "-06-01";
+        $fechaFinal = $year . "-07-31";
+        $periodoNombre = "de Verano " . $year;
+        break;
+    case '2':
+        $fechaInicial = $year . "-08-01";
+        $fechaFinal = $year . "-12-31";
+        $periodoNombre = "de Agosto a Septiembre " . $year;
+        break;
+    case '3':
+        $fechaInicial = $_POST["fechaInicial"];
+        $fechaFinal = $_POST["fechaFinal"];
+        $periodoNombre = "Personalizado " . $year;
+    default:
+        break;
+}
+
+$allCursos = App::resolve(CursoRepository::class)->getAllReporteTECNM($fechaInicial,$fechaFinal);
+
 header("Content-type: application/vnd.ms-excel");
-header("Content-Disposition: attachment; Filename=FD_AP_2022 Formato TecNM ".$formattedToday.".xls");
+header("Content-Disposition: attachment; Filename=FD_AP_2022 Formato TecNM " . $periodoNombre . ".xls");
+
+//faltaría revisar que las fechas sean validas?
+
 
 ?>
 <html>
@@ -132,4 +160,3 @@ header("Content-Disposition: attachment; Filename=FD_AP_2022 Formato TecNM ".$fo
 </table>
 
 </html>
-

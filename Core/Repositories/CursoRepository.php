@@ -952,20 +952,20 @@ class CursoRepository extends RepositoryTemplate
         )->getOrFail();
     }
 
-    public function getAllReporteTECNM()
+    public function getAllReporteTECNM($fechaInicial,$fechaFinal)
     {
         return $this->query(
             "SELECT
-            curso.CURSOID,
-            curso.CURSO_Nombre,
-            curso.CURSO_Tipo AS tipo,
-            CASE 
-                WHEN MONTH(curso.CURSO_Fecha_Inicio) >= 1 AND MONTH(curso.CURSO_Fecha_Final) <= 5 THEN 
-                    'Enero-Mayo ' + CAST(YEAR(curso.CURSO_Fecha_Inicio) AS VARCHAR)
-                WHEN MONTH(curso.CURSO_Fecha_Inicio) >= 6 AND MONTH(curso.CURSO_Fecha_Final) <= 7 THEN 
-                    'Verano ' + CAST(YEAR(curso.CURSO_Fecha_Inicio) AS VARCHAR)
-                WHEN MONTH(curso.CURSO_Fecha_Inicio) >= 8 AND MONTH(curso.CURSO_Fecha_Final) <= 12 THEN 
-                    'Agosto-Diciembre ' + CAST(YEAR(curso.CURSO_Fecha_Inicio) AS VARCHAR)
+                curso.CURSOID,
+                curso.CURSO_Nombre,
+                curso.CURSO_Tipo AS tipo,
+                CASE 
+                WHEN MONTH(curso.CURSO_Fecha_Final) <= 5 THEN 
+                    'Enero-Mayo ' + CAST(YEAR(curso.CURSO_Fecha_Final) AS VARCHAR)
+                WHEN MONTH(curso.CURSO_Fecha_Final) <= 7 THEN 
+                    'Verano ' + CAST(YEAR(curso.CURSO_Fecha_Final) AS VARCHAR)
+                WHEN MONTH(curso.CURSO_Fecha_Final) <= 12 THEN 
+                    'Agosto-Diciembre ' + CAST(YEAR(curso.CURSO_Fecha_Final) AS VARCHAR)
                 ELSE 'Otro periodo'
             END AS Periodo,
             curso.CURSO_Activo,
@@ -991,6 +991,8 @@ class CursoRepository extends RepositoryTemplate
             tblDocente AS docente ON cursoDocente.DOCENTEID = docente.DOCENTEID
         LEFT JOIN
             tblUsuario AS usuarioDocente ON docente.USERID = usuarioDocente.USERID
+        WHERE 
+			curso.CURSO_Fecha_Final BETWEEN ? AND ?
         GROUP BY
             curso.CURSOID,
             curso.CURSO_Nombre,
@@ -1001,23 +1003,24 @@ class CursoRepository extends RepositoryTemplate
             usuario.USER_Nombre,
             curso.CURSO_Fecha_Inicio,
             curso.CURSO_Fecha_Final,
-            usuario.USER_Apellido;"
+            usuario.USER_Apellido;",
+            [$fechaInicial,$fechaFinal]
         )->getAll();
     }
 
-    public function getAllReporteITESCA()
+    public function getAllReporteITESCA($fechaInicial,$fechaFinal)
     {
         return $this->query(
             "SELECT
                 curso.CURSOID,
                 curso.CURSO_Nombre,
                 CASE 
-                    WHEN MONTH(curso.CURSO_Fecha_Inicio) >= 1 AND MONTH(curso.CURSO_Fecha_Final) <= 5 THEN 
-                        'Enero-Mayo ' + CAST(YEAR(curso.CURSO_Fecha_Inicio) AS VARCHAR)
-                    WHEN MONTH(curso.CURSO_Fecha_Inicio) >= 6 AND MONTH(curso.CURSO_Fecha_Final) <= 7 THEN 
-                        'Verano ' + CAST(YEAR(curso.CURSO_Fecha_Inicio) AS VARCHAR)
-                    WHEN MONTH(curso.CURSO_Fecha_Inicio) >= 8 AND MONTH(curso.CURSO_Fecha_Final) <= 12 THEN 
-                        'Agosto-Diciembre ' + CAST(YEAR(curso.CURSO_Fecha_Inicio) AS VARCHAR)
+                    WHEN MONTH(curso.CURSO_Fecha_Final) <= 5 THEN 
+                        'Enero-Mayo ' + CAST(YEAR(curso.CURSO_Fecha_Final) AS VARCHAR)
+                    WHEN MONTH(curso.CURSO_Fecha_Final) <= 7 THEN 
+                        'Verano ' + CAST(YEAR(curso.CURSO_Fecha_Final) AS VARCHAR)
+                    WHEN MONTH(curso.CURSO_Fecha_Final) <= 12 THEN 
+                        'Agosto-Diciembre ' + CAST(YEAR(curso.CURSO_Fecha_Final) AS VARCHAR)
                     ELSE 'Otro periodo'
                 END AS Periodo,
                 COUNT(DISTINCT CASE WHEN cursoDocente.CURSODOCENTE_Calificacion > 70 THEN docente.DOCENTEID END) AS cantidad_docentes_total,
@@ -1039,6 +1042,8 @@ class CursoRepository extends RepositoryTemplate
                 tblDocente AS docente ON cursoDocente.DOCENTEID = docente.DOCENTEID
             LEFT JOIN
                 tblUsuario AS usuarioDocente ON docente.USERID = usuarioDocente.USERID
+            WHERE 
+			    curso.CURSO_Fecha_Final BETWEEN ? AND ?
             GROUP BY
                 curso.CURSOID,
                 curso.CURSO_Nombre,
@@ -1050,7 +1055,8 @@ class CursoRepository extends RepositoryTemplate
                 curso.CURSO_Fecha_Inicio,
                 curso.CURSO_Fecha_Final,
                 curso.CURSO_Total_Horas,
-                usuario.USER_Apellido;"
+                usuario.USER_Apellido;",
+                [$fechaInicial,$fechaFinal]
         )->getAll();
     }
 
@@ -1222,7 +1228,7 @@ class CursoRepository extends RepositoryTemplate
     public function getFechaCursoById($cursoId)
     {
         return $this->query(
-            "SELECT CURSO_Fecha_Inicio FROM tblCurso WHERE CURSOID = ?",
+            "SELECT CURSO_Fecha_Final FROM tblCurso WHERE CURSOID = ?",
             [$cursoId]
         )->getOrFail();
     }
