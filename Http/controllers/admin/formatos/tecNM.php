@@ -4,7 +4,7 @@ use Core\App;
 use Core\Session;
 use Core\Repositories\CursoRepository;
 
-$periodo = $_POST["periodo"];
+$periodo = $_POST["periodoTEC"];
 $year = $_POST["year"];
 $periodoNombre = "";
 switch ($periodo) {
@@ -138,6 +138,8 @@ header("Content-Disposition: attachment; Filename=FD_AP_2022 Formato TecNM " . $
             $docentes_masculinos = htmlspecialchars($curso["cantidad_docentes_masculinos"]);
             $docentes_femeninos = htmlspecialchars($curso["cantidad_docentes_femeninos"]);
             $total_docentes = htmlspecialchars($curso["cantidad_docentes_total"]);
+            $primerFolio = htmlspecialchars($curso["primer_folio"]);
+            $ultimoFolio = htmlspecialchars($curso["ultimo_folio"]);
             ?>
             <tr>
                 <td class="tg-c3ow"><?= $nombre ?></td>
@@ -151,12 +153,12 @@ header("Content-Disposition: attachment; Filename=FD_AP_2022 Formato TecNM " . $
                 <td class="tg-c3ow"><?= $docentes_femeninos ?></td>
                 <td class="tg-c3ow"><?= $total_docentes ?></td>
                 <td class="tg-c3ow"><?= $id ?></td>
-                <td class="tg-c3ow"></td>
+                <td class="tg-c3ow"><?= $primerFolio ?></td>
                 <td class="tg-c3ow">al</td>
-                <td class="tg-c3ow"></td>
+                <td class="tg-c3ow"><?= $ultimoFolio ?></td>
             </tr>
         <?php endforeach; ?>
     </tbody>
-</table>
+</table> 
 
 </html>

@@ -68,13 +68,12 @@ class ConstanciaRepository extends RepositoryTemplate
         )->get();
     }
 
-    public function setConstancia($cursoId, $personalId, $usuarioId, $docente)
+    public function setConstancia($cursoId, $usuarioId, $docente)
     {
         return $this->query(
-            "INSERT INTO tblConstancia (CURSOID,
-                PERSONALID, USERID, CONSTANCIA_Docente) 
-            VALUES (?, ?, ?, ?)",
-            [$cursoId, $personalId, $usuarioId, $docente]
+            "INSERT INTO tblConstancia (CURSOID, USERID, CONSTANCIA_Docente) 
+            VALUES (?, ?, ?)",
+            [$cursoId, $usuarioId, $docente]
         );
     }
 

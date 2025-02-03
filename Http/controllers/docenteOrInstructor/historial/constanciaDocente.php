@@ -10,7 +10,7 @@ use Core\Repositories\PersonalRepository;
 use Core\Repositories\UsuarioRepository;
 
 $db = App::resolve(Database::class);
-$constanciaId = $_GET["id"];
+$constanciaId = $_GET["id"]; 
 $constancia = App::resolve(ConstanciaRepository::class)->getById($constanciaId);
 
 if ($constancia) {
@@ -20,7 +20,7 @@ if ($constancia) {
         $cursoId = $constancia["CURSOID"];
         $curso = App::resolve(CursoRepository::class)->getCursoConstancia($userId, $cursoId);
 
-        $personalId = $constancia["PERSONALID"];
+        $personalId = $curso["PERSONALID"];
         $personalData = App::resolve(PersonalRepository::class)->getById($personalId);
         
         $fechaInicio = new DateTime($curso["CURSO_Fecha_Inicio"]);
