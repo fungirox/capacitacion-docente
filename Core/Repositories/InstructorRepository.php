@@ -4,6 +4,31 @@ namespace Core\Repositories;
 
 class InstructorRepository extends RepositoryTemplate {
 
+    public function getAll() {
+        return $this->query(
+            "SELECT 
+                INSTRUCTORID as id,
+                USER_Nombre + ' ' + USER_Apellido AS nombre
+            FROM tblInstructor AS instructor
+            LEFT JOIN tblUsuario AS usuario ON instructor.USERID = usuario.USERID
+            WHERE USER_Activo = 1
+            ORDER BY USER_Nombre + ' ' + USER_Apellido ASC"
+        )->getAll();
+    }
+
+    public function getAllIds($instructorId) {
+        return $this->query(
+            "SELECT 
+                INSTRUCTORID as id
+            FROM tblInstructor AS instructor
+            LEFT JOIN tblUsuario AS usuario ON instructor.USERID = usuario.USERID
+            WHERE USER_Activo = 1 AND
+            INSTRUCTORID = ?
+            ORDER BY USER_Nombre + ' ' + USER_Apellido ASC",
+            [$instructorId]
+        )->getAll();
+    }
+
     public function getAllWithParams($archivado = 0, $page = 1, $limit = 15, $search = "", $sortBy = "usuario.USERID-DESC", $sortOrder = "ASC") {
         $allowedSortColumns = ['usuario.USERID', 'USER_NombreUsuario', 'USER_Nombre', 'USER_Apellido', 'USER_Email'];
 
@@ -71,28 +96,26 @@ class InstructorRepository extends RepositoryTemplate {
             ]
         ];
     }
-    // public function getAll() {
-    //     return $this->query(
-    //         "SELECT 
-    //             INSTRUCTORID as id,
-    //             USER_Nombre + ' ' + USER_Apellido AS nombre
-    //         FROM tblInstructor AS instructor
-    //         LEFT JOIN tblUsuario AS usuario ON instructor.USERID = usuario.USERID
-    //         WHERE USER_Activo = 1
-    //         ORDER BY USER_Nombre + ' ' + USER_Apellido ASC"
-    //     )->getAll();
-    // }
 
-    // public function getAllIds($instructorId) {
-    //     return $this->query(
-    //         "SELECT 
-    //             INSTRUCTORID as id
-    //         FROM tblInstructor AS instructor
-    //         LEFT JOIN tblUsuario AS usuario ON instructor.USERID = usuario.USERID
-    //         WHERE USER_Activo = 1 AND
-    //         INSTRUCTORID = ?
-    //         ORDER BY USER_Nombre + ' ' + USER_Apellido ASC",
-    //         [$instructorId]
-    //     )->getAll();
-    // }
+    public function create($attributes) {
+        $this->query(
+            "INSERT INTO tblUsuario (USER_NombreUsuario, USER_Nombre, USER_Apellido, USER_Email, USER_Genero, USER_Password, USER_Activo)
+            VALUES (?, ?, ?, ?, ?, ?, 1)",
+            [
+                $attributes["username"],
+                $attributes["nombre"],
+                $attributes["apellido"],
+                $attributes["email"],
+                $attributes["genero"],
+                password_hash($attributes["password"], PASSWORD_BCRYPT)
+            ]
+        );
+
+        $userId = $this->getDatabase()->lastInsertId();
+
+        return $this->query(
+            "INSERT INTO tblInstructor (USERID, INSTRUCTOR_Estudios) VALUES (?, ?)",
+            [$userId, $attributes["estudios"]]
+        );
+    }
 }
