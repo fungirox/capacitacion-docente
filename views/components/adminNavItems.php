@@ -5,13 +5,13 @@
     <a href="/admin/historial" class="nav-link <?= urlIs("/admin/historial") ? "active" : null ?>" aria-current="<?= urlIs("/admin/historial") ? "page" : null ?>" id="historial">Historial</a>
 </li>
 <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="nav-link dropdown-toggle <?= urlIs("/admin/docentes") || urlIs("/admin/instructores") || urlIs("/admin/administradores") ? "active" : null ?>" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
         Usuarios
     </a>
     <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="/admin/docentes">Docentes</a></li>
-        <li><a class="dropdown-item" href="/admin/instructores">Instructores</a></li>
-        <li><a class="dropdown-item" href="/admin/administradores">Administradores</a></li>
+        <li><a class="dropdown-item <?= urlIs("/admin/docentes") ? "active" : null ?>" href="/admin/docentes">Docentes</a></li>
+        <li><a class="dropdown-item <?= urlIs("/admin/instructores") ? "active" : null ?>" href="/admin/instructores">Instructores</a></li>
+        <li><a class="dropdown-item <?= urlIs("/admin/administradores") ? "active" : null ?>" href="/admin/administradores">Administradores</a></li>
     </ul>
 </li>
 <li class="nav-item dropdown">
