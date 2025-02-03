@@ -119,12 +119,14 @@
                                         <i class="bi bi-three-dots-vertical"></i>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end">
-                                        <li>
-                                            <a class="dropdown-item" href="/admin/administradores/editar?id=<?= $id ?>">
-                                                <i class="bi bi-pencil"></i>
-                                                <span class="ms-2">Editar</span>
-                                            </a>
-                                        </li>
+                                        <?php if (!$archivados): ?>
+                                            <li>
+                                                <a class="dropdown-item" href="/admin/administradores/editar?id=<?= $id ?>">
+                                                    <i class="bi bi-pencil"></i>
+                                                    <span class="ms-2">Editar</span>
+                                                </a>
+                                            </li>
+                                        <?php endif; ?>
                                         <li>
                                             <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#archiveModal<?= $id ?>">
                                                 <i class="bi bi-archive"></i>
