@@ -52,6 +52,10 @@ class Validator {
         return strlen($value) === 5 && ctype_alpha($value);
     }
 
+    public static function nivelDeEstudios($nivel) {
+        return in_array($nivel, array("bachillerato", "licenciatura", "maestria", "doctorado"));
+    }
+
     public static function tipoDeServicio($servicio) {
         return in_array($servicio, array("curso", "taller", "diplomado"));
     }
