@@ -50,7 +50,8 @@ class InstructorRepository extends RepositoryTemplate {
                 usuario.USERID AS id,
                 USER_NombreUsuario AS username,
                 USER_Nombre + ' ' + USER_Apellido AS nombre,
-                USER_Email AS email
+                USER_Email AS email,
+                INSTRUCTOR_Estudios AS estudios
             FROM tblUsuario AS usuario
             INNER JOIN tblInstructor AS instructor ON instructor.USERID = usuario.USERID
             WHERE USER_Activo != ?
