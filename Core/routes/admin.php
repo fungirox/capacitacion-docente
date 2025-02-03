@@ -19,6 +19,30 @@ $router->patch("/admin/cursos", "admin/cursos/update.php")->only(ADMIN);
 
 ## Usuarios
 
+# Docentes
+
+$router->get("/admin/docentes", "admin/docentes/index.php")->only(ADMIN);
+$router->get("/admin/docentes/editar", "admin/docentes/edit.php")->only(ADMIN);
+$router->get("/admin/docentes/nuevo", "admin/docentes/create.php")->only(ADMIN);
+
+$router->post("/admin/docentes", "admin/docentes/store.php")->only(ADMIN);
+
+$router->delete("/admin/docentes", "admin/docentes/archive.php")->only(ADMIN);
+
+$router->patch("/admin/docentes", "admin/docentes/update.php")->only(ADMIN);
+
+# Instructores
+
+$router->get("/admin/instructores", "admin/instructores/index.php")->only(ADMIN);
+$router->get("/admin/instructores/editar", "admin/instructores/edit.php")->only(ADMIN);
+$router->get("/admin/instructores/nuevo", "admin/instructores/create.php")->only(ADMIN);
+
+$router->post("/admin/instructores", "admin/instructores/store.php")->only(ADMIN);
+
+$router->delete("/admin/instructores", "admin/instructores/archive.php")->only(ADMIN);
+
+$router->patch("/admin/instructores", "admin/instructores/update.php")->only(ADMIN);
+
 # Administradores
 
 $router->get("/admin/administradores", "admin/administradores/index.php")->only(ADMIN);
@@ -69,12 +93,12 @@ $router->patch("/admin/carreras", "admin/carreras/update.php")->only(ADMIN);
 
 # Reportes
 
-$router->get("/admin/reportes","admin/reportes/index.php")->only(ADMIN);
-$router->get("/admin/resumenEvaluacion","admin/reportes/resumenEvaluacion.php")->only(ADMIN);
-$router->get("/admin/resumenEficacia","admin/reportes/resumenEficacia.php")->only(ADMIN);
+$router->get("/admin/reportes", "admin/reportes/index.php")->only(ADMIN);
+$router->get("/admin/resumenEvaluacion", "admin/reportes/resumenEvaluacion.php")->only(ADMIN);
+$router->get("/admin/resumenEficacia", "admin/reportes/resumenEficacia.php")->only(ADMIN);
 
 # Formatos
 
-$router->get("/admin/formatos","admin/formatos/index.php")->only(ADMIN);
-$router->get("/admin/formatos/tecNM","admin/formatos/tecNM.php")->only(ADMIN);
-$router->get("/admin/formatos/F06PSA19.02","admin/formatos/F06PSA19.02.php")->only(ADMIN);
+$router->get("/admin/formatos", "admin/formatos/index.php")->only(ADMIN);
+$router->get("/admin/formatos/tecNM", "admin/formatos/tecNM.php")->only(ADMIN);
+$router->get("/admin/formatos/F06PSA19.02", "admin/formatos/F06PSA19.02.php")->only(ADMIN);
