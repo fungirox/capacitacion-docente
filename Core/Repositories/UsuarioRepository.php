@@ -70,4 +70,25 @@ class UsuarioRepository extends RepositoryTemplate {
             [$cursoId]
         )->get();
     }
+
+    public function userAlreadyExists($username) {
+        return $this->query(
+            "SELECT COUNT(*) as total FROM tblUsuario WHERE USER_NombreUsuario = ?",
+            [$username]
+        )->get()['total'] > 0;
+    }
+
+    public function userAlreadyExistsForUpdate($id, $username) {
+        return $this->query(
+            "SELECT COUNT(*) as total FROM tblUsuario WHERE USERID != ? AND USER_NombreUsuario = ?",
+            [$id, $username]
+        )->get()['total'] > 0;
+    }
+
+    public function archive($id, $state) {
+        return $this->query(
+            "UPDATE tblUsuario SET USER_Activo = ? WHERE USERID = ?",
+            [$state, $id]
+        );
+    }
 }

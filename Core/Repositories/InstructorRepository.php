@@ -97,28 +97,6 @@ class InstructorRepository extends RepositoryTemplate {
         ];
     }
 
-    public function create($attributes) {
-        $this->query(
-            "INSERT INTO tblUsuario (USER_NombreUsuario, USER_Nombre, USER_Apellido, USER_Email, USER_Genero, USER_Password, USER_Activo)
-            VALUES (?, ?, ?, ?, ?, ?, 1)",
-            [
-                $attributes["username"],
-                $attributes["nombre"],
-                $attributes["apellido"],
-                $attributes["email"],
-                $attributes["genero"],
-                password_hash($attributes["password"], PASSWORD_BCRYPT)
-            ]
-        );
-        
-        $userId = $this->getDatabase()->lastInsertId();
-
-        return $this->query(
-            "INSERT INTO tblInstructor (USERID, INSTRUCTOR_Estudios) VALUES (?, ?)",
-            [$userId, $attributes["estudios"]]
-        );
-    }
-
     public function getById($id) {
         return $this->query(
             "SELECT
@@ -134,5 +112,76 @@ class InstructorRepository extends RepositoryTemplate {
             WHERE usuario.USERID = ?",
             [$id]
         )->get();
+    }
+
+    public function create($attributes) {
+        $this->query(
+            "INSERT INTO tblUsuario (USER_NombreUsuario, USER_Nombre, USER_Apellido, USER_Email, USER_Genero, USER_Password, USER_Activo)
+            VALUES (?, ?, ?, ?, ?, ?, 1)",
+            [
+                $attributes["username"],
+                $attributes["nombre"],
+                $attributes["apellido"],
+                $attributes["email"],
+                $attributes["genero"],
+                password_hash($attributes["password"], PASSWORD_BCRYPT)
+            ]
+        );
+
+        $userId = $this->getDatabase()->lastInsertId();
+
+        return $this->query(
+            "INSERT INTO tblInstructor (USERID, INSTRUCTOR_Estudios) VALUES (?, ?)",
+            [$userId, $attributes["estudios"]]
+        );
+    }
+
+    public function update($attributes) {
+        if ($attributes["updatePassword"]) {
+            $this->query(
+                "UPDATE tblUsuario
+                SET USER_Nombre = ?,
+                    USER_Apellido = ?,
+                    USER_NombreUsuario = ?,
+                    USER_Email = ?,
+                    USER_Genero = ?,
+                    USER_Password = ?
+                WHERE USERID = ?",
+                [
+                    $attributes["nombre"],
+                    $attributes["apellido"],
+                    $attributes["username"],
+                    $attributes["email"],
+                    $attributes["genero"],
+                    password_hash($attributes["password"], PASSWORD_BCRYPT),
+                    $attributes["id"]
+                ]
+            );
+        } else {
+            $this->query(
+                "UPDATE tblUsuario
+                SET USER_Nombre = ?,
+                    USER_Apellido = ?,
+                    USER_NombreUsuario = ?,
+                    USER_Email = ?,
+                    USER_Genero = ?
+                WHERE USERID = ?",
+                [
+                    $attributes["nombre"],
+                    $attributes["apellido"],
+                    $attributes["username"],
+                    $attributes["email"],
+                    $attributes["genero"],
+                    $attributes["id"]
+                ]
+            );
+        }
+
+        return $this->query(
+            "UPDATE tblInstructor
+            SET INSTRUCTOR_Estudios = ?
+            WHERE USERID = ?",
+            [$attributes["estudios"], $attributes["id"]]
+        );
     }
 }

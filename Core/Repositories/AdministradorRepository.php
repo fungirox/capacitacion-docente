@@ -110,6 +110,28 @@ class AdministradorRepository extends RepositoryTemplate {
     }
 
     public function update($attributes) {
+        if ($attributes["updatePassword"]) {
+            return $this->query(
+                "UPDATE tblUsuario
+                SET USER_Nombre = ?,
+                    USER_Apellido = ?,
+                    USER_NombreUsuario = ?,
+                    USER_Email = ?,
+                    USER_Genero = ?,
+                    USER_Password = ?
+                WHERE USERID = ?",
+                [
+                    $attributes["nombre"],
+                    $attributes["apellido"],
+                    $attributes["username"],
+                    $attributes["email"],
+                    $attributes["genero"],
+                    password_hash($attributes["password"], PASSWORD_BCRYPT),
+                    $attributes["id"]
+                ]
+            );
+        }
+
         return $this->query(
             "UPDATE tblUsuario
             SET USER_Nombre = ?,
@@ -127,48 +149,5 @@ class AdministradorRepository extends RepositoryTemplate {
                 $attributes["id"]
             ]
         );
-    }
-
-    public function updateWithPassword($attributes) {
-        return $this->query(
-            "UPDATE tblUsuario
-            SET USER_Nombre = ?,
-                USER_Apellido = ?,
-                USER_NombreUsuario = ?,
-                USER_Email = ?,
-                USER_Genero = ?,
-                USER_Password = ?
-            WHERE USERID = ?",
-            [
-                $attributes["nombre"],
-                $attributes["apellido"],
-                $attributes["username"],
-                $attributes["email"],
-                $attributes["genero"],
-                password_hash($attributes["password"], PASSWORD_BCRYPT),
-                $attributes["id"]
-            ]
-        );
-    }
-
-    public function archive($id, $state) {
-        return $this->query(
-            "UPDATE tblUsuario SET USER_Activo = ? WHERE USERID = ?",
-            [$state, $id]
-        );
-    }
-
-    public function userAlreadyExists($username) {
-        return $this->query(
-            "SELECT COUNT(*) as total FROM tblUsuario WHERE USER_NombreUsuario = ?",
-            [$username]
-        )->get()['total'] > 0;
-    }
-
-    public function userAlreadyExistsForUpdate($id, $username) {
-        return $this->query(
-            "SELECT COUNT(*) as total FROM tblUsuario WHERE USERID != ? AND USER_NombreUsuario = ?",
-            [$id, $username]
-        )->get()['total'] > 0;
     }
 }
