@@ -7,7 +7,7 @@ $archivados = isset($_GET["archivados"]);
 $page = $_GET["page"] ?? 1;
 $search = $_GET["search"] ?? "";
 
-$sortInput = $_GET["sortBy"] ?? 'usuario.USERID-ASC';
+$sortInput = $_GET["sortBy"] ?? 'USER_Nombre-ASC';
 $sortParts = explode('-', $sortInput);
 $sortBy = $sortParts[0];
 $sortOrder = $sortParts[1];
