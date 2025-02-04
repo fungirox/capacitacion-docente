@@ -7,4 +7,4 @@ $archive = $_POST["action"] === "archive";
 
 App::resolve(UsuarioRepository::class)->archive($_POST["id"], $archive ? 0 : 1);
 
-redirect("/admin/administradores");
+redirect("/admin/instructores");
