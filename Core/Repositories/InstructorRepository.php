@@ -110,12 +110,29 @@ class InstructorRepository extends RepositoryTemplate {
                 password_hash($attributes["password"], PASSWORD_BCRYPT)
             ]
         );
-
+        
         $userId = $this->getDatabase()->lastInsertId();
 
         return $this->query(
             "INSERT INTO tblInstructor (USERID, INSTRUCTOR_Estudios) VALUES (?, ?)",
             [$userId, $attributes["estudios"]]
         );
+    }
+
+    public function getById($id) {
+        return $this->query(
+            "SELECT
+                usuario.USERID AS id,
+                USER_Nombre AS nombre,
+                USER_Apellido AS apellido,
+                USER_NombreUsuario AS username,
+                USER_Email AS email,
+                USER_Genero AS genero,
+                INSTRUCTOR_Estudios AS estudios
+            FROM tblUsuario AS usuario
+            INNER JOIN tblInstructor AS instructor ON instructor.USERID = usuario.USERID
+            WHERE usuario.USERID = ?",
+            [$id]
+        )->get();
     }
 }
