@@ -1,9 +1,6 @@
 <li class="nav-item">
     <a href="/admin/cursos" class="nav-link <?= urlIs("/admin/cursos") ? "active" : null ?>" aria-current="<?= urlIs("/admin/cursos") ? "page" : null ?>" id="cursos">Cursos</a>
 </li>
-<li class="nav-item">
-    <a href="/admin/historial" class="nav-link <?= urlIs("/admin/historial") ? "active" : null ?>" aria-current="<?= urlIs("/admin/historial") ? "page" : null ?>" id="historial">Historial</a>
-</li>
 <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle <?= urlIs("/admin/docentes") || urlIs("/admin/instructores") || urlIs("/admin/administradores") ? "active" : null ?>" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
         Usuarios
