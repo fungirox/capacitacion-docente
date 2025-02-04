@@ -1,4 +1,8 @@
-<?php view("components/styledHeader.php", ["title" => $title]); ?>
+<?php
+
+use Core\Session;
+
+view("components/styledHeader.php", ["title" => $title]); ?>
 <main role="main" class="container py-5" style="margin-top: 56px">
     <h1><?= $title ?></h1>
     <form class="row pt-4 g-2 justify-content-between" method="GET">
@@ -127,12 +131,14 @@
                                                 </a>
                                             </li>
                                         <?php endif; ?>
-                                        <li>
-                                            <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#archiveModal<?= $id ?>">
-                                                <i class="bi bi-archive"></i>
-                                                <span class="ms-2"><?= $archivados ? "Desarchivar" : "Archivar" ?></span>
-                                            </button>
-                                        </li>
+                                        <?php if (!$archivados && $id !== Session::getUser("id")): ?>
+                                            <li>
+                                                <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#archiveModal<?= $id ?>">
+                                                    <i class="bi bi-archive"></i>
+                                                    <span class="ms-2"><?= $archivados ? "Desarchivar" : "Archivar" ?></span>
+                                                </button>
+                                            </li>
+                                        <?php endif; ?>
                                     </ul>
                                 </div>
                             </td>
