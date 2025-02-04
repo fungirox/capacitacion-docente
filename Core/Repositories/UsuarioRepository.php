@@ -3,7 +3,6 @@
 namespace Core\Repositories;
 
 use Core\Roles\Roles;
-use Core\Session;
 
 class UsuarioRepository extends RepositoryTemplate {
 
@@ -12,40 +11,6 @@ class UsuarioRepository extends RepositoryTemplate {
     private $instructor = Roles::INSTRUCTOR;
     private $docenteAndInstructor = Roles::DOCENTE_AND_INSTRUCTOR;
     private $guest = Roles::GUEST;
-
-    public function getAllExceptCurrent() {
-        $userId = Session::getUser('id');
-
-        return $this->query(
-            "SELECT
-                usuario.USERID,
-                USER_NombreUsuario,
-                USER_Nombre + ' ' + USER_Apellido as USER_NombreCompleto,
-                USER_Email,
-                CASE
-                    WHEN admin.ADMINID IS NOT NULL THEN 'Administrador'
-                    WHEN docente.DOCENTEID IS NOT NULL AND instructor.INSTRUCTORID IS NOT NULL THEN 'Docente/Instructor'
-                    WHEN docente.DOCENTEID IS NOT NULL THEN 'Docente'
-                    WHEN instructor.INSTRUCTORID IS NOT NULL THEN 'Instructor'
-                    ELSE '$this->guest'
-                END AS rol,
-                CASE
-                    WHEN admin.ADMINID IS NOT NULL THEN 'danger'
-                    WHEN docente.DOCENTEID IS NOT NULL AND instructor.INSTRUCTORID IS NOT NULL THEN 'warning'
-                    WHEN docente.DOCENTEID IS NOT NULL THEN 'success'
-                    WHEN instructor.INSTRUCTORID IS NOT NULL THEN 'secondary'
-                    ELSE ''
-                END AS color
-            FROM
-                [tblUsuario] usuario
-                LEFT JOIN tblAdmin admin on usuario.USERID = admin.USERID
-                LEFT JOIN tblDocente docente on usuario.USERID = docente.USERID
-                LEFT JOIN tblInstructor instructor on usuario.USERID = instructor.USERID
-            WHERE
-                usuario.USERID != $userId AND
-                USER_Activo = 1"
-        )->getAll();
-    }
 
     public function getById($id) {
         return $this->query(
@@ -94,39 +59,7 @@ class UsuarioRepository extends RepositoryTemplate {
         )->get();
     }
 
-    public function createUsuario($values) {
-        return $this->query(
-            "INSERT INTO tblUsuario (USER_NombreUsuario, USER_Password, USER_Nombre, USER_Apellido, USER_Email, USER_Genero) VALUES (?, ?, ?, ?, ?, ?)",
-            [$values["username"], password_hash($values["contraseña"], PASSWORD_BCRYPT), $values["nombre"], $values["apellido"], $values["email"], $values["genero"]]
-        );
-    }
-
-    public function createDocente($values) {
-        return $this->query(
-            "INSERT INTO tblDocente (USERID, DOCENTE_Nomina, DOCENTE_Base, DOCENTE_Horas_Base) VALUES (?, ?, ?, ?)",
-            [$values["userId"], $values["username"], $values["baseOrHoras"], $values["horasBase"]]
-        );
-    }
-
-    public function createInstructor($userId) {
-        return $this->query(
-            "INSERT INTO tblInstructor (USERID) VALUES (?)",
-            [$userId]
-        );
-    }
-
-    public function createAdministrador($userId) {
-        return $this->query(
-            "INSERT INTO tblAdmin (USERID) VALUES (?)",
-            [$userId]
-        );
-    }
-
-    public function delete($id) {
-        return $this->query("UPDATE tblUsuario SET USER_Activo = 0 WHERE USERID = ?", [$id]);
-    }
-
-    public function getInstructorFullName($cursoId){
+    public function getInstructorFullName($cursoId) {
         return $this->query(
             "SELECT u.USER_Nombre + ' ' + u.USER_Apellido as nombre
             FROM tblCurso c
@@ -137,5 +70,4 @@ class UsuarioRepository extends RepositoryTemplate {
             [$cursoId]
         )->get();
     }
-
 }
