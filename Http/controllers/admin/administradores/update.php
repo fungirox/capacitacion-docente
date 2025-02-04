@@ -17,6 +17,10 @@ AdministradorForm::validate($attributes = [
     "confirmPassword" => trim($_POST["confirm-password"])
 ]);
 
-App::resolve(AdministradorRepository::class)->update($attributes);
+if ($attributes["updatePassword"]) {
+    App::resolve(AdministradorRepository::class)->updateWithPassword($attributes);
+} else {
+    App::resolve(AdministradorRepository::class)->update($attributes);
+}
 
 redirect("/admin/administradores");
