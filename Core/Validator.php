@@ -2,9 +2,9 @@
 
 namespace Core;
 
-use Core\Repositories\AdministradorRepository;
 use Core\Repositories\AreaRepository;
 use Core\Repositories\InstructorRepository;
+use Core\Repositories\UsuarioRepository;
 use DateTime;
 
 class Validator {
@@ -21,11 +21,11 @@ class Validator {
     }
 
     public static function username($value) {
-        return !App::resolve(AdministradorRepository::class)->userAlreadyExists($value);
+        return !App::resolve(UsuarioRepository::class)->userAlreadyExists($value);
     }
 
     public static function updateUsername($id, $value) {
-        return !App::resolve(AdministradorRepository::class)->userAlreadyExistsForUpdate($id, $value);
+        return !App::resolve(UsuarioRepository::class)->userAlreadyExistsForUpdate($id, $value);
     }
 
     public static function date($value) {
