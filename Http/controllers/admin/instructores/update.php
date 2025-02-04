@@ -1,22 +1,23 @@
 <?php
 
 use Core\App;
-use Core\Repositories\AdministradorRepository;
-use Http\Forms\AdministradorForm;
+use Core\Repositories\InstructorRepository;
+use Http\Forms\InstructorForm;
 
-AdministradorForm::validate($attributes = [
-    "edit" => true, 
+InstructorForm::validate($attributes = [
+    "edit" => true,
     "id" => $_POST["id"],
     "nombre" => trim($_POST["nombre"]),
     "apellido" => trim($_POST["apellido"]),
     "username" => trim($_POST["username"]),
     "email" => trim($_POST["email"]),
     "genero" => $_POST["genero"],
+    "estudios" => $_POST["estudios"],
     "updatePassword" => isset($_POST["update-password"]),
     "password" => trim($_POST["password"]),
     "confirmPassword" => trim($_POST["confirm-password"])
 ]);
 
-App::resolve(AdministradorRepository::class)->update($attributes);
+App::resolve(InstructorRepository::class)->update($attributes);
 
-redirect("/admin/administradores");
+redirect("/admin/instructores");
