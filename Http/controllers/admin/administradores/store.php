@@ -16,4 +16,4 @@ AdministradorForm::validate($attributes = [
 
 App::resolve(AdministradorRepository::class)->create($attributes);
 
-redirect("/admin/administradores");
+redirect("/admin/administradores?sortBy=usuario.USERID-DESC");

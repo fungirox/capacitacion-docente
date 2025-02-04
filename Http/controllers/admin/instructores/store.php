@@ -17,4 +17,4 @@ InstructorForm::validate($attributes = [
 
 App::resolve(InstructorRepository::class)->create($attributes);
 
-redirect("/admin/instructores");
+redirect("/admin/instructores?sortBy=usuario.USERID-DESC");
