@@ -97,8 +97,8 @@
                     <tr>
                         <th scope="col">Usuario/matrícula</th>
                         <th scope="col">Nombre</th>
-                        <th scope="col">Correo</th>
                         <th scope="col">Estudios</th>
+                        <th scope="col">Correo</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
