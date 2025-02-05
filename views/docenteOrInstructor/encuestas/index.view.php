@@ -34,17 +34,17 @@
         </div>
         <div class="accordion-item">
             <h2 class="accordion-header">
-                <button class="accordion-button <?= count($cursosSinSegundaEncuesta) > 0 ? "" : "collapsed" ?>" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                <button class="accordion-button <?= count($cursosSinEficacia) > 0 ? "" : "collapsed" ?>" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                     <div class="w-100 row align-items-center justify-content-between">
                         <span class="col fs-4">Encuesta de Eficacia</span>
-                        <span class="col text-end me-3"><?= count($cursosSinSegundaEncuesta) ?></span>
+                        <span class="col text-end me-3"><?= count($cursosSinEficacia) ?></span>
                     </div>
                 </button>
             </h2>
-            <div id="collapseTwo" class="accordion-collapse collapse <?= count($cursosSinSegundaEncuesta) > 0 ? "show" : "" ?>">
+            <div id="collapseTwo" class="accordion-collapse collapse <?= count($cursosSinEficacia) > 0 ? "show" : "" ?>">
                 <div class="accordion-body">
-                    <?php if (!empty($cursosSinSegundaEncuesta)): ?>
-                        <?php foreach ($cursosSinSegundaEncuesta as $key => $curso): ?>
+                    <?php if (!empty($cursosSinEficacia)): ?>
+                        <?php foreach ($cursosSinEficacia as $key => $curso): ?>
                             <div class="row align-items-center justify-content-between gap-3">
                                 <span class="col-12 col-md-auto"><?= $curso["CURSO_Nombre"]; ?></span>
                                 <form class="d-grid col-12 col-md-auto" action="/historial/evaluarEficacia" method="GET">
@@ -52,7 +52,7 @@
                                     <button type="submit" class="btn btn-outline-primary">Evaluar curso</button>
                                 </form>
                             </div>
-                            <?php if ($key < count($cursosSinSegundaEncuesta) - 1): ?>
+                            <?php if ($key < count($cursosSinEficacia) - 1): ?>
                                 <hr class="text-body-tertiary" />
                             <?php endif; ?>
                         <?php endforeach; ?>

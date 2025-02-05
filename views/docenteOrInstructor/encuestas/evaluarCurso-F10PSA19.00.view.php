@@ -3,15 +3,16 @@
     <div class="d-flex flex-column align-items-start gap-2 pb-4">
         <div class="row align-items-center">
             <a class="col-12 col-md-auto" href="/historial"><i class="bi bi-arrow-left-circle" style="font-size: 1.5rem;"></i></a>
-            <h1 class="col-12 col-md-10"><span class="fw-light"><?= $title ?></span> <span><?= $courseName ?></span></h1>
+            <h1 class="col-12 col-md-10"><span class="fw-light"><?= $title ?></span> <span><?= $cursoNombre ?></span></h1>
         </div>
         <span class="badge rounded-pill text-bg-primary"><span class="fw-normal"><?= $instructorNombre ?></span></span>
     </div>
     <span>Por favor, responda el siguiente cuestionario de la manera más objetiva. Coloque un número del 1 al 5 considerando
         que uno es muy malo y 5 excelente, anote el que mejor describa su percepción del evento.</span>
     <div class="pt-4">
-        <form action="/historial/evaluarCurso/F10PSA19.00" method="POST">
-            <input type="hidden" name="CURSOID" value="<?= $courseId ?>">
+        <form action="/evaluaciones/evaluarServicio" method="POST">
+            <input type="hidden" name="CURSOID" value="<?= $cursoId ?>">
+            <input type="hidden" name="ENCUESTAID" value="2">
             <div class="d-flex flex-column gap-3">
                 <?php
                     foreach ($questions as $row):
@@ -31,7 +32,6 @@
                 <?php endforeach; ?>
             </div>
             <!-- Queda pendiente el comentarios (textarea) -->
-            <!-- Queda pendiente frontend y separar por categorias las preguntas :D -->
             <div class="pt-4">
                 <h2>Comentarios</h2>
                 <textarea class="form-control" id="comentarios" rows="2"></textarea>
