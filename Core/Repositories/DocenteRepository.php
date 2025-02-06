@@ -108,6 +108,32 @@ class DocenteRepository extends RepositoryTemplate {
         )->get();
     }
 
+    public function getById($id) {
+        return $this->query(
+            "SELECT
+                usuario.USERID AS id,
+                INSTRUCTORID AS instructorId,
+                DOCENTEID AS docenteId,
+                USER_Nombre AS nombre,
+                USER_Apellido AS apellido,
+                USER_NombreUsuario AS username,
+                USER_Email AS email,
+                USER_Genero AS genero,
+                DOCENTE_Base AS baseHoras,
+                DOCENTE_Horas_Base AS horasBase,
+                INSTRUCTOR_Estudios AS estudios,
+                CASE
+                    WHEN INSTRUCTORID > 0 THEN 1
+                    ELSE 0
+                END AS 'docenteInstructor'
+            FROM tblUsuario AS usuario
+                LEFT JOIN tblInstructor AS instructor ON usuario.USERID = instructor.USERID
+                RIGHT JOIN tblDocente AS docente ON usuario.USERID = docente.USERID
+            WHERE usuario.USERID = ?",
+            [$id]
+        )->get();
+    }
+
     public function create($attributes) {
         $this->query(
             "INSERT INTO tblUsuario (USER_NombreUsuario, USER_Nombre, USER_Apellido, USER_Email, USER_Genero, USER_Password, USER_Activo)
@@ -136,6 +162,72 @@ class DocenteRepository extends RepositoryTemplate {
                 [$userId, $attributes["estudios"]]
             );
         }
+    }
 
+    public function update($attributes) {
+        if ($attributes["updatePassword"]) {
+            $this->query(
+                "UPDATE tblUsuario
+                SET USER_Nombre = ?,
+                    USER_Apellido = ?,
+                    USER_NombreUsuario = ?,
+                    USER_Email = ?,
+                    USER_Genero = ?,
+                    USER_Password = ?
+                WHERE USERID = ?",
+                [
+                    $attributes["nombre"],
+                    $attributes["apellido"],
+                    $attributes["username"],
+                    $attributes["email"],
+                    $attributes["genero"],
+                    password_hash($attributes["password"], PASSWORD_BCRYPT),
+                    $attributes["id"]
+                ]
+            );
+        } else {
+            $this->query(
+                "UPDATE tblUsuario
+                SET USER_Nombre = ?,
+                    USER_Apellido = ?,
+                    USER_NombreUsuario = ?,
+                    USER_Email = ?,
+                    USER_Genero = ?
+                WHERE USERID = ?",
+                [
+                    $attributes["nombre"],
+                    $attributes["apellido"],
+                    $attributes["username"],
+                    $attributes["email"],
+                    $attributes["genero"],
+                    $attributes["id"]
+                ]
+            );
+        }
+
+        if ($attributes["isDocenteInstructor"] == 1) {
+            $this->query(
+                "UPDATE tblInstructor
+                SET INSTRUCTOR_Estudios = ?
+                WHERE USERID = ?",
+                [$attributes["estudios"], $attributes["id"]]
+            );
+        }
+
+        if ($attributes["isDocenteInstructor"] == 0 && $attributes["docenteInstructor"] == 1) {
+            $this->query(
+                "INSERT INTO tblInstructor (USERID, INSTRUCTOR_Estudios) VALUES (?, ?)",
+                [$attributes["id"], $attributes["estudios"]]
+            );
+        }
+
+        return $this->query(
+            "UPDATE tblDocente
+            SET DOCENTE_Nomina = ?,
+                DOCENTE_Base = ?,
+                DOCENTE_Horas_Base = ?
+            WHERE USERID = ?",
+            [$attributes["username"], $attributes["baseHoras"], $attributes["horasBase"], $attributes["id"]]
+        );
     }
 }
