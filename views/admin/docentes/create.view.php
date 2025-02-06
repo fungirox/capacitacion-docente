@@ -7,6 +7,8 @@
 
         const docenteBaseCheck = $('#base-check');
         const horasBaseInput = $('#horas-base-container');
+        const docenteInstructorSwitch = $('#docente-instructor');
+        const estudiosContainer = $('#estudios-container');
 
         function showHorasBaseInput() {
             if (docenteBaseCheck.prop('checked')) {
@@ -16,11 +18,24 @@
             }
         }
 
+        function showEstudiosSelector() {
+            if (docenteInstructorSwitch.prop('checked')) {
+                estudiosContainer.show();
+            } else {
+                estudiosContainer.hide();
+            }
+        }
+
         $('input[name="base-horas"]').on('change', () => {
             showHorasBaseInput();
         })
 
+        docenteInstructorSwitch.on('change', () => {
+            showEstudiosSelector();
+        });
+
         showHorasBaseInput();
+        showEstudiosSelector();
     });
 </script>
 <main role="main" class="container py-5" style="margin-top: 56px">
@@ -42,7 +57,7 @@
         </div>
         <div class="col-12 mb-3">
             <label for="username" class="form-label">Nómina</label>
-            <input type="text" class="form-control <?= isValidInput($errors, "username") ?>" id="username" name="username" value="<?= cleanOld("username") ?>">
+            <input type="number" class="form-control <?= isValidInput($errors, "username") ?>" id="username" name="username" value="<?= cleanOld("username") ?>">
             <div class="form-text">Se utilizará para iniciar sesión.</div>
             <div class="invalid-feedback">
                 <?= $errors['username'] ?>
@@ -81,13 +96,13 @@
         </div>
         <div id="hora-base-check-container" class="col-12 mb-3">
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="base-horas" id="base-check" value="1" <?= cleanOld("base-horas", "1") === "1" ? "checked" : "" ?>>
+                <input class="form-check-input" type="radio" name="base-horas" id="base-check" value="1" <?= cleanOld("baseHoras", "1") === "1" ? "checked" : "" ?>>
                 <label class="form-check-label" for="base-check">
                     Docente de base
                 </label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="base-horas" id="horas-check" value="0" <?= cleanOld("base-horas") === "0" ? "checked" : "" ?>>
+                <input class="form-check-input" type="radio" name="base-horas" id="horas-check" value="0" <?= cleanOld("baseHoras") === "0" ? "checked" : "" ?>>
                 <label class="form-check-label" for="horas-check">
                     Docente por horas
                 </label>
@@ -95,15 +110,26 @@
         </div>
         <div id="horas-base-container" class="col-12 mb-3">
             <label for="horas-base" class="form-label">Horas base</label>
-            <input type="number" min=0 class="form-control <?= isValidInput($errors, "horas-base") ?>" id="horas-base" name="horas-base" value="<?= cleanOld("horas-base") ?>">
+            <input type="number" min=0 class="form-control <?= isValidInput($errors, "horasBase") ?>" id="horas-base" name="horas-base" value="<?= cleanOld("horasBase") ?>">
             <div class="invalid-feedback">
-                <?= $errors['horas-base'] ?>
+                <?= $errors['horasBase'] ?>
             </div>
         </div>
         <div id="docente-instructor-switch" class="col-12 mb-3">
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" role="switch" name="docente-instructor" id="docente-instructor" value="1" <?= cleanOld("docente-instructor", "0") === "1" ? "checked" : "" ?>>
+                <input class="form-check-input" type="checkbox" role="switch" name="docente-instructor" id="docente-instructor" value="1" <?= cleanOld("docenteInstructor", "0") === "1" ? "checked" : "" ?>>
                 <label class="form-check-label" for="docente-instructor">El docente es instructor</label>
+            </div>
+        </div>
+        <div id="estudios-container" class="col-12 mb-3">
+            <label for="estudios" class="form-label">Nivel de estudios</label>
+            <select class="form-select <?= isValidInput($errors, "estudios") ?>" id="estudios" name="estudios">
+                <?php foreach ($nivelEstudios as $key => $value) : ?>
+                    <option value="<?= $key ?>" <?= cleanOld("estudios", "maestria") === $key ? "selected" : "" ?>><?= $value ?></option>
+                <?php endforeach; ?>
+            </select>
+            <div class="invalid-feedback">
+                <?= $errors['estudios'] ?>
             </div>
         </div>
         <div class="order-2 order-md-1 col-md-auto col-12 ms-md-auto mb-3">
