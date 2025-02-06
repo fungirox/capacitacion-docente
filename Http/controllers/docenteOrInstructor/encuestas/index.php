@@ -10,7 +10,6 @@ $cursosSinEficacia = App::resolve(CursoRepository::class)-> getCursosSinEficacia
 
 return view("/docenteOrInstructor/encuestas/index.view.php", [
     "title" => "Evaluaciones Pendientes",
-    "isDocenteAndInstructor" => $isDocenteAndInstructor,
     "cursosNoEvaluados" => $cursosNoEvaluados,
     "cursosSinEficacia" => $cursosSinEficacia
 ]);

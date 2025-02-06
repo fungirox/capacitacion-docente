@@ -1,24 +1,21 @@
 <?php
 
 use Core\App;
-use Core\Database;
-use Core\Repositories\ConstanciaRepository;
-use Core\Router;
 use Core\Session;
+use Core\Repositories\ConstanciaRepository;
 use Core\Repositories\CursoRepository;
 use Core\Repositories\PersonalRepository;
 use Core\Repositories\UsuarioRepository;
 
-$db = App::resolve(Database::class);
 $constanciaId = $_GET["id"]; 
 $constancia = App::resolve(ConstanciaRepository::class)->getById($constanciaId);
 
 if ($constancia) {
-        $userId = Session::getUser("id");
-        $userData = App::resolve(UsuarioRepository::class)->getById($userId);
+        $usuarioId = Session::getUser("id");
+        $userData = App::resolve(UsuarioRepository::class)->getById($usuarioId);
 
         $cursoId = $constancia["CURSOID"];
-        $curso = App::resolve(CursoRepository::class)->getCursoConstancia($userId, $cursoId);
+        $curso = App::resolve(CursoRepository::class)->getCursoConstancia($usuarioId, $cursoId);
 
         $personalId = $curso["PERSONALID"];
         $personalData = App::resolve(PersonalRepository::class)->getById($personalId);
@@ -42,6 +39,8 @@ if ($constancia) {
         $personalPuesto = mb_strtoupper($personalData["PERSONAL_Puesto"]);
 
         $constanciaFolio = $constancia["CONSTANCIA_Folio"];
+
+        $texto = $constancia["CONSTANCIA_Docente"] == 1 ? "APROBADO" : "IMPARTIDO";
 
         require base_path("vendor/autoload.php");
         $mpdf = new \Mpdf\Mpdf();
@@ -115,7 +114,7 @@ if ($constancia) {
                         <h1><?= $userData["USER_Nombre"] ?> <?= $userData["USER_Apellido"] ?></h1>
                 </div>
                 <div class="container">
-                        <h4>POR HABER APROBADO SATISFACTORIAMENTE EL <?= $tipo ?>:</h4>
+                        <h4>POR HABER <?= $texto ?> SATISFACTORIAMENTE EL <?= $tipo ?>:</h4>
                 </div>
                 <div class="container">
                         <h2><?= $curso["CURSO_Nombre"] ?></h2>
@@ -136,6 +135,6 @@ if ($constancia) {
         $mpdf->WriteHTML($html_code);
         $fileName = "Constancia " .  $constancia["CONSTANCIA_Folio"] . ".pdf";
         $mpdf->Output($fileName, 'D');
-        redirect("/admin/reportes");
+        redirect("/constancias");
         exit();
 }

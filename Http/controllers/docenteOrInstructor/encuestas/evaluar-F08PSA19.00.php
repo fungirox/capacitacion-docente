@@ -8,6 +8,8 @@ use Core\Repositories\CursoDocenteRepository;
 use Core\Repositories\RespuestaRepository;
 use Core\Repositories\RespuestaPreguntaRepository;
 
+// eficacia de un servicio
+
 $userId = Session::getUser("id");
 $cursoId = $_POST["CURSOID"];
 $docenteId = App::resolve(DocenteRepository::class) -> getDocenteId($userId);

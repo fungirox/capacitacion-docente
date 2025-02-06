@@ -15,5 +15,4 @@ $router->post("/evaluaciones/evaluarEficacia", "docenteOrInstructor/encuestas/ev
 # Constancias
 
 $router->get("/constancias", "docenteOrInstructor/constancias/index.php")->only(DOCENTE_OR_INSTRUCTOR);
-$router->get("/historial/constanciaDocente", "docenteOrInstructor/constancias/constanciaDocente.php")->only(DOCENTE_OR_INSTRUCTOR);
-$router->get("/historial/constanciaInstructor", "docenteOrInstructor/constancias/constanciaInstructor.php")->only(DOCENTE_OR_INSTRUCTOR);
+$router->get("/historial/constancia", "docenteOrInstructor/constancias/constancia.php")->only(DOCENTE_OR_INSTRUCTOR);
