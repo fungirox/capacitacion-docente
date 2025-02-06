@@ -131,7 +131,7 @@ view("components/styledHeader.php", ["title" => $title]); ?>
                                                 </a>
                                             </li>
                                         <?php endif; ?>
-                                        <?php if (!$archivados && $id !== Session::getUser("id")): ?>
+                                        <?php if ($id !== Session::getUser("id")): ?>
                                             <li>
                                                 <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#archiveModal<?= $id ?>">
                                                     <i class="bi bi-archive"></i>
