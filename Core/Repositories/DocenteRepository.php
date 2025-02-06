@@ -107,4 +107,35 @@ class DocenteRepository extends RepositoryTemplate {
             [$userId]
         )->get();
     }
+
+    public function create($attributes) {
+        $this->query(
+            "INSERT INTO tblUsuario (USER_NombreUsuario, USER_Nombre, USER_Apellido, USER_Email, USER_Genero, USER_Password, USER_Activo)
+            VALUES (?, ?, ?, ?, ?, ?, 1)",
+            [
+                $attributes["username"],
+                $attributes["nombre"],
+                $attributes["apellido"],
+                $attributes["email"],
+                $attributes["genero"],
+                password_hash($attributes["password"], PASSWORD_BCRYPT)
+            ]
+        );
+
+        $userId = $this->getDatabase()->lastInsertId();
+
+        $this->query(
+            "INSERT INTO tblDocente (USERID, DOCENTE_Nomina, DOCENTE_Base, DOCENTE_Horas_Base)
+            VALUES (?, ?, ?, ?)",
+            [$userId, $attributes["username"], $attributes["baseHoras"], $attributes["horasBase"]]
+        );
+
+        if ($attributes["docenteInstructor"] == 1) {
+            return $this->query(
+                "INSERT INTO tblInstructor (USERID, INSTRUCTOR_Estudios) VALUES (?, ?)",
+                [$userId, $attributes["estudios"]]
+            );
+        }
+
+    }
 }
