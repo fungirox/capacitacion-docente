@@ -28,6 +28,7 @@ return view("components/curso.php", [
     "tipo" => htmlspecialchars(ucfirst($curso["tipo"])),
     "isVirtual" => htmlspecialchars($curso["modalidad"] == "virtual"),
     "estado" => htmlspecialchars($curso["estado"]),
+    "archivado" => htmlspecialchars($curso["archivado"]),
     "formattedState" => htmlspecialchars($formattedState),
     "areas" => explode(",", htmlspecialchars($curso["areas"])),
     "origen" => htmlspecialchars($curso["origen"]),

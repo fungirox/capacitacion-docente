@@ -16,40 +16,63 @@
             <?php if (strcmp($mode, "admin") === 0): ?>
                 <div class="container pb-3">
                     <div class="row gap-3">
-                        <?php if ($estado != "terminado"): ?>
-                            <button type="button" class="col-12 col-md-auto btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#stateModal">
-                                <i class="bi bi-flag pe-2"></i>
-                                <?= $action ?>
-                            </button>
-                            <div class="modal fade" id="stateModal" tabindex="-1" aria-labelledby="stateModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="stateModalLabel"><?= $action ?></h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <?php if (!$archivado): ?>
+                            <?php if ($estado != "terminado"): ?>
+                                <button type="button" class="col-12 col-md-auto btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#stateModal">
+                                    <i class="bi bi-flag pe-2"></i>
+                                    <?= $action ?>
+                                </button>
+                                <div class="modal fade" id="stateModal" tabindex="-1" aria-labelledby="stateModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="stateModalLabel"><?= $action ?></h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                ¿Seguro de que desea cambiar el estado del curso "<?= $nombre ?>"?
+                                            </div>
+                                            <form class="modal-footer" method="POST">
+                                                <input type="hidden" name="_method" value="PATCH">
+                                                <input type="hidden" name="id" value="<?= $id ?>">
+                                                <input type="hidden" name="state" value="<?= $estado ?>">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Regresar</button>
+                                                <button type="submit" class="btn btn-success"><?= $action ?></button>
+                                            </form>
                                         </div>
-                                        <div class="modal-body">
-                                            ¿Seguro de que desea cambiar el estado del curso "<?= $nombre ?>"?
-                                        </div>
-                                        <form class="modal-footer" method="POST">
-                                            <input type="hidden" name="_method" value="PATCH">
-                                            <input type="hidden" name="id" value="<?= $id ?>">
-                                            <input type="hidden" name="state" value="<?= $estado ?>">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Regresar</button>
-                                            <button type="submit" class="btn btn-success"><?= $action ?></button>
-                                        </form>
                                     </div>
                                 </div>
-                            </div>
+                            <?php endif; ?>
+                            <a href="/admin/cursos/editar?id=<?= $id ?>" class="col-12 col-md-auto btn btn-outline-primary">
+                                <i class="bi bi-pencil pe-2"></i>
+                                <span>Editar</span>
+                            </a>
                         <?php endif; ?>
-                        <a href="/admin/cursos/editar?id=<?= $id ?>" class="col-12 col-md-auto btn btn-outline-primary">
-                            <i class="bi bi-pencil pe-2"></i>
-                            <span>Editar</span>
-                        </a>
-                        <button type="button" class="col-12 col-md-auto btn btn-outline-warning">
+                        <button type="button" class="col-12 col-md-auto btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#archiveModal<?= $id ?>">
                             <i class="bi bi-archive pe-2"></i>
-                            <span>Archivar</span>
+                            <span><?= $archivado ? "Desarchivar" : "Archivar" ?></span>
                         </button>
+                        <!-- Modal de confirmación para archivar curso -->
+                        <div class="modal fade" id="archiveModal<?= $id ?>" tabindex="-1" aria-labelledby="archiveModalLabel<?= $id ?>" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="archiveModalLabel<?= $id ?>"><?= $archivado ? "Desarchivar" : "Archivar" ?> Curso</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>¿Seguro de que desea <?= $archivado ? "desarchivar" : "archivar" ?> este curso?</p>
+                                    </div>
+                                    <form class="modal-footer" method="POST" action="/admin/cursos">
+                                        <input type="hidden" name="_method" value="DELETE" />
+                                        <input type="hidden" name="id" value="<?= $id ?>" />
+                                        <input type="hidden" name="action" value="<?= $archivado ? "unarchive" : "archive" ?>" />
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                        <button type="submit" class="btn btn-warning"><?= $archivado ? "Desarchivar" : "Archivar" ?></button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             <?php endif; ?>

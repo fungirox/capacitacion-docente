@@ -374,6 +374,7 @@ class CursoRepository extends RepositoryTemplate {
                 curso.CURSO_Tipo + ' ' + curso.CURSO_Modalidad as tipo,
                 curso.CURSO_Modalidad as modalidad,
                 curso.CURSO_Estado AS estado,
+                curso.CURSO_Archivado AS archivado,
                 (
                     SELECT STRING_AGG(AREA_Siglas, ',') WITHIN GROUP (ORDER BY AREA_Siglas)
                     FROM (
@@ -442,6 +443,7 @@ class CursoRepository extends RepositoryTemplate {
                 curso.CURSO_Tipo,
                 curso.CURSO_Modalidad,
                 curso.CURSO_Estado,
+                curso.CURSO_Archivado,
                 curso.CURSO_Externo,
                 curso.CURSO_Perfil,
                 curso.CURSO_Total_Horas,
