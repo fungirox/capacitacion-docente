@@ -101,12 +101,20 @@
                 $nombre = htmlspecialchars($curso["nombre"]);
                 $instructorNombre = htmlspecialchars($curso["instructor_nombre"]);
                 $tipo = htmlspecialchars(ucfirst($curso["tipo"]));
+                $estado = htmlspecialchars($curso["estado"]);
+
+                $estado =  match ($estado) {
+                    "publico" => "Público",
+                    "privado" => "Privado",
+                    "en_progreso" => "En progreso",
+                    "terminado" => "Terminado"
+                };
                 ?>
                 <div class="col">
                     <div class="card h-100 rounded-4">
                         <a href="/admin/cursos/curso?id=<?= $id ?>">
                             <div class="pt-2 pe-3 shadow-sm" style="position: absolute; right: 0">
-                                <span class="badge bg-success">En progreso</span>
+                                <span class="badge bg-primary"><?= $estado ?></span>
                             </div>
                             <img
                                 src="https://plus.unsplash.com/premium_photo-1682125773446-259ce64f9dd7?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
