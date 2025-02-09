@@ -55,9 +55,10 @@ class CursoRepository extends RepositoryTemplate {
 
         $results = $this->query(
             "SELECT
-                curso.CURSOID as id,
-                curso.CURSO_Nombre as nombre,
-                curso.CURSO_Tipo + ' ' + curso.CURSO_Modalidad as tipo,
+                curso.CURSOID AS id,
+                curso.CURSO_Nombre AS nombre,
+                curso.CURSO_Tipo + ' ' + curso.CURSO_Modalidad AS tipo,
+                curso.CURSO_Estado AS estado,
                 (
                     SELECT STRING_AGG(AREA_Siglas, ',') WITHIN GROUP (ORDER BY AREA_Siglas)
                     FROM (
@@ -87,6 +88,7 @@ class CursoRepository extends RepositoryTemplate {
                 curso.CURSOID,
                 curso.CURSO_Nombre,
                 curso.CURSO_Tipo,
+                curso.CURSO_Estado,
                 curso.CURSO_Modalidad,
                 usuario.USER_Nombre,
                 usuario.USER_Apellido
