@@ -1,11 +1,7 @@
 <?php
 
 use Core\App;
-use Core\Database;
-use Core\Router;
-use Core\Session;
 use Core\Repositories\CursoRepository;
-use Core\Repositories\UsuarioRepository;
 
 $periodo = $_POST["periodoITESCA"];
 $year = $_POST["year"];

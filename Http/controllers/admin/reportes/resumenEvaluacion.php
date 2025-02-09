@@ -1,7 +1,6 @@
 <?php
 
 use Core\App;
-use Core\Database;
 use Core\Repositories\CursoRepository;
 use Core\Repositories\EncuestaRepository;
 use Core\Repositories\UsuarioRepository;
@@ -9,7 +8,6 @@ use Core\Repositories\RespuestaRepository;
 use Core\Repositories\RespuestaPreguntaRepository;
 use Core\Repositories\CursoDocenteRepository;
 
-$db = App::resolve(Database::class);
 $cursoId = $_GET["id"];
 $curso = App::resolve(CursoRepository::class)->getCursoEvaluado($cursoId);
 if ($curso) {

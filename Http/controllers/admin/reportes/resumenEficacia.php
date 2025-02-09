@@ -1,7 +1,6 @@
 <?php
 
 use Core\App;
-use Core\Database;
 use Core\Repositories\CursoRepository;
 use Core\Repositories\EncuestaRepository;
 use Core\Repositories\UsuarioRepository;
@@ -9,9 +8,9 @@ use Core\Repositories\RespuestaRepository;
 use Core\Repositories\RespuestaPreguntaRepository;
 use Core\Repositories\CursoDocenteRepository;
 
-$db = App::resolve(Database::class);
 $cursoId = $_GET["id"];
 $curso = App::resolve(CursoRepository::class)->getCursoConcluido($cursoId);
+
 if ($curso) {
     $encuesta = App::resolve(EncuestaRepository::class)->getById(3);
     $instructorNombre = App::resolve(UsuarioRepository::class)->getInstructorFullName($cursoId);
