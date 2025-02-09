@@ -325,6 +325,7 @@ class CursoRepository extends RepositoryTemplate {
                 curso.CURSO_Nombre as nombre,
                 curso.CURSO_Tipo + ' ' + curso.CURSO_Modalidad as tipo,
                 curso.CURSO_Modalidad as modalidad,
+                curso.CURSO_Estado as estado,
                 (
                     SELECT STRING_AGG(HORARIOCURSO_Dia_Semana, ',') WITHIN GROUP (ORDER BY HORARIOCURSO_Dia_Semana)
                     FROM (
@@ -372,6 +373,7 @@ class CursoRepository extends RepositoryTemplate {
                 CAST(curso.CURSO_Descripcion AS VARCHAR(MAX)) as descripcion,
                 curso.CURSO_Tipo + ' ' + curso.CURSO_Modalidad as tipo,
                 curso.CURSO_Modalidad as modalidad,
+                curso.CURSO_Estado AS estado,
                 (
                     SELECT STRING_AGG(AREA_Siglas, ',') WITHIN GROUP (ORDER BY AREA_Siglas)
                     FROM (
@@ -439,6 +441,7 @@ class CursoRepository extends RepositoryTemplate {
                 CAST(curso.CURSO_Descripcion AS VARCHAR(MAX)),
                 curso.CURSO_Tipo,
                 curso.CURSO_Modalidad,
+                curso.CURSO_Estado,
                 curso.CURSO_Externo,
                 curso.CURSO_Perfil,
                 curso.CURSO_Total_Horas,

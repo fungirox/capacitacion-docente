@@ -21,7 +21,7 @@
                 $dias = htmlspecialchars(shortFormattedDays($curso["dias"]));
                 $horaInicial = htmlspecialchars(formatTime($curso["hora_inicial"]));
                 $horaFinal = htmlspecialchars(formatTime($curso["hora_final"]));
-                $enProgreso = $curso["en_progreso"] == 1;
+                $enProgreso = $curso["estado"] == "en_progreso";
                 ?>
                 <div class="col-12">
                     <div class="card rounded-4">

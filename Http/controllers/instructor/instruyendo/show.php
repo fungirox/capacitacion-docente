@@ -7,6 +7,7 @@ use Core\Session;
 $curso = App::resolve(CursoRepository::class)->getAllTeachingById($_GET["id"], Session::getUser("id"));
 
 return view("components/curso.php", [
+    "root" => "/instruyendo",
     "id" => htmlspecialchars($curso["id"]),
     "nombre" => htmlspecialchars($curso["nombre"]),
     "descripcion" => htmlspecialchars($curso["descripcion"]),

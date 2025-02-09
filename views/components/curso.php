@@ -31,7 +31,7 @@
                     </div>
                 </div>
             <?php endif; ?>
-            <?php view("components/nestedTitle.php", ["url" => "/admin/cursos", "title" => $nombre]) ?>
+            <?php view("components/nestedTitle.php", ["url" => $root, "title" => $nombre]) ?>
             <h4 class="text-secondary py-1"><?= $instructor ?></h4>
             <hr class="text-secondary" />
             <div class="row justify-content-between pb-4">
@@ -40,7 +40,7 @@
                         <span class="badge rounded-pill text-bg-primary"><?= $area ?></span>
                     <?php endforeach; ?>
                 </div>
-                <span class="col text-secondary text-end"><?= $tipo ?> (en curso)</span>
+                <span class="col text-secondary text-end"><?= $tipo ?><?= isset($estado) ? " (" . $estado . ")" : "" ?></span>
             </div>
             <p class="lh-lg"><?= $descripcion ?></p>
         </div>
