@@ -16,10 +16,32 @@
             <?php if (strcmp($mode, "admin") === 0): ?>
                 <div class="container pb-3">
                     <div class="row gap-3">
-                        <button type="button" class="col-12 col-md-auto btn btn-outline-success">
-                            <i class="bi bi-flag pe-2"></i>
-                            <span>Iniciar curso</span>
-                        </button>
+                        <?php if ($estado != "terminado"): ?>
+                            <button type="button" class="col-12 col-md-auto btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#stateModal">
+                                <i class="bi bi-flag pe-2"></i>
+                                <?= $action ?>
+                            </button>
+                            <div class="modal fade" id="stateModal" tabindex="-1" aria-labelledby="stateModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="stateModalLabel"><?= $action ?></h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            ¿Seguro de que desea cambiar el estado del curso "<?= $nombre ?>"?
+                                        </div>
+                                        <form class="modal-footer" method="POST">
+                                            <input type="hidden" name="_method" value="PATCH">
+                                            <input type="hidden" name="id" value="<?= $id ?>">
+                                            <input type="hidden" name="state" value="<?= $estado ?>">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Regresar</button>
+                                            <button type="submit" class="btn btn-success"><?= $action ?></button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
                         <a href="/admin/cursos/editar?id=<?= $id ?>" class="col-12 col-md-auto btn btn-outline-primary">
                             <i class="bi bi-pencil pe-2"></i>
                             <span>Editar</span>
@@ -40,7 +62,7 @@
                         <span class="badge rounded-pill text-bg-primary"><?= $area ?></span>
                     <?php endforeach; ?>
                 </div>
-                <span class="col text-secondary text-end"><?= $tipo ?><?= isset($estado) ? " (" . $estado . ")" : "" ?></span>
+                <span class="col text-secondary text-end"><?= $tipo ?><?= isset($estado) ? " (" . $formattedState . ")" : "" ?></span>
             </div>
             <p class="lh-lg"><?= $descripcion ?></p>
         </div>

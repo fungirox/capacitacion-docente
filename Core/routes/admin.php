@@ -16,6 +16,7 @@ $router->post("/admin/cursos", "admin/cursos/store.php")->only(ADMIN);
 $router->delete("/admin/cursos", "admin/cursos/archive.php")->only(ADMIN);
 
 $router->patch("/admin/cursos", "admin/cursos/update.php")->only(ADMIN);
+$router->patch("/admin/cursos/curso", "admin/cursos/state.php")->only(ADMIN);
 
 ## Usuarios
 
@@ -55,6 +56,18 @@ $router->delete("/admin/administradores", "admin/administradores/archive.php")->
 
 $router->patch("/admin/administradores", "admin/administradores/update.php")->only(ADMIN);
 
+# Reportes
+
+$router->get("/admin/reportes", "admin/reportes/index.php")->only(ADMIN);
+$router->get("/admin/resumenEvaluacion", "admin/reportes/resumenEvaluacion.php")->only(ADMIN);
+$router->get("/admin/resumenEficacia", "admin/reportes/resumenEficacia.php")->only(ADMIN);
+
+# Formatos
+
+$router->get("/admin/formatos", "admin/formatos/index.php")->only(ADMIN);
+$router->get("/admin/formatos/tecNM", "admin/formatos/tecNM.php")->only(ADMIN);
+$router->get("/admin/formatos/F06PSA19.02", "admin/formatos/F06PSA19.02.php")->only(ADMIN);
+
 # Áreas
 
 $router->get("/admin/areas", "admin/areas/index.php")->only(ADMIN);
@@ -78,15 +91,3 @@ $router->post("/admin/carreras", "admin/carreras/store.php")->only(ADMIN);
 $router->delete("/admin/carreras", "admin/carreras/archive.php")->only(ADMIN);
 
 $router->patch("/admin/carreras", "admin/carreras/update.php")->only(ADMIN);
-
-# Reportes
-
-$router->get("/admin/reportes", "admin/reportes/index.php")->only(ADMIN);
-$router->get("/admin/resumenEvaluacion", "admin/reportes/resumenEvaluacion.php")->only(ADMIN);
-$router->get("/admin/resumenEficacia", "admin/reportes/resumenEficacia.php")->only(ADMIN);
-
-# Formatos
-
-$router->get("/admin/formatos", "admin/formatos/index.php")->only(ADMIN);
-$router->get("/admin/formatos/tecNM", "admin/formatos/tecNM.php")->only(ADMIN);
-$router->get("/admin/formatos/F06PSA19.02", "admin/formatos/F06PSA19.02.php")->only(ADMIN);

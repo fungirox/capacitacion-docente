@@ -1262,4 +1262,11 @@ class CursoRepository extends RepositoryTemplate {
             $params
         );
     }
+
+    public function updateState($cursoId, $state) {
+        return $this->query(
+            "UPDATE tblCurso SET CURSO_Estado = ? WHERE CURSOID = ?",
+            [$state, $cursoId]
+        );
+    }
 }

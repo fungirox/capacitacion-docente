@@ -5,20 +5,30 @@ use Core\Repositories\CursoRepository;
 
 $curso = App::resolve(CursoRepository::class)->getById($_GET["id"]);
 
-$estado = match ($curso["estado"]) {
+$formattedState = match ($curso["estado"]) {
+    "privado" => "privado",
     "publico" => "público",
     "en_progreso" => "en progreso",
-    default => $curso["estado"]
+    "terminado" => "terminado",
+};
+
+$action = match ($curso["estado"]) {
+    "privado" => "Publicar curso",
+    "publico" => "Comenzar curso",
+    "en_progreso" => "Finalizar curso",
+    "terminado" => "",
 };
 
 return view("components/curso.php", [
     "root" => "/admin/cursos",
+    "action" => $action,
     "id" => htmlspecialchars($curso["id"]),
     "nombre" => htmlspecialchars($curso["nombre"]),
     "descripcion" => htmlspecialchars($curso["descripcion"]),
     "tipo" => htmlspecialchars(ucfirst($curso["tipo"])),
     "isVirtual" => htmlspecialchars($curso["modalidad"] == "virtual"),
-    "estado" => htmlspecialchars($estado),
+    "estado" => htmlspecialchars($curso["estado"]),
+    "formattedState" => htmlspecialchars($formattedState),
     "areas" => explode(",", htmlspecialchars($curso["areas"])),
     "origen" => htmlspecialchars($curso["origen"]),
     "perfil" => htmlspecialchars($curso["perfil"]),
