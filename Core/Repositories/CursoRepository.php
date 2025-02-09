@@ -1176,9 +1176,10 @@ class CursoRepository extends RepositoryTemplate {
                 CURSO_Total_Horas,
                 CURSO_Aula,
                 CURSO_Limite,
-                CURSO_Externo
+                CURSO_Externo,
+                CURSO_Estado
             )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'privado')",
             [$tipo, $nombre, $descripcion, $perfil, $modalidad, $fechaInicial, $fechaFinal, $horasTotal, $aula, $limite, $externo]
         );
     }
@@ -1199,9 +1200,10 @@ class CursoRepository extends RepositoryTemplate {
                 CURSO_Horas_Presenciales,
                 CURSO_Aula,
                 CURSO_Limite,
-                CURSO_Externo
+                CURSO_Externo,
+                CURSO_Estado
             )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'privado')",
             [$tipo, $nombre, $descripcion, $perfil, $modalidad, $fechaInicial, $fechaFinal, $horasTotal, $horasPresenciales, $aula, $limite, $externo]
         );
     }
@@ -1219,9 +1221,10 @@ class CursoRepository extends RepositoryTemplate {
                 CURSO_Fecha_Inicio,
                 CURSO_Fecha_Final,
                 CURSO_Total_Horas,
-                CURSO_Externo
+                CURSO_Externo,
+                CURSO_Estado
             )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'privado')",
             [$tipo, $nombre, $descripcion, $perfil, $modalidad, $fechaInicial, $fechaFinal, $horasTotal, $externo]
         );
     }
@@ -1262,6 +1265,56 @@ class CursoRepository extends RepositoryTemplate {
                 (CURSOID, HORARIOCURSO_Dia_Semana, HORARIOCURSO_Hora_Inicio, HORARIOCURSO_Hora_Final, HORARIOCURSO_Horas)
             VALUES $placeholders",
             $params
+        );
+    }
+
+    public function update($attributes) {
+        $this->query(
+            "UPDATE tblCurso
+            SET CURSO_Tipo = ?,
+                CURSO_Nombre = ?,
+                CURSO_Descripcion = ?,
+                CURSO_Perfil = ?,
+                CURSO_Modalidad = ?,
+                CURSO_Fecha_Inicio = ?,
+                CURSO_Fecha_Final = ?,
+                CURSO_Total_Horas = ?,
+                CURSO_Horas_Presenciales = ?,
+                CURSO_Aula = ?,
+                CURSO_Limite = ?,
+                CURSO_Externo = ?
+            WHERE CURSOID = ?",
+            [
+                $attributes["tipo"],
+                $attributes["nombre"],
+                $attributes["descripcion"],
+                $attributes["perfil"],
+                $attributes["modalidad"],
+                $attributes["fechaInicial"],
+                $attributes["fechaFinal"],
+                $attributes["horasTotal"],
+                $attributes["horasPresenciales"],
+                $attributes["aula"],
+                $attributes["limite"],
+                $attributes["externo"],
+                $attributes["id"]
+            ]
+        );
+
+        $this->query(
+            "DELETE FROM tblCursoInstructor WHERE CURSOID = ?;
+            DELETE FROM tblCursoArea WHERE CURSOID = ?;
+            DELETE FROM tblHorarioCurso WHERE CURSOID = ?;",
+            [$attributes["id"], $attributes["id"], $attributes["id"]]
+        );
+
+        $this->addCursoInstructor($attributes["id"], $attributes["instructor"]);
+        $this->addCursoArea($attributes["id"], $attributes["areas"]);
+        $this->addCursoSchedule(
+            $attributes["id"],
+            $attributes["dias"],
+            $attributes["horaInicial"],
+            $attributes["horaFinal"]
         );
     }
 
