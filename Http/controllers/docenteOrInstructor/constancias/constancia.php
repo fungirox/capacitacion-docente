@@ -1,26 +1,50 @@
 <?php
 
 use Core\App;
-use Core\Database;
-use Core\Router;
 use Core\Session;
+use Core\Repositories\ConstanciaRepository;
 use Core\Repositories\CursoRepository;
+use Core\Repositories\PersonalRepository;
 use Core\Repositories\UsuarioRepository;
 
-$db = App::resolve(Database::class);
-$cursoId = $_GET["id"];
-$userId = Session::getUser("id");
-$userData = App::resolve(UsuarioRepository::class)->getById($userId);
-$curso = App::resolve(CursoRepository::class)->getCursoConstancia($userId, $cursoId);
-if ($curso) {
-        $fecha = new DateTime($curso["CURSO_Fecha_Final"]);
+$constanciaId = $_GET["id"]; 
+$constancia = App::resolve(ConstanciaRepository::class)->getById($constanciaId);
+
+if ($constancia) {
+        $usuarioId = Session::getUser("id");
+        $userData = App::resolve(UsuarioRepository::class)->getById($usuarioId);
+
+        $cursoId = $constancia["CURSOID"];
+        $curso = App::resolve(CursoRepository::class)->getCursoConstancia($usuarioId, $cursoId);
+
+        $personalId = $curso["PERSONALID"];
+        $personalData = App::resolve(PersonalRepository::class)->getById($personalId);
+        
+        $fechaInicio = new DateTime($curso["CURSO_Fecha_Inicio"]);
         $mesesEs = ['ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO', 'JULIO', 'AGOSTO', 'SEPTIEMBRE', 'OCTUBRE', 'NOVIEMBRE', 'DICIEMBRE'];
-        $mes = (int)$fecha->format('n') - 1;
-        $fechaFormateada = $fecha->format('d') . ' DE ' . $mesesEs[$mes] . ' DE ' . $fecha->format('Y');
+        $mes = (int)$fechaInicio->format('n') - 1;
+        $fechaInicioFormateada = $fechaInicio->format('d') . ' DE ' . $mesesEs[$mes] . ' DE ' . $fechaInicio->format('Y');
+
+        $fechaFinal = new DateTime($curso["CURSO_Fecha_Final"]);
+        $mesesEs = ['ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO', 'JULIO', 'AGOSTO', 'SEPTIEMBRE', 'OCTUBRE', 'NOVIEMBRE', 'DICIEMBRE'];
+        $mes = (int)$fechaFinal->format('n') - 1;
+        $fechaFinalFormateada = $fechaFinal->format('d') . ' DE ' . $mesesEs[$mes] . ' DE ' . $fechaFinal->format('Y');
+
         $tipo = strtoupper($curso["CURSO_Tipo"]);
+        $modalidad = strtoupper($curso["CURSO_Modalidad"]) === 'MIXTO' ? 'MIXTA' : strtoupper($curso["CURSO_Modalidad"]);
+        $totalHoras = strtoupper($curso["CURSO_Total_Horas"]);
+
+        $personalTitulo = strtoupper($personalData["PERSONAL_Titulo"]);
+        $personalNombre = strtoupper($personalData["PERSONAL_Nombre"]);
+        $personalPuesto = mb_strtoupper($personalData["PERSONAL_Puesto"]);
+
+        $constanciaFolio = $constancia["CONSTANCIA_Folio"];
+
+        $texto = $constancia["CONSTANCIA_Docente"] == 1 ? "APROBADO" : "IMPARTIDO";
+
         require base_path("vendor/autoload.php");
         $mpdf = new \Mpdf\Mpdf();
-        $mpdf->SetHTMLFooter('<img style="text-align: center;" src="C:\xampp\htdocs\capacitacion-docente\public\assets\images\footer.jpg" alt="Logo de la SEP y TECNM" height="64" /><br><p style="text-align: left;">folio constancia</p>');
+        $mpdf->SetHTMLFooter('<img style="text-align: center;" src="C:\xampp\htdocs\capacitacion-docente\public\assets\images\footer.jpg" alt="Logo de la SEP y TECNM" height="64" /><br><p style="text-align: left;">' . $constanciaFolio . '</p>');
         $mpdf->SetHTMLHeader('<img style="text-align: center;" src="C:\xampp\htdocs\capacitacion-docente\public\assets\images\header.jpg" alt="Logo ITESCA" height="64" />');
         ob_start();
 ?>
@@ -73,7 +97,7 @@ if ($curso) {
                         }
                 </style>
         </head>
-
+ 
         <body>
                 <br><br><br>
                 <div class="container">
@@ -90,18 +114,18 @@ if ($curso) {
                         <h1><?= $userData["USER_Nombre"] ?> <?= $userData["USER_Apellido"] ?></h1>
                 </div>
                 <div class="container">
-                        <h4>POR HABER APROBADO SATISFACTORIAMENTE EL <?= $tipo ?>:</h4>
+                        <h4>POR HABER <?= $texto ?> SATISFACTORIAMENTE EL <?= $tipo ?>:</h4>
                 </div>
                 <div class="container">
                         <h2><?= $curso["CURSO_Nombre"] ?></h2>
                 </div>
                 <div class="container">
-                        <h4>IMPARTIDO DEL <b><?= $fechaFormateada ?></b> DE <b>segunda fecha</b> EN EL INSTITUTO TECNOLÓGICO SUPERIOR DE CAJEME, CON UNA DURACIÓN DE <b>horas</b> EN LA MODALIDAD <b>modalidad</b>.</h4>
+                        <h4>IMPARTIDO DEL <b><?= $fechaInicioFormateada ?></b> AL <b><?= $fechaFinalFormateada ?></b> EN EL INSTITUTO TECNOLÓGICO SUPERIOR DE CAJEME, CON UNA DURACIÓN DE <b><?= $totalHoras ?></b> HORAS EN LA MODALIDAD <b><?= $modalidad ?></b>.</h4>
                 </div>
                 <br><br>
                 <div class="container">
-                        <h4 class="title">LIC. MARGARITA VÉLEZ DE LA ROCHA</h4>
-                        <p class="subtitle">DIRECTORA GENERAL</p>
+                        <h4 class="title"><?= $personalTitulo ?>. <?= $personalNombre ?></h4>
+                        <p class="subtitle"><?= $personalPuesto ?></p>
                 </div>
         </body>
 
@@ -109,8 +133,8 @@ if ($curso) {
 <?php
         $html_code = ob_get_clean();
         $mpdf->WriteHTML($html_code);
-        $fileName = $userData["USER_Nombre"] . " " . $userData["USER_Apellido"] . " - Constancia " .  $cursoId . ".pdf";
+        $fileName = "Constancia " .  $constancia["CONSTANCIA_Folio"] . ".pdf";
         $mpdf->Output($fileName, 'D');
-        redirect("/admin/reportes");
+        redirect("/constancias");
         exit();
 }

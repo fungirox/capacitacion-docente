@@ -1,8 +1,6 @@
 <?php
 
 use Core\App;
-use Core\Database;
-use Core\Roles\Roles;
 use Core\Session;
 use Core\Repositories\PreguntaRepository;
 use Core\Repositories\DocenteRepository;
@@ -10,14 +8,14 @@ use Core\Repositories\CursoDocenteRepository;
 use Core\Repositories\RespuestaRepository;
 use Core\Repositories\RespuestaPreguntaRepository;
 
-$db = App::resolve(Database::class);
-$isDocenteAndInstructor = Session::role() === Roles::DOCENTE_AND_INSTRUCTOR;
-$userId = Session::getUser("id");
-$courseID = $_POST["CURSOID"];
+// eficacia de un servicio
 
+$userId = Session::getUser("id");
+$cursoId = $_POST["CURSOID"];
 $docenteId = App::resolve(DocenteRepository::class) -> getDocenteId($userId);
-App::resolve(CursoDocenteRepository::class) -> updateEncuestaEficacia($docenteId["DOCENTEID"],$courseID);
-App::resolve(RespuestaRepository::class) -> setRespuesta($docenteId["DOCENTEID"],3,$courseID);
+
+App::resolve(CursoDocenteRepository::class) -> updateEncuestaEficacia($docenteId["DOCENTEID"],$cursoId);
+App::resolve(RespuestaRepository::class) -> setRespuesta($docenteId["DOCENTEID"],3,$cursoId);
 $respuestasId = App::resolve(RespuestaRepository::class) -> getUltimoId();
 $preguntasIds = App::resolve(PreguntaRepository::class) -> getPreguntas(3);
 

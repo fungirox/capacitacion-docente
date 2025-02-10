@@ -3,7 +3,7 @@
     <div class="d-flex flex-column align-items-start gap-2 pb-4">
         <div class="row align-items-center">
             <a class="col-12 col-md-auto" href="/historial"><i class="bi bi-arrow-left-circle" style="font-size: 1.5rem;"></i></a>
-            <h1 class="col-12 col-md-10"><span class="fw-light"><?= $title ?></span> <span><?= $courseName ?></span></h1>
+            <h1 class="col-12 col-md-10"><span class="fw-light"><?= $title ?></span> <span><?= $cursoNombre ?></span></h1>
         </div>
         <span class="badge rounded-pill text-bg-primary"><span class="fw-normal"><?= $instructorNombre ?></span></span>
     </div>
@@ -11,8 +11,8 @@
         Agradecemos que con sinceridad marque la respuesta que a su juicio corresponde a la
         afirmación realizada con base en la siguiente escala:</span>
     <div class="pt-4">
-        <form action="/historial/evaluarCurso/F08PSA19.00" method="POST">
-            <input type="hidden" name="CURSOID" value="<?= $courseId ?>">
+        <form action="/evaluaciones/evaluarEficacia" method="POST">
+            <input type="hidden" name="CURSOID" value="<?= $cursoId ?>">
             <div class="d-flex flex-column gap-3">
                 <?php
                     foreach ($questions as $row):

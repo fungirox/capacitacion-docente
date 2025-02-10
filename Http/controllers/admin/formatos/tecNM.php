@@ -4,12 +4,40 @@ use Core\App;
 use Core\Session;
 use Core\Repositories\CursoRepository;
 
-$allCursos = App::resolve(CursoRepository::class)->getAllReporteTECNM();
-date_default_timezone_set('America/Hermosillo');
-$todayDate = new DateTime();
-$formattedToday = $todayDate->format('d-m-Y');
+$periodo = $_POST["periodoTEC"];
+$year = $_POST["year"];
+$periodoNombre = "";
+switch ($periodo) {
+    case '0':
+        $fechaInicial = $year . "-01-01";
+        $fechaFinal = $year . "-05-31";
+        $periodoNombre = "de Enero a Mayo " . $year;
+        break;
+    case '1':
+        $fechaInicial = $year . "-06-01";
+        $fechaFinal = $year . "-07-31";
+        $periodoNombre = "de Verano " . $year;
+        break;
+    case '2':
+        $fechaInicial = $year . "-08-01";
+        $fechaFinal = $year . "-12-31";
+        $periodoNombre = "de Agosto a Septiembre " . $year;
+        break;
+    case '3':
+        $fechaInicial = $_POST["fechaInicial"];
+        $fechaFinal = $_POST["fechaFinal"];
+        $periodoNombre = "Personalizado " . $year;
+    default:
+        break;
+}
+
+$allCursos = App::resolve(CursoRepository::class)->getAllReporteTECNM($fechaInicial,$fechaFinal);
+
 header("Content-type: application/vnd.ms-excel");
-header("Content-Disposition: attachment; Filename=FD_AP_2022 Formato TecNM ".$formattedToday.".xls");
+header("Content-Disposition: attachment; Filename=FD_AP_2022 Formato TecNM " . $periodoNombre . ".xls");
+
+//faltaría revisar que las fechas sean validas?
+
 
 ?>
 <html>
@@ -110,6 +138,8 @@ header("Content-Disposition: attachment; Filename=FD_AP_2022 Formato TecNM ".$fo
             $docentes_masculinos = htmlspecialchars($curso["cantidad_docentes_masculinos"]);
             $docentes_femeninos = htmlspecialchars($curso["cantidad_docentes_femeninos"]);
             $total_docentes = htmlspecialchars($curso["cantidad_docentes_total"]);
+            $primerFolio = htmlspecialchars($curso["primer_folio"]);
+            $ultimoFolio = htmlspecialchars($curso["ultimo_folio"]);
             ?>
             <tr>
                 <td class="tg-c3ow"><?= $nombre ?></td>
@@ -123,13 +153,12 @@ header("Content-Disposition: attachment; Filename=FD_AP_2022 Formato TecNM ".$fo
                 <td class="tg-c3ow"><?= $docentes_femeninos ?></td>
                 <td class="tg-c3ow"><?= $total_docentes ?></td>
                 <td class="tg-c3ow"><?= $id ?></td>
-                <td class="tg-c3ow"></td>
+                <td class="tg-c3ow"><?= $primerFolio ?></td>
                 <td class="tg-c3ow">al</td>
-                <td class="tg-c3ow"></td>
+                <td class="tg-c3ow"><?= $ultimoFolio ?></td>
             </tr>
         <?php endforeach; ?>
     </tbody>
-</table>
+</table> 
 
 </html>
-

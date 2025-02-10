@@ -91,3 +91,15 @@ $router->post("/admin/carreras", "admin/carreras/store.php")->only(ADMIN);
 $router->delete("/admin/carreras", "admin/carreras/archive.php")->only(ADMIN);
 
 $router->patch("/admin/carreras", "admin/carreras/update.php")->only(ADMIN);
+
+# Reportes
+
+$router->get("/admin/reportes","admin/reportes/index.php")->only(ADMIN);
+$router->get("/admin/resumenEvaluacion","admin/reportes/resumenEvaluacion.php")->only(ADMIN);
+$router->get("/admin/resumenEficacia","admin/reportes/resumenEficacia.php")->only(ADMIN);
+
+# Formatos
+
+$router->get("/admin/formatos","admin/formatos/index.php")->only(ADMIN);
+$router->post("/admin/formatos/tecNM","admin/formatos/tecNM.php")->only(ADMIN);
+$router->post("/admin/formatos/F06PSA19.02","admin/formatos/F06PSA19.02.php")->only(ADMIN);
