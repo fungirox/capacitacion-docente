@@ -777,7 +777,7 @@ class CursoRepository extends RepositoryTemplate
                         WHERE u.USERID = ?
                         AND c.CURSOID = ?
                         AND cd.CURSODOCENTE_EncuestaEvaluacion IS NULL
-                        AND c.CURSO_En_Progreso = 0
+                        AND c.CURSO_Estado = 'terminado'
                         AND c.CURSO_Archivado = 0
                         AND cd.CURSODOCENTE_Calificacion > 0;",
             [$userId, $cursoId]
@@ -795,7 +795,7 @@ class CursoRepository extends RepositoryTemplate
                         AND c.CURSOID = ?
                         AND cd.CURSODOCENTE_EncuestaEvaluacion = 1
                         AND cd.CURSODOCENTE_EncuestaEficacia IS NULL
-                        AND c.CURSO_En_Progreso = 0
+                        AND c.CURSO_Estado = 'terminado'
                         AND c.CURSO_Archivado = 0
                         AND cd.CURSODOCENTE_Calificacion > 0;",
             [$userId, $cursoId]
@@ -813,7 +813,7 @@ class CursoRepository extends RepositoryTemplate
             WHERE u.USERID = ?
             AND cd.CURSODOCENTE_EncuestaEvaluacion IS NULL
             AND cd.CURSODOCENTE_EncuestaEficacia IS NULL
-            AND c.CURSO_En_Progreso = 0
+            AND c.CURSO_Estado = 'terminado'
             AND c.CURSO_Archivado = 0
             AND cd.CURSODOCENTE_Calificacion > 0;",
             [$userId]
@@ -833,7 +833,7 @@ class CursoRepository extends RepositoryTemplate
             WHERE u.USERID = ?
             AND cd.CURSODOCENTE_EncuestaEvaluacion = 1
             AND cd.CURSODOCENTE_EncuestaEficacia IS NULL
-            AND c.CURSO_En_Progreso = 0
+            AND c.CURSO_Estado = 'terminado'
             AND c.CURSO_Archivado = 0
             AND cd.CURSODOCENTE_Calificacion > 0;",
             [$userId]
@@ -853,7 +853,7 @@ class CursoRepository extends RepositoryTemplate
             WHERE u.USERID = ?
             AND cd.CURSODOCENTE_EncuestaEvaluacion = 1
             AND cd.CURSODOCENTE_EncuestaEficacia = 1
-            AND c.CURSO_En_Progreso = 0
+            AND c.CURSO_Estado = 'terminado'
             AND c.CURSO_Archivado = 0
             AND cd.CURSODOCENTE_Calificacion > 0;",
             [$userId]
