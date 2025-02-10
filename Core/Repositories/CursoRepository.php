@@ -421,6 +421,11 @@ class CursoRepository extends RepositoryTemplate {
                 curso.CURSO_Fecha_Final as final,
                 curso.CURSO_Aula as aula,
                 curso.CURSO_Limite as limite,
+                curso.CURSO_Limite - (
+                    SELECT COUNT(*)
+                    FROM tblCursoDocente
+                    WHERE CURSOID = 17
+                ) AS 'disponibles',
                 usuario.USER_Nombre + ' ' + usuario.USER_Apellido AS instructor_nombre
             FROM
                 tblCurso AS curso
@@ -585,6 +590,11 @@ class CursoRepository extends RepositoryTemplate {
                 curso.CURSO_Fecha_Final as final,
                 curso.CURSO_Aula as aula,
                 curso.CURSO_Limite as limite,
+                curso.CURSO_Limite - (
+                    SELECT COUNT(*)
+                    FROM tblCursoDocente
+                    WHERE CURSOID = 17
+                ) AS 'disponibles',
                 instructor_usuario.USER_Nombre + ' ' + instructor_usuario.USER_Apellido AS instructor_nombre
             FROM
                 tblCurso AS curso
@@ -681,6 +691,11 @@ class CursoRepository extends RepositoryTemplate {
                 curso.CURSO_Fecha_Final as final,
                 curso.CURSO_Aula as aula,
                 curso.CURSO_Limite as limite,
+                curso.CURSO_Limite - (
+                    SELECT COUNT(*)
+                    FROM tblCursoDocente
+                    WHERE CURSOID = 17
+                ) AS 'disponibles',
                 instructor_usuario.USER_Nombre + ' ' + instructor_usuario.USER_Apellido AS instructor_nombre
             FROM
                 tblCurso AS curso
@@ -781,6 +796,11 @@ class CursoRepository extends RepositoryTemplate {
                 curso.CURSO_Fecha_Final as final,
                 curso.CURSO_Aula as aula,
                 curso.CURSO_Limite as limite,
+                curso.CURSO_Limite - (
+                    SELECT COUNT(*)
+                    FROM tblCursoDocente
+                    WHERE CURSOID = 17
+                ) AS 'disponibles',
                 usuario.USER_Nombre + ' ' + usuario.USER_Apellido AS instructor_nombre
             FROM
                 tblCurso AS curso
