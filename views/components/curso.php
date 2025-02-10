@@ -155,29 +155,35 @@
                                 <?php
                                 case "oferta": ?>
                                     <a type="button" class="btn btn-outline-secondary">Descargar ficha</a>
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Inscribirse al curso</button>
-                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Inscribirse al Curso</h1>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <?php if ($disponibles > 0): ?>
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Inscribirse al curso</button>
+                                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Inscribirse al Curso</h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        ¿Seguro de que desea inscribrise al curso "<?= $nombre ?>"?
+                                                    </div>
+                                                    <form class="modal-footer" method="POST">
+                                                        <input type="hidden" name="id" value="<?= $id ?>" />
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Regresar</button>
+                                                        <button type="submit" class="btn btn-primary">Inscribirse al curso</button>
+                                                    </form>
                                                 </div>
-                                                <div class="modal-body">
-                                                    ¿Seguro de que desea inscribrise al curso "<?= $nombre ?>"?
-                                                </div>
-                                                <form class="modal-footer" method="POST">
-                                                    <input type="hidden" name="id" value="<?= $id ?>" />
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Regresar</button>
-                                                    <button type="submit" class="btn btn-primary">Inscribirse al curso</button>
-                                                </form>
                                             </div>
                                         </div>
-                                    </div>
+                                    <?php else: ?>
+                                        <button type="button" class="btn btn-secondary" disabled>Curso lleno</button>
+                                    <?php endif; ?>
                                     <?php break; ?>
                             <?php endswitch; ?>
                             <?php if (!$isVirtual): ?>
-                                <span class="col text-secondary text-end fst-italic"><?= $disponibles ?>/<?= $limite ?> cupos disponibles</span>
+                                <span class="col text-secondary text-end fst-italic">
+                                    <?= $disponibles > 0 ? $disponibles . "/" . $limite . " cupos disponibles" : "No existen cupos disponibles" ?>
+                                </span>
                             <?php endif; ?>
                         </div>
                     </div>
