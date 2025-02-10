@@ -177,7 +177,7 @@
                                     <?php break; ?>
                             <?php endswitch; ?>
                             <?php if (!$isVirtual): ?>
-                                <span class="col text-secondary text-end fst-italic"><?= $limite ?> cupos disponibles</span>
+                                <span class="col text-secondary text-end fst-italic"><?= $disponibles ?>/<?= $limite ?> cupos disponibles</span>
                             <?php endif; ?>
                         </div>
                     </div>

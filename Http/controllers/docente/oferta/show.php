@@ -22,6 +22,7 @@ return view("components/curso.php", [
     "horas" => htmlspecialchars(formattedHourRange($curso["hora_inicial"], $curso["hora_final"])),
     "aula" => htmlspecialchars($curso["aula"]),
     "limite" => htmlspecialchars($curso["limite"]),
+    "disponibles" => htmlspecialchars($curso["disponibles"]),
     "instructor" => htmlspecialchars($curso["instructor_nombre"]),
     "mode" => "oferta"
 ]);
