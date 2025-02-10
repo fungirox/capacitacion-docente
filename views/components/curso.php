@@ -43,10 +43,12 @@
                                     </div>
                                 </div>
                             <?php endif; ?>
-                            <a href="/admin/cursos/editar?id=<?= $id ?>" class="col-12 col-md-auto btn btn-outline-primary">
-                                <i class="bi bi-pencil pe-2"></i>
-                                <span>Editar</span>
-                            </a>
+                            <?php if ($estado == "privado" || $estado == "publico"): ?>
+                                <a href="/admin/cursos/editar?id=<?= $id ?>" class="col-12 col-md-auto btn btn-outline-primary">
+                                    <i class="bi bi-pencil pe-2"></i>
+                                    <span>Editar</span>
+                                </a>
+                            <?php endif; ?>
                         <?php endif; ?>
                         <button type="button" class="col-12 col-md-auto btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#archiveModal<?= $id ?>">
                             <i class="bi bi-archive pe-2"></i>

@@ -150,12 +150,14 @@
                                                     </button>
                                                 </li>
                                             <?php endif; ?>
-                                            <li>
-                                                <a class="dropdown-item" href="/admin/cursos/editar?id=<?= $id ?>">
-                                                    <i class="bi bi-pencil"></i>
-                                                    <span class="ms-2">Editar</span>
-                                                </a>
-                                            </li>
+                                            <?php if ($estado == "privado" || $estado == "publico"): ?>
+                                                <li>
+                                                    <a class="dropdown-item" href="/admin/cursos/editar?id=<?= $id ?>">
+                                                        <i class="bi bi-pencil"></i>
+                                                        <span class="ms-2">Editar</span>
+                                                    </a>
+                                                </li>
+                                            <?php endif; ?>
                                         <?php endif; ?>
                                         <li>
                                             <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#archiveModal<?= $id ?>">
