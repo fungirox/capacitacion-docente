@@ -162,8 +162,8 @@ class CursoRepository extends RepositoryTemplate {
             LEFT JOIN
                 tblUsuario AS instructor_usuario ON instructor_usuario.USERID = instructor.USERID
             WHERE
-                curso.CURSO_Estado = 'publico' OR
-                curso.CURSO_Estado = 'en_progreso' AND
+                (curso.CURSO_Estado = 'publico' OR
+                curso.CURSO_Estado = 'en_progreso') AND
                 curso.CURSO_Archivado = 0 AND
                 usuario.USERID = ?
             GROUP BY
@@ -356,8 +356,8 @@ class CursoRepository extends RepositoryTemplate {
                 tblInstructor AS instructor ON instructor.INSTRUCTORID = curso_instructor.INSTRUCTORID
             WHERE
                 curso.CURSO_Archivado = 0 AND
-                curso.CURSO_Estado = 'publico' OR
-                curso.CURSO_Estado = 'en_progreso' AND
+                (curso.CURSO_Estado = 'publico' OR
+                curso.CURSO_Estado = 'en_progreso') AND
                 instructor.USERID = ?
             ORDER BY
                 curso.CURSOID DESC",
@@ -508,7 +508,10 @@ class CursoRepository extends RepositoryTemplate {
             LEFT JOIN tblCursoInstructor AS instructor ON curso.CURSOID = instructor.CURSOID
             LEFT JOIN tblCursoArea AS curso_area ON curso_area.CURSOID = curso.CURSOID
             LEFT JOIN tblArea AS area ON area.AREAID = curso_area.AREAID
-            WHERE curso.CURSOID = ?
+            WHERE
+                (curso.CURSO_Estado = 'privado' OR
+                curso.CURSO_Estado = 'publico') AND
+                curso.CURSOID = ?
             GROUP BY
                 curso.CURSOID,
                 CURSO_Nombre,
@@ -599,8 +602,8 @@ class CursoRepository extends RepositoryTemplate {
                 tblUsuario AS instructor_usuario ON instructor_usuario.USERID = instructor.USERID
             WHERE
                 curso.CURSOID = ? AND
-                curso.CURSO_Estado = 'publico' OR
-                curso.CURSO_Estado = 'en_progreso' AND
+                (curso.CURSO_Estado = 'publico' OR
+                curso.CURSO_Estado = 'en_progreso') AND
                 curso.CURSO_Archivado = 0 AND
                 usuario.USERID = ?
             GROUP BY
@@ -790,8 +793,8 @@ class CursoRepository extends RepositoryTemplate {
             WHERE
                 curso.CURSOID = ? AND
                 curso.CURSO_Archivado = 0 AND
-                curso.CURSO_Estado = 'publico' OR
-                curso.CURSO_Estado = 'en_progreso' AND
+                (curso.CURSO_Estado = 'publico' OR
+                curso.CURSO_Estado = 'en_progreso') AND
                 instructor.USERID = ?
             GROUP BY
                 curso.CURSOID,
