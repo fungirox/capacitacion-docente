@@ -2,6 +2,7 @@
 
 use Core\App;
 use Core\Repositories\CursoRepository;
+use Core\Repositories\PersonalRepository;
 
 $archivados = isset($_GET["archivados"]);
 $page = $_GET["page"] ?? 1;
@@ -13,6 +14,8 @@ $sortBy = $sortParts[0];
 $sortOrder = $sortParts[1];
 
 $filterBy = $_GET["filterBy"] ?? null;
+
+$personal = App::resolve(PersonalRepository::class)->getAll();
 
 $cursosData = App::resolve(CursoRepository::class)->getAll(
     $archivados ? 1 : 0,
@@ -33,6 +36,7 @@ $paramsActive = (isset($_GET["search"]) && !empty($_GET["search"])) || (isset($_
 
 return view("admin/cursos/index.view.php", [
     "title" => $archivados ? "Cursos Archivados" : "Cursos",
+    "personal" => $personal,
     "allCursos" => $cursosData["data"],
     "paramsActive" => $paramsActive,
     "pagination" => $cursosData["pagination"],

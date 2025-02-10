@@ -2,19 +2,21 @@
 
 namespace Core\Repositories;
 
-use Core\Roles\Roles;
-use Core\Session;
+class PersonalRepository extends RepositoryTemplate {
 
-class PersonalRepository extends RepositoryTemplate
-{
-    private $admin = Roles::ADMIN;
-    private $docente = Roles::DOCENTE;
-    private $instructor = Roles::INSTRUCTOR;
-    private $docenteAndInstructor = Roles::DOCENTE_AND_INSTRUCTOR;
-    private $guest = Roles::GUEST;
+    public function getAll() {
+        return $this->query(
+            "SELECT
+                PERSONALID AS id,
+                PERSONAL_Nombre AS nombre,
+                PERSONAL_Puesto AS puesto
+            FROM tblPersonal
+            WHERE PERSONAL_Archivado = 0
+            ORDER BY PERSONAL_Nombre ASC"
+        )->getAll();
+    }
 
-    public function getById($personalId)
-    {
+    public function getById($personalId) {
         return $this->query(
             "SELECT * FROM 
                 tblPersonal
