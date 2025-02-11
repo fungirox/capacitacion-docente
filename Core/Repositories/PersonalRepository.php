@@ -86,6 +86,19 @@ class PersonalRepository extends RepositoryTemplate {
         )->getOrFail();
     }
 
+    public function getByIdForEdit($personalId) {
+        return $this->query(
+            "SELECT
+                PERSONALID AS id,
+                PERSONAL_Nombre AS nombre,
+                PERSONAL_Puesto AS puesto,
+                PERSONAL_Titulo AS titulo
+            FROM tblPersonal
+            WHERE PERSONALID = ?",
+            [$personalId]
+        )->getOrFail();
+    }
+
     public function create($values) {
         return $this->query(
             "INSERT INTO tblPersonal (PERSONAL_Nombre, PERSONAL_Puesto, PERSONAL_Titulo)
