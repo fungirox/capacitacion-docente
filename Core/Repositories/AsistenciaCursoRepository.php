@@ -14,6 +14,17 @@ class AsistenciaCursoRepository extends RepositoryTemplate {
         )->getAll();
     }
 
+    public function getSessions($cursoId) {
+        return $this->query(
+            "SELECT ASISTENCIACURSO_Fecha AS cantidad_sesiones
+            FROM tblAsistenciaCurso
+            WHERE CURSOID = ?
+            GROUP BY ASISTENCIACURSO_Fecha
+            ORDER BY ASISTENCIACURSO_Fecha ASC",
+            [$cursoId]
+        )->getAll();
+    }
+
     public function createAsistencia($cursoId, $date, $alumnosIds) {
         $placeholders = implode(',', array_fill(0, count($alumnosIds), '(?, ?, ?)'));
 
