@@ -1182,7 +1182,7 @@ class CursoRepository extends RepositoryTemplate
 			    curso.CURSO_Fecha_Final BETWEEN ? AND ?
             ",
             [$fechaInicio, $fechaFinal]
-        );
+        )->getOrFail();
     }
 
     public function subscribe($cursoId, $userId)
