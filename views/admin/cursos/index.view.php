@@ -107,14 +107,16 @@
                     "privado" => "Publicar curso",
                     "publico" => "Comenzar curso",
                     "en_progreso" => "Finalizar curso",
-                    "terminado" => "",
+                    default => "",
                 };
 
                 $formattedEstado =  match ($estado) {
                     "publico" => "Público",
                     "privado" => "Privado",
                     "en_progreso" => "En progreso",
-                    "terminado" => "Terminado"
+                    "terminado" => "Terminado",
+                    "calificado" => "Calificado",
+                    default => $estado
                 };
 
                 ?>

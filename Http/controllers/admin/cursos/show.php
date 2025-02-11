@@ -12,13 +12,15 @@ $formattedState = match ($curso["estado"]) {
     "publico" => "público",
     "en_progreso" => "en progreso",
     "terminado" => "terminado",
+    "calificado" => "calificado",
+    default => $curso["estado"]
 };
 
 $action = match ($curso["estado"]) {
     "privado" => "Publicar curso",
     "publico" => "Comenzar curso",
     "en_progreso" => "Finalizar curso",
-    "terminado" => "",
+    default => "",
 };
 
 return view("components/curso.php", [
