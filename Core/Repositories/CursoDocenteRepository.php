@@ -8,13 +8,39 @@ class CursoDocenteRepository extends RepositoryTemplate {
         return $this->query(
             "SELECT
                 docente.DOCENTEID AS id,
-                USER_Nombre + ' ' + USER_Apellido AS nombre
+                USER_Nombre + ' ' + USER_Apellido AS nombre,
+                0 AS presente
             FROM tblCursoDocente AS curso_docente
             INNER JOIN tblDocente AS docente ON curso_docente.DOCENTEID = docente.DOCENTEID
             INNER JOIN tblUsuario AS usuario ON docente.USERID = usuario.USERID
             WHERE curso_docente.CURSOID = ? 
             ORDER BY nombre ASC",
             [$cursoId]
+        )->getAll();
+    }
+
+    public function getDocentesFromPreviousCurso($cursoId, $date) {
+        return $this->query(
+            "SELECT
+                docente.DOCENTEID AS id,
+                USER_Nombre + ' ' + USER_Apellido AS nombre,
+                CASE
+                    WHEN EXISTS (
+                        SELECT *
+                        FROM tblAsistenciaCurso AS asistencia_curso
+                        WHERE asistencia_curso.ASISTENCIACURSO_Fecha = ? AND
+                        asistencia_curso.CURSOID = ? AND
+                        asistencia_curso.DOCENTEID = docente.DOCENTEID
+                    )
+                    THEN 1
+                    ELSE 0
+                END AS presente
+            FROM tblCursoDocente AS curso_docente
+            INNER JOIN tblDocente AS docente ON curso_docente.DOCENTEID = docente.DOCENTEID
+            INNER JOIN tblUsuario AS usuario ON docente.USERID = usuario.USERID
+            WHERE curso_docente.CURSOID = ?
+            ORDER BY nombre ASC",
+            [$date, $cursoId, $cursoId]
         )->getAll();
     }
 

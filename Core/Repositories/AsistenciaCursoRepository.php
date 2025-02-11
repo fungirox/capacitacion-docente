@@ -16,7 +16,7 @@ class AsistenciaCursoRepository extends RepositoryTemplate {
 
     public function getSessions($cursoId) {
         return $this->query(
-            "SELECT ASISTENCIACURSO_Fecha AS cantidad_sesiones
+            "SELECT ASISTENCIACURSO_Fecha AS fecha
             FROM tblAsistenciaCurso
             WHERE CURSOID = ?
             GROUP BY ASISTENCIACURSO_Fecha
