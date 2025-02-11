@@ -49,7 +49,9 @@
                                 </div>
                                 <?php if ($modalidad !== "virtual"): ?>
                                     <div class="col-12 col-md-auto d-grid">
-                                        <a class="btn <?= $enProgreso ? "btn-outline-primary" : "btn-outline-secondary disabled" ?>">Tomar asistencia</a>
+                                        <a href="/instruyendo/curso/asistencia?id=<?= $id ?>" class="btn <?= $enProgreso ? "btn-outline-primary" : "btn-outline-secondary disabled" ?>">
+                                            Tomar asistencia
+                                        </a>
                                     </div>
                                 <?php endif; ?>
                             </div>
