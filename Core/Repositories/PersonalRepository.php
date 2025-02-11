@@ -107,6 +107,18 @@ class PersonalRepository extends RepositoryTemplate {
         );
     }
 
+    public function update($values) {
+        return $this->query(
+            "UPDATE tblPersonal
+            SET
+                PERSONAL_Nombre = ?,
+                PERSONAL_Puesto = ?,
+                PERSONAL_Titulo = ?
+            WHERE PERSONALID = ?",
+            [$values["nombre"], $values["puesto"], $values["titulo"], $values["id"]]
+        );
+    }
+
     public function archive($id, $state) {
         return $this->query(
             "UPDATE tblPersonal SET PERSONAL_Archivado = ? WHERE PERSONALID = ?",
