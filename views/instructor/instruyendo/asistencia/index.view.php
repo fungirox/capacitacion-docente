@@ -6,7 +6,7 @@
             <a href="<?= $sesion > 1 ? "/instruyendo/curso/asistencia?id=38&sesion=" . ($sesion - 1) : "" ?>" class="btn btn-outline-<?= $sesion > 1 ? "primary" : "secondary" ?>">
                 <i class="bi bi-chevron-left"></i>
             </a>
-            <a href="<?= $nuevaSesion ? "" : "/instruyendo/curso/asistencia?id=38&sesion=" . ($sesion + 1) ?>" class="btn btn-outline-<?= $nuevaSesion ? "secondary" : "primary"  ?>">
+            <a href="<?= $sesion == $sesiones ? "" : "/instruyendo/curso/asistencia?id=38&sesion=" . ($sesion + 1) ?>" class="btn btn-outline-<?= $sesion == $sesiones ? "secondary" : "primary"  ?>">
                 <i class="bi bi-chevron-right"></i>
             </a>
         </div>
