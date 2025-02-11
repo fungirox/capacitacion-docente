@@ -1,7 +1,7 @@
 <?php view("components/styledHeader.php", ["title" => $title]); ?>
 <main role="main" class="container py-5" style="margin-top: 56px">
     <h1><?= $title ?></h1>
-    <div class="accordion">
+    <div class="accordion mt-4">
         <div class="accordion-item">
             <h2 class="accordion-header">
                 <button class="accordion-button <?= count($cursosNoEvaluados) > 0 ? "" : "collapsed" ?>" type="button" data-bs-toggle="collapse" data-bs-target="#cursos-sin-evaluar" aria-expanded="false" aria-controls="cursos-sin-evaluar">
