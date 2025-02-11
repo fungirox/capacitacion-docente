@@ -5,6 +5,7 @@ use Core\Container;
 use Core\Database;
 use Core\Repositories\AdministradorRepository;
 use Core\Repositories\AreaRepository;
+use Core\Repositories\AsistenciaCursoRepository;
 use Core\Repositories\CarreraRepository;
 use Core\Repositories\CursoDocenteRepository;
 use Core\Repositories\CursoRepository;
@@ -78,6 +79,10 @@ $container->bind("Core\Repositories\ConstanciaRepository", function () {
 
 $container->bind("Core\Repositories\PersonalRepository", function () {
     return new PersonalRepository(App::resolve(Database::class));
+});
+
+$container->bind("Core\Repositories\AsistenciaCursoRepository", function () {
+    return new AsistenciaCursoRepository(App::resolve(Database::class));
 });
 
 App::setContainer($container);
