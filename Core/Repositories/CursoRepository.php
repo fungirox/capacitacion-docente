@@ -1374,4 +1374,15 @@ class CursoRepository extends RepositoryTemplate {
             [$cursoId]
         )->getOrFail();
     }
+
+    public function userIsInstructor($userId, $cursoId) {
+        return $this->query(
+            "SELECT *
+            FROM tblCurso AS curso
+            INNER JOIN tblCursoInstructor AS curso_instructor ON curso_instructor.CURSOID = curso.CURSOID
+            INNER JOIN tblInstructor AS instructor ON instructor.INSTRUCTORID = curso_instructor.INSTRUCTORID
+            WHERE instructor.USERID = ? AND curso.CURSOID = ?",
+            [$userId, $cursoId]
+        )->getOrFail();
+    }
 }
