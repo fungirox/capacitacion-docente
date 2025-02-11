@@ -1,37 +1,39 @@
 <?php
 
 use Core\App;
-use Core\Session;
 use Core\Repositories\CursoRepository;
 
-$periodo = $_POST["periodoTEC"];
 $year = $_POST["year"];
 $periodoNombre = "";
-switch ($periodo) {
-    case '0':
-        $fechaInicial = $year . "-01-01";
-        $fechaFinal = $year . "-05-31";
-        $periodoNombre = "de Enero a Mayo " . $year;
-        break;
-    case '1':
-        $fechaInicial = $year . "-06-01";
-        $fechaFinal = $year . "-07-31";
-        $periodoNombre = "de Verano " . $year;
-        break;
-    case '2':
-        $fechaInicial = $year . "-08-01";
-        $fechaFinal = $year . "-12-31";
-        $periodoNombre = "de Agosto a Septiembre " . $year;
-        break;
-    case '3':
-        $fechaInicial = $_POST["fechaInicial"];
-        $fechaFinal = $_POST["fechaFinal"];
-        $periodoNombre = "Personalizado " . $year;
-    default:
-        break;
+$periodoRango = $_POST["tec-radio"];
+if ($periodoRango == "periodo") {
+    $periodo = $_POST["periodoTEC"];
+    switch ($periodo) {
+        case '0':
+            $fechaInicial = $year . "-01-01";
+            $fechaFinal = $year . "-05-31";
+            $periodoNombre = "de Enero a Mayo " . $year;
+            break;
+        case '1':
+            $fechaInicial = $year . "-06-01";
+            $fechaFinal = $year . "-07-31";
+            $periodoNombre = "de Verano " . $year;
+            break;
+        case '2':
+            $fechaInicial = $year . "-08-01";
+            $fechaFinal = $year . "-12-31";
+            $periodoNombre = "de Agosto a Septiembre " . $year;
+            break;
+        default:
+            break;
+    }
+} else {
+    $fechaInicial = $_POST["fechaInicial"];
+    $fechaFinal = $_POST["fechaFinal"];
+    $periodoNombre = "Personalizado " . $year;
 }
 
-$allCursos = App::resolve(CursoRepository::class)->getAllReporteTECNM($fechaInicial,$fechaFinal);
+$allCursos = App::resolve(CursoRepository::class)->getAllReporteTECNM($fechaInicial, $fechaFinal);
 
 header("Content-type: application/vnd.ms-excel");
 header("Content-Disposition: attachment; Filename=FD_AP_2022 Formato TecNM " . $periodoNombre . ".xls");
@@ -159,6 +161,6 @@ header("Content-Disposition: attachment; Filename=FD_AP_2022 Formato TecNM " . $
             </tr>
         <?php endforeach; ?>
     </tbody>
-</table> 
+</table>
 
 </html>

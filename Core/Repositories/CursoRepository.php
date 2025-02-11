@@ -1041,62 +1041,62 @@ class CursoRepository extends RepositoryTemplate {
     public function getAllReporteTECNM($fechaInicial, $fechaFinal) {
         return $this->query(
             "SELECT
-    curso.CURSOID,
-    curso.CURSO_Nombre,
-    curso.CURSO_Tipo AS tipo,
-    CASE 
-        WHEN MONTH(curso.CURSO_Fecha_Final) <= 5 THEN 
-            'Enero-Mayo ' + CAST(YEAR(curso.CURSO_Fecha_Final) AS VARCHAR)
-        WHEN MONTH(curso.CURSO_Fecha_Final) <= 7 THEN 
-            'Verano ' + CAST(YEAR(curso.CURSO_Fecha_Final) AS VARCHAR)
-        WHEN MONTH(curso.CURSO_Fecha_Final) <= 12 THEN 
-            'Agosto-Diciembre ' + CAST(YEAR(curso.CURSO_Fecha_Final) AS VARCHAR)
-        ELSE 'Otro periodo'
-            END AS Periodo,
-            curso.CURSO_Activo,
-            curso.CURSO_Perfil,
-            curso.CURSO_Modalidad,
-            usuario.USER_Nombre + ' ' + usuario.USER_Apellido AS instructor_nombre,
-            COUNT(DISTINCT CASE WHEN usuario.USER_Genero = 0 AND cursoDocente.CURSODOCENTE_Calificacion > 70  THEN docente.DOCENTEID END) AS cantidad_docentes_masculinos,
-            COUNT(DISTINCT CASE WHEN usuario.USER_Genero = 1 AND cursoDocente.CURSODOCENTE_Calificacion > 70  THEN docente.DOCENTEID END) AS cantidad_docentes_femeninos,
-            COUNT(DISTINCT CASE WHEN cursoDocente.CURSODOCENTE_Calificacion > 70 THEN docente.DOCENTEID END) AS cantidad_docentes_total,
-            (SELECT TOP 1 CONSTANCIA_Folio 
-            FROM tblConstancia 
-            WHERE CURSOID = curso.CURSOID 
-            ORDER BY CONSTANCIAID ASC) AS primer_folio,
-            (SELECT TOP 1 CONSTANCIA_Folio 
-            FROM tblConstancia 
-            WHERE CURSOID = curso.CURSOID 
-            ORDER BY CONSTANCIAID DESC) AS ultimo_folio
-        FROM
-            tblCurso AS curso
-        LEFT JOIN
-            tblCursoInstructor AS cursoInstructor ON curso.CURSOID = cursoInstructor.CURSOID
-        LEFT JOIN
-            tblInstructor AS instructor ON instructor.INSTRUCTORID = cursoInstructor.INSTRUCTORID
-        LEFT JOIN
-            tblUsuario AS usuario ON usuario.USERID = instructor.USERID
-        LEFT JOIN
-            tblCursoArea AS cursoArea ON cursoArea.CURSOID = curso.CURSOID
-        LEFT JOIN
-            tblCursoDocente AS cursoDocente ON curso.CURSOID = cursoDocente.CURSOID
-        LEFT JOIN
-            tblDocente AS docente ON cursoDocente.DOCENTEID = docente.DOCENTEID
-        LEFT JOIN
-            tblUsuario AS usuarioDocente ON docente.USERID = usuarioDocente.USERID
-        WHERE 
-            curso.CURSO_Fecha_Final BETWEEN ? AND ?
-        GROUP BY
             curso.CURSOID,
             curso.CURSO_Nombre,
-            curso.CURSO_Tipo,
-            curso.CURSO_Activo,
-            curso.CURSO_Perfil,
-            curso.CURSO_Modalidad,
-            usuario.USER_Nombre,
-            curso.CURSO_Fecha_Inicio,
-            curso.CURSO_Fecha_Final,
-            usuario.USER_Apellido;",
+            curso.CURSO_Tipo AS tipo,
+            CASE 
+                WHEN MONTH(curso.CURSO_Fecha_Final) <= 5 THEN 
+                    'Enero-Mayo ' + CAST(YEAR(curso.CURSO_Fecha_Final) AS VARCHAR)
+                WHEN MONTH(curso.CURSO_Fecha_Final) <= 7 THEN 
+                    'Verano ' + CAST(YEAR(curso.CURSO_Fecha_Final) AS VARCHAR)
+                WHEN MONTH(curso.CURSO_Fecha_Final) <= 12 THEN 
+                    'Agosto-Diciembre ' + CAST(YEAR(curso.CURSO_Fecha_Final) AS VARCHAR)
+                ELSE 'Otro periodo'
+                    END AS Periodo,
+                    curso.CURSO_Perfil,
+                    curso.CURSO_Modalidad,
+                    usuario.USER_Nombre + ' ' + usuario.USER_Apellido AS instructor_nombre,
+                    COUNT(DISTINCT CASE WHEN usuario.USER_Genero = 0 AND cursoDocente.CURSODOCENTE_Calificacion > 70  THEN docente.DOCENTEID END) AS cantidad_docentes_masculinos,
+                    COUNT(DISTINCT CASE WHEN usuario.USER_Genero = 1 AND cursoDocente.CURSODOCENTE_Calificacion > 70  THEN docente.DOCENTEID END) AS cantidad_docentes_femeninos,
+                    COUNT(DISTINCT CASE WHEN cursoDocente.CURSODOCENTE_Calificacion > 70 THEN docente.DOCENTEID END) AS cantidad_docentes_total,
+                    (SELECT TOP 1 CONSTANCIA_Folio 
+                    FROM tblConstancia 
+                    WHERE CURSOID = curso.CURSOID 
+                    ORDER BY CONSTANCIAID ASC) AS primer_folio,
+                    (SELECT TOP 1 CONSTANCIA_Folio 
+                    FROM tblConstancia 
+                    WHERE CURSOID = curso.CURSOID 
+                    ORDER BY CONSTANCIAID DESC) AS ultimo_folio
+                FROM
+                    tblCurso AS curso
+                LEFT JOIN
+                    tblCursoInstructor AS cursoInstructor ON curso.CURSOID = cursoInstructor.CURSOID
+                LEFT JOIN
+                    tblInstructor AS instructor ON instructor.INSTRUCTORID = cursoInstructor.INSTRUCTORID
+                LEFT JOIN
+                    tblUsuario AS usuario ON usuario.USERID = instructor.USERID
+                LEFT JOIN
+                    tblCursoArea AS cursoArea ON cursoArea.CURSOID = curso.CURSOID
+                LEFT JOIN
+                    tblCursoDocente AS cursoDocente ON curso.CURSOID = cursoDocente.CURSOID
+                LEFT JOIN
+                    tblDocente AS docente ON cursoDocente.DOCENTEID = docente.DOCENTEID
+                LEFT JOIN
+                    tblUsuario AS usuarioDocente ON docente.USERID = usuarioDocente.USERID
+                WHERE 
+                    curso.CURSO_Fecha_Final BETWEEN ? AND ?
+                AND
+					curso.CURSO_Archivado = 0
+                GROUP BY
+                    curso.CURSOID,
+                    curso.CURSO_Nombre,
+                    curso.CURSO_Tipo,
+                    curso.CURSO_Perfil,
+                    curso.CURSO_Modalidad,
+                    usuario.USER_Nombre,
+                    curso.CURSO_Fecha_Inicio,
+                    curso.CURSO_Fecha_Final,
+                    usuario.USER_Apellido;",
             [$fechaInicial, $fechaFinal]
         )->getAll();
     }
@@ -1140,7 +1140,6 @@ class CursoRepository extends RepositoryTemplate {
                 curso.CURSOID,
                 curso.CURSO_Nombre,
                 curso.CURSO_Tipo,
-                curso.CURSO_Activo,
                 curso.CURSO_Perfil,
                 curso.CURSO_Modalidad,
                 usuario.USER_Nombre,
@@ -1150,6 +1149,21 @@ class CursoRepository extends RepositoryTemplate {
                 usuario.USER_Apellido;",
             [$fechaInicial, $fechaFinal]
         )->getAll();
+    }
+
+    public function getTotalCurso($fechaInicio, $fechaFinal) {
+        return $this->query(
+            "SELECT
+                SUM(CASE WHEN CURSO_Archivado = 0 THEN 1 ELSE 0 END) as cursos_activos,
+				SUM(CASE WHEN CURSO_Archivado = 1 THEN 1 ELSE 0 END) as cursos_archivados,
+				COUNT(*) as total_cursos
+            FROM
+                tblCurso AS curso
+            WHERE 
+			    curso.CURSO_Fecha_Final BETWEEN ? AND ?
+            ",
+            [$fechaInicio, $fechaFinal]
+        )->getOrFail();
     }
 
     public function subscribe($cursoId, $userId) {
@@ -1384,5 +1398,12 @@ class CursoRepository extends RepositoryTemplate {
             WHERE instructor.USERID = ? AND curso.CURSOID = ?",
             [$userId, $cursoId]
         )->getOrFail();
+    }
+
+    public function updatePersonal($cursoId, $personalId) {
+        return $this->query(
+            "UPDATE tblCurso SET PERSONALID = ? WHERE CURSOID = ?",
+            [$personalId, $cursoId]
+        );
     }
 }
