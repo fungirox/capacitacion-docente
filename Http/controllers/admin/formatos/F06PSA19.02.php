@@ -34,6 +34,7 @@ if ($periodoRango == "periodo") {
 }
 
 $allCursos = App::resolve(CursoRepository::class)->getAllReporteITESCA($fechaInicial,$fechaFinal);
+$totalCursos = App::resolve(CursoRepository::class)->getTotalCurso($fechaInicial,$fechaFinal);
 date_default_timezone_set('America/Hermosillo');
 $todayDate = new DateTime();
 $formattedToday = $todayDate->format('d-m-Y');
@@ -132,9 +133,9 @@ ob_start();
                 <td class="tg-baqh" colspan="2">% de Realización</td>
             </tr>
             <tr>
-                <td class="tg-0lax"></td>
-                <td class="tg-0lax"></td>
-                <td class="tg-0lax"></td>
+                <td class="tg-0lax"><?= $totalCursos["total_cursos"] ?></td>
+                <td class="tg-0lax"><?= $totalCursos["cursos_activos"] ?></td>
+                <td class="tg-0lax"><?= $totalCursos["cursos_archivados"] ?></td>
                 <td class="tg-0lax"></td>
                 <td class="tg-0lax" colspan="2"></td>
             </tr>
