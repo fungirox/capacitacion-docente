@@ -85,4 +85,11 @@ class PersonalRepository extends RepositoryTemplate {
             [$personalId]
         )->getOrFail();
     }
+
+    public function archive($id, $state) {
+        return $this->query(
+            "UPDATE tblPersonal SET PERSONAL_Archivado = ? WHERE PERSONALID = ?",
+            [$state, $id]
+        );
+    }
 }
