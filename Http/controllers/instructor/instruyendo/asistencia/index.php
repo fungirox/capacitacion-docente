@@ -6,24 +6,31 @@ use Core\Repositories\CursoDocenteRepository;
 use Core\Repositories\CursoRepository;
 use Core\Session;
 
-App::resolve(CursoRepository::class)->userIsInstructor(Session::getUser("id"), $_GET["id"]);
+$cursoId = $_GET["id"];
 
-$sessiones = App::resolve(AsistenciaCursoRepository::class)->getSessions($_GET["id"]);
+App::resolve(CursoRepository::class)->userIsInstructor(Session::getUser("id"), $cursoId);
+
+$sessiones = App::resolve(AsistenciaCursoRepository::class)->getSessions($cursoId);
 $nuevaSesion = $_GET["sesion"] == count($sessiones) + 1;
 
 $alumnos = $nuevaSesion
-    ? App::resolve(CursoDocenteRepository::class)->getDocentesFromCurso($_GET["id"])
-    : App::resolve(CursoDocenteRepository::class)->getDocentesFromPreviousCurso($_GET["id"], $sessiones[$_GET["sesion"] - 1]["fecha"]);
+    ? App::resolve(CursoDocenteRepository::class)->getDocentesFromCurso($cursoId)
+    : App::resolve(CursoDocenteRepository::class)->getDocentesFromPreviousCurso($cursoId, $sessiones[$_GET["sesion"] - 1]["fecha"]);
 
 $fecha = $nuevaSesion
     ? formatDate((new DateTime())->format("Y-m-d"))
     : formatDate($sessiones[$_GET["sesion"] - 1]["fecha"]);
+
+if ((new DateTime())->format("Y-m-d") == end($sessiones)["fecha"] && $nuevaSesion) {
+    redirect("/instruyendo/curso/asistencia?id=" . $cursoId . "&sesion=" . count($sessiones));
+}
 
 return view("/instructor/instruyendo/asistencia/index.view.php", [
     "nuevaSesion" => $nuevaSesion,
     "title" => "Asistencia",
     "date" => $fecha,
     "sesion" => $_GET["sesion"],
-    "id" => $_GET["id"],
+    "sesiones" => count($sessiones),
+    "id" => $cursoId,
     "alumnos" => $alumnos
 ]);
