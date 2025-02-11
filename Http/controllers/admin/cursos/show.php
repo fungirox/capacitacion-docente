@@ -2,8 +2,10 @@
 
 use Core\App;
 use Core\Repositories\CursoRepository;
+use Core\Repositories\PersonalRepository;
 
 $curso = App::resolve(CursoRepository::class)->getById($_GET["id"]);
+$personal = App::resolve(PersonalRepository::class)->getAll();
 
 $formattedState = match ($curso["estado"]) {
     "privado" => "privado",
@@ -21,6 +23,7 @@ $action = match ($curso["estado"]) {
 
 return view("components/curso.php", [
     "root" => "/admin/cursos",
+    "personal" => $personal,
     "action" => $action,
     "id" => htmlspecialchars($curso["id"]),
     "nombre" => htmlspecialchars($curso["nombre"]),

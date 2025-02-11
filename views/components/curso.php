@@ -24,22 +24,30 @@
                                 </button>
                                 <div class="modal fade" id="stateModal" tabindex="-1" aria-labelledby="stateModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
-                                        <div class="modal-content">
+                                        <form class="modal-content" method="POST">
                                             <div class="modal-header">
                                                 <h1 class="modal-title fs-5" id="stateModalLabel"><?= $action ?></h1>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
                                                 ¿Seguro de que desea cambiar el estado del curso "<?= $nombre ?>"?
+                                                <?php if ($estado == "en_progreso"): ?>
+                                                    <label class="text-secondary mb-2" for="personal">Seleccione al responsable de las constancias del servicio.</label>
+                                                    <select name="personal" id="personal" class="form-select">
+                                                        <?php foreach ($personal as $persona): ?>
+                                                            <option value="<?= $persona['id'] ?>"><?= $persona["nombre"] . " - " . $persona["puesto"] ?></option>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                <?php endif; ?>
                                             </div>
-                                            <form class="modal-footer" method="POST">
+                                            <div class="modal-footer">
                                                 <input type="hidden" name="_method" value="PATCH">
                                                 <input type="hidden" name="id" value="<?= $id ?>">
                                                 <input type="hidden" name="state" value="<?= $estado ?>">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Regresar</button>
                                                 <button type="submit" class="btn btn-success"><?= $action ?></button>
-                                            </form>
-                                        </div>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             <?php endif; ?>
