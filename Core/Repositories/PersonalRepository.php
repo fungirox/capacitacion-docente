@@ -86,6 +86,14 @@ class PersonalRepository extends RepositoryTemplate {
         )->getOrFail();
     }
 
+    public function create($values) {
+        return $this->query(
+            "INSERT INTO tblPersonal (PERSONAL_Nombre, PERSONAL_Puesto, PERSONAL_Titulo)
+            VALUES (?, ?, ?)",
+            [$values["nombre"], $values["puesto"], $values["titulo"]]
+        );
+    }
+
     public function archive($id, $state) {
         return $this->query(
             "UPDATE tblPersonal SET PERSONAL_Archivado = ? WHERE PERSONALID = ?",
