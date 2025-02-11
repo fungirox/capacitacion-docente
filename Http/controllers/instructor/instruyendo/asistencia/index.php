@@ -21,6 +21,10 @@ $fecha = $nuevaSesion
     ? formatDate((new DateTime())->format("Y-m-d"))
     : formatDate($sessiones[$_GET["sesion"] - 1]["fecha"]);
 
+if (empty($alumnos)) {
+    redirect("/instruyendo");
+}
+
 if ((new DateTime())->format("Y-m-d") == end($sessiones)["fecha"] && $nuevaSesion) {
     redirect("/instruyendo/curso/asistencia?id=" . $cursoId . "&sesion=" . count($sessiones));
 }
