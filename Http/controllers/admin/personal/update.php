@@ -5,6 +5,7 @@ use Core\Repositories\PersonalRepository;
 use Http\Forms\PersonalForm;
 
 PersonalForm::validate($attributes = [
+    "id" => $_POST["id"],
     "nombre" => trim($_POST["nombre"]),
     "puesto" => trim($_POST["puesto"]),
     "titulo" => trim($_POST["titulo"])
