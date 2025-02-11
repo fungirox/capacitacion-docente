@@ -68,6 +68,18 @@ $router->get("/admin/formatos", "admin/formatos/index.php")->only(ADMIN);
 $router->get("/admin/formatos/tecNM", "admin/formatos/tecNM.php")->only(ADMIN);
 $router->get("/admin/formatos/F06PSA19.02", "admin/formatos/F06PSA19.02.php")->only(ADMIN);
 
+# Personal
+
+$router->get("/admin/personal", "admin/personal/index.php")->only(ADMIN);
+$router->get("/admin/personal/editar", "admin/personal/edit.php")->only(ADMIN);
+$router->get("/admin/personal/nuevo", "admin/personal/create.php")->only(ADMIN);
+
+$router->post("/admin/personal", "admin/personal/store.php")->only(ADMIN);
+
+$router->delete("/admin/personal", "admin/personal/archive.php")->only(ADMIN);
+
+$router->patch("/admin/personal", "admin/personal/update.php")->only(ADMIN);
+
 # Áreas
 
 $router->get("/admin/areas", "admin/areas/index.php")->only(ADMIN);
