@@ -21,10 +21,11 @@
     </ul>
 </li>
 <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle <?= urlIs("/admin/areas") || urlIs("/admin/carreras") ? "active" : null ?>" href="#" role="button" data-bs-toggle="dropdown" aria-current="<?= urlIs("/admin/areas") || urlIs("/admin/carreras") ? "page" : null ?> aria-expanded=" false">
+    <a class="nav-link dropdown-toggle <?= urlIs("/admin/personal") || urlIs("/admin/areas") || urlIs("/admin/carreras") ? "active" : null ?>" href="#" role="button" data-bs-toggle="dropdown" aria-current="<?= urlIs("/admin/personal") || urlIs("/admin/areas") || urlIs("/admin/carreras") ? "page" : null ?> aria-expanded=" false">
         Académico
     </a>
     <ul class="dropdown-menu">
+        <li><a class="dropdown-item <?= urlIs("/admin/personal") ? "active" : null ?>" href="/admin/personal">Personal</a></li>
         <li><a class="dropdown-item <?= urlIs("/admin/areas") ? "active" : null ?>" href="/admin/areas">Áreas</a></li>
         <li><a class="dropdown-item <?= urlIs("/admin/carreras") ? "active" : null ?>" href="/admin/carreras">Carreras</a></li>
     </ul>
