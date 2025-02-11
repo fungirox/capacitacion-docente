@@ -2,39 +2,47 @@
 
 namespace Core\Repositories;
 
-use Core\Roles\Roles;
-use Core\Session;
-
 class CursoDocenteRepository extends RepositoryTemplate {
-    private $admin = Roles::ADMIN;
-    private $docente = Roles::DOCENTE;
-    private $instructor = Roles::INSTRUCTOR;
-    private $docenteAndInstructor = Roles::DOCENTE_AND_INSTRUCTOR;
-    private $guest = Roles::GUEST;
 
-    public function updateEncuestaEvaluacion($docenteId,$cursoId){
+    public function getDocentesFromCurso($cursoId) {
+        return $this->query(
+            "SELECT
+                docente.DOCENTEID AS id,
+                USER_Nombre + ' ' + USER_Apellido AS nombre
+            FROM tblCursoDocente AS curso_docente
+            LEFT JOIN tblDocente AS docente ON curso_docente.DOCENTEID = docente.DOCENTEID
+            LEFT JOIN tblUsuario AS usuario ON docente.USERID = usuario.USERID
+            WHERE curso_docente.CURSOID = ?
+            ORDER BY nombre ASC",
+            [$cursoId]
+        )->getAll();
+    }
+
+    public function updateEncuestaEvaluacion($docenteId, $cursoId) {
         return $this->query(
             "UPDATE tblCursoDocente SET 
                 CURSODOCENTE_EncuestaEvaluacion = 1 
                 WHERE CURSOID = ? AND DOCENTEID = ?",
-            [$cursoId,$docenteId]
+            [$cursoId, $docenteId]
         );
     }
 
-    public function updateEncuestaEficacia($docenteId,$cursoId){
+    public function updateEncuestaEficacia($docenteId, $cursoId) {
         return $this->query(
             "UPDATE tblCursoDocente SET 
                 CURSODOCENTE_EncuestaEficacia = 1 
                 WHERE CURSOID = ? AND DOCENTEID = ?",
-            [$cursoId,$docenteId]
+            [$cursoId, $docenteId]
         );
     }
 
-    public function getParticipantesCurso($cursoId){
-        return $this -> query(
+    public function getParticipantesCurso($cursoId) {
+        return $this->query(
             "SELECT COUNT(*) AS CantidadDocentes 
                 FROM tblCursoDocente 
                 WHERE CURSOID = ?
-            ",[$cursoId])->getOrFail();
+            ",
+            [$cursoId]
+        )->getOrFail();
     }
 }
