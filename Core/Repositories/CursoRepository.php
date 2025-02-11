@@ -424,7 +424,7 @@ class CursoRepository extends RepositoryTemplate {
                 curso.CURSO_Limite - (
                     SELECT COUNT(*)
                     FROM tblCursoDocente
-                    WHERE CURSOID = 17
+                    WHERE CURSOID = ?
                 ) AS 'disponibles',
                 usuario.USER_Nombre + ' ' + usuario.USER_Apellido AS instructor_nombre
             FROM
@@ -458,7 +458,7 @@ class CursoRepository extends RepositoryTemplate {
                 curso.CURSO_Limite,
                 usuario.USER_Nombre,
                 usuario.USER_Apellido",
-            [$cursoId]
+            [$cursoId, $cursoId]
         )->getOrFail();
     }
 
@@ -593,7 +593,7 @@ class CursoRepository extends RepositoryTemplate {
                 curso.CURSO_Limite - (
                     SELECT COUNT(*)
                     FROM tblCursoDocente
-                    WHERE CURSOID = 17
+                    WHERE CURSOID = ?
                 ) AS 'disponibles',
                 instructor_usuario.USER_Nombre + ' ' + instructor_usuario.USER_Apellido AS instructor_nombre
             FROM
@@ -632,7 +632,7 @@ class CursoRepository extends RepositoryTemplate {
                 curso.CURSO_Limite,
                 instructor_usuario.USER_Nombre,
                 instructor_usuario.USER_Apellido",
-            [$cursoId, $userId]
+            [$cursoId, $cursoId, $userId]
         )->getOrFail();
     }
 
@@ -694,7 +694,7 @@ class CursoRepository extends RepositoryTemplate {
                 curso.CURSO_Limite - (
                     SELECT COUNT(*)
                     FROM tblCursoDocente
-                    WHERE CURSOID = 17
+                    WHERE CURSOID = ?
                 ) AS 'disponibles',
                 instructor_usuario.USER_Nombre + ' ' + instructor_usuario.USER_Apellido AS instructor_nombre
             FROM
@@ -738,7 +738,7 @@ class CursoRepository extends RepositoryTemplate {
                 curso.CURSO_Limite,
                 instructor_usuario.USER_Nombre,
                 instructor_usuario.USER_Apellido",
-            [$userId, $userId, $cursoId]
+            [$cursoId, $userId, $userId, $cursoId]
         )->getOrFail();
     }
 
@@ -799,7 +799,7 @@ class CursoRepository extends RepositoryTemplate {
                 curso.CURSO_Limite - (
                     SELECT COUNT(*)
                     FROM tblCursoDocente
-                    WHERE CURSOID = 17
+                    WHERE CURSOID = ?
                 ) AS 'disponibles',
                 usuario.USER_Nombre + ' ' + usuario.USER_Apellido AS instructor_nombre
             FROM
@@ -831,7 +831,7 @@ class CursoRepository extends RepositoryTemplate {
                 curso.CURSO_Limite,
                 usuario.USER_Nombre,
                 usuario.USER_Apellido",
-            [$cursoId, $userId]
+            [$cursoId, $cursoId, $userId]
         )->getOrFail();
     }
 
