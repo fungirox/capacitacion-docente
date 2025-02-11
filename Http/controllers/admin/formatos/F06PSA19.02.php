@@ -3,31 +3,34 @@
 use Core\App;
 use Core\Repositories\CursoRepository;
 
-$periodo = $_POST["periodoITESCA"];
 $year = $_POST["year"];
 $periodoNombre = "";
-switch ($periodo) {
-    case '0':
-        $fechaInicial = $year . "-01-01";
-        $fechaFinal = $year . "-05-31";
-        $periodoNombre = "de Enero a Mayo " . $year;
-        break;
-    case '1':
-        $fechaInicial = $year . "-06-01";
-        $fechaFinal = $year . "-07-31";
-        $periodoNombre = "de Verano " . $year;
-        break;
-    case '2':
-        $fechaInicial = $year . "-08-01";
-        $fechaFinal = $year . "-12-31";
-        $periodoNombre = "de Agosto a Septiembre " . $year;
-        break;
-    case '3':
-        $fechaInicial = $_POST["fechaInicial"];
-        $fechaFinal = $_POST["fechaFinal"];
-        $periodoNombre = "De " . $fechaInicial . " a " . $fechaFinal;
-    default:
-        break;
+$periodoRango = $_POST["itesca-radio"];
+if ($periodoRango == "periodo") {
+    $periodo = $_POST["periodoITESCA"];
+    switch ($periodo) {
+        case '0':
+            $fechaInicial = $year . "-01-01";
+            $fechaFinal = $year . "-05-31";
+            $periodoNombre = "de Enero a Mayo " . $year;
+            break;
+        case '1':
+            $fechaInicial = $year . "-06-01";
+            $fechaFinal = $year . "-07-31";
+            $periodoNombre = "de Verano " . $year;
+            break;
+        case '2':
+            $fechaInicial = $year . "-08-01";
+            $fechaFinal = $year . "-12-31";
+            $periodoNombre = "de Agosto a Septiembre " . $year;
+            break;
+        default:
+            break;
+    }
+} else {
+    $fechaInicial = $_POST["fechaInicial"];
+    $fechaFinal = $_POST["fechaFinal"];
+    $periodoNombre = "Personalizado " . $year;
 }
 
 $allCursos = App::resolve(CursoRepository::class)->getAllReporteITESCA($fechaInicial,$fechaFinal);

@@ -48,9 +48,9 @@
                 <div class="card-body d-flex flex-column gap-4">
                     <h2 class="text-center">TecNM</h2>
                     <div class="btn-group">
-                        <input type="radio" class="btn-check" name="tec-radio" id="tec-periodo-radio" checked>
+                        <input type="radio" class="btn-check" name="tec-radio" id="tec-periodo-radio" value="periodo" checked>
                         <label class="btn btn-outline-primary" for="tec-periodo-radio">Periodo</label>
-                        <input type="radio" class="btn-check" name="tec-radio" id="tec-rango-radio">
+                        <input type="radio" class="btn-check" name="tec-radio" id="tec-rango-radio" value="rango">
                         <label class="btn btn-outline-primary" for="tec-rango-radio">Rango</label>
                     </div>
                     <input type="hidden" name="year" id="year" value="<?= $year ?>">
@@ -77,13 +77,13 @@
                 <div class="card-body d-flex flex-column gap-4">
                     <h2 class="text-center">ITESCA</h2>
                     <div class="btn-group">
-                        <input type="radio" class="btn-check" name="itesca-radio" id="itesca-periodo-radio" checked>
+                        <input type="radio" class="btn-check" name="itesca-radio" id="itesca-periodo-radio" value="periodo" checked>
                         <label class="btn btn-outline-primary" for="itesca-periodo-radio">Periodo</label>
-                        <input type="radio" class="btn-check" name="itesca-radio" id="itesca-rango-radio">
+                        <input type="radio" class="btn-check" name="itesca-radio" id="itesca-rango-radio" value="rango">
                         <label class="btn btn-outline-primary" for="itesca-rango-radio">Rango</label>
                     </div>
                     <input type="hidden" name="year" id="year" value="<?= $year ?>">
-                    <select name="periodoTEC" id="periodo-itesca" class="form-select">
+                    <select name="periodoITESCA" id="periodo-itesca" class="form-select">
                         <option value="0">Enero-Mayo <?= $year ?></option>
                         <option value="1">Verano <?= $year ?></option>
                         <option value="2">Agosto-Diciembre <?= $year ?></option>
