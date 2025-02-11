@@ -370,6 +370,53 @@ class CursoRepository extends RepositoryTemplate
         )->getAll();
     }
 
+    public function getAllTerminados($userId)
+    {
+        return $this->query(
+            "SELECT
+                curso.CURSOID as id,
+                curso.CURSO_Nombre as nombre,
+                curso.CURSO_Tipo + ' ' + curso.CURSO_Modalidad as tipo,
+                curso.CURSO_Modalidad as modalidad,
+                curso.CURSO_Estado as estado,
+                (
+                    SELECT STRING_AGG(HORARIOCURSO_Dia_Semana, ',') WITHIN GROUP (ORDER BY HORARIOCURSO_Dia_Semana)
+                    FROM (
+                        SELECT DISTINCT horario.HORARIOCURSO_Dia_Semana
+                        FROM tblHorarioCurso AS horario
+                        WHERE horario.CURSOID = curso.CURSOID
+                    ) AS distinct_dias
+                ) AS dias,
+                (
+                    SELECT TOP 1 horario.HORARIOCURSO_Hora_Inicio
+                    FROM tblHorarioCurso AS horario
+                    WHERE horario.CURSOID = curso.CURSOID
+                ) AS hora_inicial,
+                (
+                    SELECT TOP 1 horario.HORARIOCURSO_Hora_Final
+                    FROM tblHorarioCurso AS horario
+                    WHERE horario.CURSOID = curso.CURSOID
+                ) AS hora_final,
+                curso.CURSO_Fecha_Inicio as inicio,
+                curso.CURSO_Fecha_Final as final,
+                curso.CURSO_Aula as aula,
+                curso.CURSO_Estado as estado
+            FROM
+                tblCurso AS curso
+            LEFT JOIN
+                tblCursoInstructor AS curso_instructor ON curso.CURSOID = curso_instructor.CURSOID
+            LEFT JOIN
+                tblInstructor AS instructor ON instructor.INSTRUCTORID = curso_instructor.INSTRUCTORID
+            WHERE
+                curso.CURSO_Archivado = 0 AND
+                curso.CURSO_Estado = 'terminado' AND
+                instructor.USERID = ?
+            ORDER BY
+                curso.CURSOID DESC",
+            [$userId]
+        )->getAll();
+    }
+
     public function getById($cursoId)
     {
         return $this->query(
