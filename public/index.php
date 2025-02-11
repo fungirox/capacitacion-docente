@@ -9,10 +9,9 @@ require BASE_PATH . "vendor/autoload.php";
 
 session_start();
 
-date_default_timezone_set("America/Hermosillo");
-
 require BASE_PATH . "Core/functions.php";
 
+require base_path("Core/config.php");
 require base_path("bootstrap.php");
 
 $router = new \Core\Router();
