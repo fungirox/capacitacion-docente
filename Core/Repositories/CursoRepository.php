@@ -1368,4 +1368,11 @@ class CursoRepository extends RepositoryTemplate {
             [$cursoId]
         )->getOrFail();
     }
+
+    public function updatePersonal($cursoId, $personalId) {
+        return $this->query(
+            "UPDATE tblCurso SET PERSONALID = ? WHERE CURSOID = ?",
+            [$personalId, $cursoId]
+        );
+    }
 }

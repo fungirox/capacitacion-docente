@@ -61,7 +61,7 @@ class UsuarioRepository extends RepositoryTemplate {
 
     public function getInstructorFullName($cursoId) {
         return $this->query(
-            "SELECT u.USER_Nombre + ' ' + u.USER_Apellido as nombre
+            "SELECT u.USERID, u.USER_Nombre + ' ' + u.USER_Apellido as nombre
             FROM tblCurso c
             JOIN tblCursoInstructor ci ON c.CURSOID = ci.CURSOID
             JOIN tblInstructor i ON ci.INSTRUCTORID = i.INSTRUCTORID
