@@ -22,6 +22,7 @@
                 $horaInicial = htmlspecialchars(formatTime($curso["hora_inicial"]));
                 $horaFinal = htmlspecialchars(formatTime($curso["hora_final"]));
                 $enProgreso = $curso["estado"] == "en_progreso";
+                $cantiadadSesiones = $curso["cantidad_sesiones"] + 1 ?? 1;
                 ?>
                 <div class="col-12">
                     <div class="card rounded-4">
@@ -49,7 +50,7 @@
                                 </div>
                                 <?php if ($modalidad !== "virtual"): ?>
                                     <div class="col-12 col-md-auto d-grid">
-                                        <a href="/instruyendo/curso/asistencia?id=<?= $id ?>" class="btn <?= $enProgreso ? "btn-outline-primary" : "btn-outline-secondary disabled" ?>">
+                                        <a href="/instruyendo/curso/asistencia?id=<?= $id ?>&sesion=<?= $cantiadadSesiones ?>" class="btn <?= $enProgreso ? "btn-outline-primary" : "btn-outline-secondary disabled" ?>">
                                             Tomar asistencia
                                         </a>
                                     </div>
