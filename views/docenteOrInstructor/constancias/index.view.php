@@ -5,7 +5,10 @@
         <div class="accordion-item">
             <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDocente" aria-expanded="false" aria-controls="collapseDocente">
-                    Como Docente
+                    <div class="w-100 row align-items-center justify-content-between">
+                        <span class="col fs-4">Como Docente</span>
+                        <span class="col text-end me-3"><?= count($constanciasDocente) ?></span>
+                    </div>
                 </button>
             </h2>
             <div id="collapseDocente" class="accordion-collapse collapse <?= !empty($constanciasDocente) ? "show" : "" ?>">
@@ -30,7 +33,10 @@
         <div class="accordion-item">
             <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor" aria-expanded="false" aria-controls="collapseInstructor">
-                    Como Instructor
+                    <div class="w-100 row align-items-center justify-content-between">
+                        <span class="col fs-4">Como Instructor</span>
+                        <span class="col text-end me-3"><?= count($constanciasInstructor) ?></span>
+                    </div>
                 </button>
             </h2>
             <div id="collapseInstructor" class="accordion-collapse collapse <?= !empty($constanciasInstructor) ? "show" : "" ?>">
