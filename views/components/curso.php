@@ -187,6 +187,11 @@
                                         <button type="button" class="btn btn-secondary" disabled>Curso lleno</button>
                                     <?php endif; ?>
                                     <?php break; ?>
+                                <?php
+                                case "instruyendo": ?>
+                                    <a type="button" class="btn btn-outline-primary">Subir archivos</a>
+                                    <a type="button" class="btn btn-primary">Tomas asistencia</a>
+                                    <?php break; ?>
                             <?php endswitch; ?>
                             <?php if (!$isVirtual): ?>
                                 <span class="col text-secondary text-end fst-italic">
