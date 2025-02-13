@@ -189,8 +189,8 @@
                                     <?php break; ?>
                                 <?php
                                 case "instruyendo": ?>
-                                    <a type="button" class="btn btn-outline-primary">Subir archivos</a>
-                                    <a type="button" class="btn btn-primary">Tomas asistencia</a>
+                                    <a class="btn btn-outline-primary">Subir archivos</a>
+                                    <a href="/instruyendo/curso/asistencia?id=<?= $id ?>&sesion=<?= $cantiadadSesiones ?>" class="btn btn-primary">Tomas asistencia</a>
                                     <?php break; ?>
                             <?php endswitch; ?>
                             <?php if (!$isVirtual): ?>

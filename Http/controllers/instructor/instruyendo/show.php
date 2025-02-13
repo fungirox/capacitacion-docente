@@ -24,5 +24,6 @@ return view("components/curso.php", [
     "limite" => htmlspecialchars($curso["limite"]),
     "disponibles" => htmlspecialchars($curso["disponibles"]),
     "instructor" => htmlspecialchars($curso["instructor_nombre"]),
+    "cantiadadSesiones" => htmlspecialchars($curso["cantidad_sesiones"] + 1) ?? 1,
     "mode" => "instruyendo"
 ]);

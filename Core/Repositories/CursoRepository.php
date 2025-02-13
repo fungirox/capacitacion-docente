@@ -797,6 +797,12 @@ class CursoRepository extends RepositoryTemplate {
                         ELSE 'Servicio externo'
                     END
                 ) AS origen,
+                (
+                    SELECT COUNT(DISTINCT ASISTENCIACURSO_Fecha)
+                    FROM tblAsistenciaCurso AS asistencia_curso
+                    WHERE asistencia_curso.CURSOID = curso.CURSOID
+                    GROUP BY asistencia_curso.CURSOID
+                ) AS cantidad_sesiones,
                 curso.CURSO_Total_Horas as duracion,
                 curso.CURSO_Fecha_Inicio as inicio,
                 curso.CURSO_Fecha_Final as final,
