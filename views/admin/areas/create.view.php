@@ -12,8 +12,16 @@
         <h1 class="col-12 col-md-10"><?= $title ?></h1>
     </div>
     <form class="row py-4 g-3" method="POST" action="/admin/areas">
+        <div class="d-flex justify-content-center mb-3">
+            <div class="col-12 col-md-8 col-lg-6 btn-group" name="tipo" role="group">
+                <input type="radio" class="btn-check" name="tipo" id="tipo-curso" value="0" autocomplete="off" <?= cleanOld("tipo", "0") === "0" ? "checked" : "" ?>>
+                <label class="btn btn-outline-primary" for="tipo-curso">Área</label>
+                <input type="radio" class="btn-check" name="tipo" id="tipo-taller" value="1" autocomplete="off" <?= cleanOld("tipo") === "1" ? "checked" : "" ?>>
+                <label class="btn btn-outline-primary" for="tipo-taller">Carrera</label>
+            </div>
+        </div>
         <div class="col-md-8">
-            <label for="nombre" class="form-label">Nombre de la área</label>
+            <label for="nombre" class="form-label">Nombre del área</label>
             <input type="text" class="form-control <?= isValidInput($errors, "nombre") ?>" id="nombre" name="nombre" value="<?= cleanOld("nombre") ?>">
             <div class="invalid-feedback">
                 <?= $errors['nombre'] ?>

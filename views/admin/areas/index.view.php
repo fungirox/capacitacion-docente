@@ -79,6 +79,7 @@
                     <tr>
                         <th scope="col">Nombre</th>
                         <th scope="col">Siglas</th>
+                        <th scope="col">Tipo</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
@@ -88,10 +89,12 @@
                         $id = htmlspecialchars($area['id']);
                         $name = htmlspecialchars($area['nombre']);
                         $acronym = htmlspecialchars($area['siglas']);
+                        $type = htmlspecialchars($area['carrera']);
                         ?>
                         <tr>
                             <td><?= $name ?></td>
                             <td><?= $acronym ?></td>
+                            <td><span class="badge rounded-pill text-bg-<?= $type == "Carrera" ? "danger" : "primary" ?>"><?= $type ?></span></td>
                             <td class="text-end">
                                 <div class="dropdown">
                                     <button class="btn btn-sm rounded-pill" type="button" data-bs-toggle="dropdown" aria-expanded="false">

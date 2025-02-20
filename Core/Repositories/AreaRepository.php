@@ -55,7 +55,11 @@ class AreaRepository extends RepositoryTemplate {
             "SELECT
                 AREAID as id,
                 AREA_Nombre as nombre,
-                AREA_Siglas as siglas
+                AREA_Siglas as siglas,
+                CASE AREA_Carrera
+                    WHEN 0 THEN 'Área'
+                    WHEN 1 THEN 'Carrera'
+                END AS carrera
             FROM tblArea
             WHERE AREA_Archivado = ?
             $searchCondition
@@ -81,15 +85,15 @@ class AreaRepository extends RepositoryTemplate {
 
     public function create($values) {
         return $this->query(
-            "INSERT INTO tblArea (AREA_Nombre, AREA_Siglas) VALUES (?, ?)",
-            [$values["nombre"], $values["siglas"]]
+            "INSERT INTO tblArea (AREA_Nombre, AREA_Siglas, AREA_Carrera) VALUES (?, ?, ?)",
+            [$values["nombre"], $values["siglas"], $values["tipo"]]
         );
     }
 
     public function update($values) {
         return $this->query(
-            "UPDATE tblArea SET AREA_Nombre = ?, AREA_Siglas = ? WHERE AREAID = ?",
-            [$values["nombre"], $values["siglas"], $values["id"]]
+            "UPDATE tblArea SET AREA_Nombre = ?, AREA_Siglas = ?, AREA_Carrera = ? WHERE AREAID = ?",
+            [$values["nombre"], $values["siglas"], $values["tipo"], $values["id"]]
         );
     }
 

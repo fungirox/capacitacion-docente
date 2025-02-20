@@ -27,6 +27,5 @@
     <ul class="dropdown-menu">
         <li><a class="dropdown-item <?= urlIs("/admin/personal") ? "active" : null ?>" href="/admin/personal">Personal</a></li>
         <li><a class="dropdown-item <?= urlIs("/admin/areas") ? "active" : null ?>" href="/admin/areas">Áreas</a></li>
-        <li><a class="dropdown-item <?= urlIs("/admin/carreras") ? "active" : null ?>" href="/admin/carreras">Carreras</a></li>
     </ul>
 </li>

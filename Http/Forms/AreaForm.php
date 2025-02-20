@@ -14,5 +14,9 @@ class AreaForm extends FormTemplate {
         if (!Validator::string($this->attributes["siglas"], 1, 5)) {
             $this->errors['siglas'] = "Favor de introducir las siglas del área.";
         }
+
+        if (!Validator::bit($this->attributes["tipo"])) {
+            $this->errors['tipo'] = "Favor de seleccionar el tipo de área.";
+        }
     }
 }

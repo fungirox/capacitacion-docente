@@ -14,8 +14,16 @@
     <form class="row py-4 g-3" method="POST" action="/admin/areas">
         <input type="hidden" name="_method" value="PATCH">
         <input type="hidden" name="id" value="<?= cleanOld("id", $area["AREAID"]) ?>">
+        <div class="d-flex justify-content-center mb-3">
+            <div class="col-12 col-md-8 col-lg-6 btn-group" name="tipo" role="group">
+                <input type="radio" class="btn-check" name="tipo" id="tipo-curso" value="0" autocomplete="off" <?= cleanOld("tipo", $area["AREA_Carrera"]) === "0" ? "checked" : "" ?>>
+                <label class="btn btn-outline-primary" for="tipo-curso">Área</label>
+                <input type="radio" class="btn-check" name="tipo" id="tipo-taller" value="1" autocomplete="off" <?= cleanOld("tipo" , $area["AREA_Carrera"]) === "1" ? "checked" : "" ?>>
+                <label class="btn btn-outline-primary" for="tipo-taller">Carrera</label>
+            </div>
+        </div>
         <div class="col-md-8">
-            <label for="nombre" class="form-label">Nombre de la área</label>
+            <label for="nombre" class="form-label">Nombre del área</label>
             <input type="text" class="form-control <?= isValidInput($errors, "nombre") ?>" id="nombre" name="nombre" value="<?= cleanOld("nombre", $area["AREA_Nombre"]) ?>">
             <div class="invalid-feedback">
                 <?= $errors['nombre'] ?>
