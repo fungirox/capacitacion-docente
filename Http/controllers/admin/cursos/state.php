@@ -11,12 +11,13 @@ $newState = match ($_POST["state"]) {
     "en_progreso" => "terminado",
     default => ""
 };
-
-App::resolve(CursoRepository::class)->updateState($_POST["id"], $newState);
-$usuarioId = App::resolve(UsuarioRepository::class)->getInstructorFullName($_POST["id"]);
+$cursoId = $_POST["id"];
+App::resolve(CursoRepository::class)->updateState($cursoId, $newState);
 if($newState == "terminado"){
-    App::resolve(ConstanciaRepository::class)->setConstancia($_POST["id"],$usuarioId["USERID"],0);
-    App::resolve(CursoRepository::class)->updatePersonal($_POST["id"],$_POST["personal"]);
+    $usuarioId = App::resolve(UsuarioRepository::class)->getInstructorFullName($cursoId);
+    App::resolve(ConstanciaRepository::class)->setConstancia($cursoId,$usuarioId["USERID"],0);
+    App::resolve(CursoRepository::class)->updatePersonal($cursoId,$_POST["personal"]);
 }
 
-redirect("/admin/cursos/curso?id=" . $_POST["id"]);
+
+redirect("/admin/cursos/curso?id=" . $cursoId);

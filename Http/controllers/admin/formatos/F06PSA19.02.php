@@ -136,8 +136,8 @@ ob_start();
                 <td class="tg-0lax"><?= $totalCursos["total_cursos"] ?></td>
                 <td class="tg-0lax"><?= $totalCursos["cursos_activos"] ?></td>
                 <td class="tg-0lax"><?= $totalCursos["cursos_archivados"] ?></td>
-                <td class="tg-0lax"></td>
-                <td class="tg-0lax" colspan="2"></td>
+                <td class="tg-0lax"><?= $totalCursos["cursos_reprogramados"] ?></td>
+                <td class="tg-0lax" colspan="2"><?= $totalCursos["porcentaje_realizacion"] ?></td>
             </tr>
             <tr>
                 <td class="tg-baqh" colspan="6">Resumen</td>
