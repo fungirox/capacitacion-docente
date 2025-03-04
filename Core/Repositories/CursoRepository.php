@@ -1207,12 +1207,14 @@ class CursoRepository extends RepositoryTemplate {
         return $this->query(
             "SELECT
                 SUM(CASE WHEN CURSO_Archivado = 0 THEN 1 ELSE 0 END) as cursos_activos,
-				SUM(CASE WHEN CURSO_Archivado = 1 THEN 1 ELSE 0 END) as cursos_archivados,
-				COUNT(*) as total_cursos
+                SUM(CASE WHEN CURSO_Archivado = 1 THEN 1 ELSE 0 END) as cursos_archivados,
+                SUM(CASE WHEN CURSO_Reprogramado = 1 THEN 1 ELSE 0 END) as cursos_reprogramados,
+                COUNT(*) as total_cursos,
+                ROUND((SUM(CASE WHEN CURSO_Archivado = 1 THEN 1 ELSE 0 END) * 100.0 / COUNT(*)), 2) as porcentaje_realizacion
             FROM
                 tblCurso AS curso
             WHERE 
-			    curso.CURSO_Fecha_Final BETWEEN ? AND ?
+                curso.CURSO_Fecha_Final BETWEEN ? AND ?
             ",
             [$fechaInicio, $fechaFinal]
         )->getOrFail();
@@ -1456,6 +1458,13 @@ class CursoRepository extends RepositoryTemplate {
         return $this->query(
             "UPDATE tblCurso SET PERSONALID = ? WHERE CURSOID = ?",
             [$personalId, $cursoId]
+        );
+    }
+
+    public function updateReprogramado($cursoId) {
+        return $this->query(
+            "UPDATE tblCurso SET CURSO_Reprogramado = 1 WHERE CURSOID = ?",
+            [$cursoId]
         );
     }
 }
