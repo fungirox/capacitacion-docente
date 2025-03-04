@@ -158,3 +158,13 @@ function formatTime($time) {
 function formattedHourRange($startHour, $endHour) {
     return formatTime($startHour) . " - " . formatTime($endHour);
 }
+
+function formatPeriod($folio) {
+    $pattern = '/^(Verano|\p{L}+-\p{L}+)\s\d{4}/u';
+
+    if (preg_match($pattern, $folio, $matches)) {
+        return $matches[0];
+    }
+
+    return $folio;
+}

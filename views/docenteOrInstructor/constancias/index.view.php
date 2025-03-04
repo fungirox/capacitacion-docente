@@ -15,11 +15,16 @@
                 <div class="accordion-body">
                     <?php if (!empty($constanciasDocente)): ?>
                         <?php foreach ($constanciasDocente as $key => $curso): ?>
-                            <div class="mb-2"><?= $curso["CURSO_Nombre"]; ?></div>
-                            <form class="d-grid col-12 col-md-auto" action="/historial/constancia" method="GET">
-                                <input type="hidden" name="id" value="<?= $curso["CONSTANCIAID"] ?>">
-                                <button type="submit" class="btn btn-outline-primary">Descargar constancia</button>
-                            </form>
+                            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center">
+                                <div class="mb-2 mb-md-0">
+                                    <p class="mb-0 fs-5"><?= $curso["CURSO_Nombre"]; ?></p>
+                                    <p class="mb-0 fs-6 text-secondary"><?= formatPeriod($curso["CONSTANCIA_Folio"]); ?></p>
+                                </div>
+                                <form action="/historial/constancia" method="GET">
+                                    <input type="hidden" name="id" value="<?= $curso["CONSTANCIAID"] ?>">
+                                    <div class="d-grid"><button type="submit" class="btn btn-outline-primary">Descargar constancia</button></div>
+                                </form>
+                            </div>
                             <?php if ($key < count($constanciasDocente) - 1): ?>
                                 <hr class="text-body-tertiary" />
                             <?php endif; ?>
@@ -43,11 +48,16 @@
                 <div class="accordion-body">
                     <?php if (!empty($constanciasInstructor)): ?>
                         <?php foreach ($constanciasInstructor as $key => $curso): ?>
-                            <div class="mb-2"><?= $curso["CURSO_Nombre"]; ?></div>
-                            <form class="d-grid col-12 col-md-auto" action="/historial/constancia" method="GET">
-                                <input type="hidden" name="id" value="<?= $curso["CONSTANCIAID"] ?>">
-                                <button type="submit" class="btn btn-outline-primary">Descargar constancia</button>
-                            </form>
+                            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center">
+                                <div class="mb-2 mb-md-0">
+                                    <p class="mb-0 fs-5"><?= $curso["CURSO_Nombre"]; ?></p>
+                                    <p class="mb-0 fs-6 text-secondary"><?= formatPeriod($curso["CONSTANCIA_Folio"]); ?></p>
+                                </div>
+                                <form action="/historial/constancia" method="GET">
+                                    <input type="hidden" name="id" value="<?= $curso["CONSTANCIAID"] ?>">
+                                    <div class="d-grid"><button type="submit" class="btn btn-outline-primary">Descargar constancia</button></div>
+                                </form>
+                            </div>
                             <?php if ($key < count($constanciasInstructor) - 1): ?>
                                 <hr class="text-body-tertiary" />
                             <?php endif; ?>
