@@ -15,11 +15,14 @@
                 <div class="accordion-body">
                     <?php if (!empty($cursosNoEvaluados)): ?>
                         <?php foreach ($cursosNoEvaluados as $key => $curso): ?>
-                            <div class="row align-items-center justify-content-between gap-3">
-                                <span class="col-12 col-md-auto"><?= $curso["CURSO_Nombre"]; ?></span>
-                                <form class="d-grid col-12 col-md-auto" action="/historial/evaluarCurso" method="GET">
+                            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center">
+                                <div class="mb-2 mb-md-0">
+                                    <p class="mb-0 fs-5"><?= $curso["CURSO_Nombre"]; ?></p>
+                                    <p class="mb-0 fs-6 text-secondary"><?= $curso["instructor"]; ?></p>
+                                </div>
+                                <form action="/historial/evaluarCurso" method="GET">
                                     <input type="hidden" name="CURSOID" value="<?= $curso["CURSOID"] ?>">
-                                    <button type="submit" class="btn btn-outline-primary">Evaluar curso</button>
+                                    <div class="d-grid"><button type="submit" class="btn btn-outline-primary">Evaluar curso</button></div>
                                 </form>
                             </div>
                             <?php if ($key < count($cursosNoEvaluados) - 1): ?>
@@ -45,11 +48,14 @@
                 <div class="accordion-body">
                     <?php if (!empty($cursosSinEficacia)): ?>
                         <?php foreach ($cursosSinEficacia as $key => $curso): ?>
-                            <div class="row align-items-center justify-content-between gap-3">
-                                <span class="col-12 col-md-auto"><?= $curso["CURSO_Nombre"]; ?></span>
-                                <form class="d-grid col-12 col-md-auto" action="/historial/evaluarEficacia" method="GET">
+                            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center">
+                                <div class="mb-2 mb-md-0">
+                                    <p class="mb-0 fs-5"><?= $curso["CURSO_Nombre"]; ?></p>
+                                    <p class="mb-0 fs-6 text-secondary"><?= formatPeriod($curso["instructor"]); ?></p>
+                                </div>
+                                <form action="/historial/evaluarEficacia" method="GET">
                                     <input type="hidden" name="CURSOID" value="<?= $curso["CURSOID"] ?>">
-                                    <button type="submit" class="btn btn-outline-primary">Evaluar curso</button>
+                                    <div class="d-grid"><button type="submit" class="btn btn-outline-primary">Evaluar curso</button></div>
                                 </form>
                             </div>
                             <?php if ($key < count($cursosSinEficacia) - 1): ?>
@@ -62,7 +68,7 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
 </main>
 <?php view("components/styledFooter.php"); ?>
