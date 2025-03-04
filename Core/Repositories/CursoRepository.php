@@ -950,11 +950,17 @@ class CursoRepository extends RepositoryTemplate {
 
     public function getCursosNoEvaluados($userId) {
         return $this->query(
-            "SELECT c.CURSOID, c.CURSO_Nombre
+            "SELECT
+                c.CURSOID,
+                c.CURSO_Nombre,
+                ui.USER_Nombre + ' ' + ui.USER_Apellido AS instructor
             FROM tblUsuario u
             JOIN tblDocente d ON u.USERID = d.USERID
             JOIN tblCursoDocente cd ON d.DOCENTEID = cd.DOCENTEID
             JOIN tblCurso c ON cd.CURSOID = c.CURSOID
+            JOIN tblCursoInstructor ci on ci.CURSOID = c.CURSOID
+            JOIN tblInstructor i ON ci.INSTRUCTORID = i.INSTRUCTORID
+            JOIN tblUsuario ui on ui.USERID = i.USERID
             WHERE u.USERID = ?
             AND cd.CURSODOCENTE_EncuestaEvaluacion IS NULL
             AND cd.CURSODOCENTE_EncuestaEficacia IS NULL
@@ -969,11 +975,15 @@ class CursoRepository extends RepositoryTemplate {
         return $this->query(
             "SELECT 
                 c.CURSOID,
-                c.CURSO_Nombre
+                c.CURSO_Nombre,
+                ui.USER_Nombre + ' ' + ui.USER_Apellido AS instructor
             FROM tblUsuario u
             JOIN tblDocente d ON u.USERID = d.USERID
             JOIN tblCursoDocente cd ON d.DOCENTEID = cd.DOCENTEID
             JOIN tblCurso c ON cd.CURSOID = c.CURSOID
+            JOIN tblCursoInstructor ci on ci.CURSOID = c.CURSOID
+            JOIN tblInstructor i ON ci.INSTRUCTORID = i.INSTRUCTORID
+            JOIN tblUsuario ui on ui.USERID = i.USERID
             WHERE u.USERID = ?
             AND cd.CURSODOCENTE_EncuestaEvaluacion = 1
             AND cd.CURSODOCENTE_EncuestaEficacia IS NULL
