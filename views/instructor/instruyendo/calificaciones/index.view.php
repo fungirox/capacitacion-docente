@@ -17,7 +17,7 @@
                             <td><?= $key + 1 ?></td>
                             <td><?= htmlspecialchars($alumno["nombre"]) ?></td>
                             <td class="text-end">
-                                <input type="number" class="" name="alumnos[<?= $alumno["id"] ?>]" />
+                                <input type="number" class="form-control" name="alumnos[<?= $alumno["id"] ?>]" />
                             </td>
                         </tr>
                     <?php endforeach; ?>
