@@ -62,6 +62,25 @@ class CursoDocenteRepository extends RepositoryTemplate {
         );
     }
 
+    public function updateCalificacion($calificaciones, $cursoId, $alumnosIds) {
+        $placeholders = implode(',', array_fill(0, count($alumnosIds), '(?, ?, ?)'));
+
+        $params = [];
+        foreach ($alumnosIds as $index => $alumnoId) {
+            $params[] = $calificaciones[$index];
+            $params[] = $cursoId;
+            $params[] = $alumnoId;
+        }
+
+        return $this->query(
+            "UPDATE tblCursoDocente SET 
+                CURSODOCENTE_Calificacion = ? 
+                WHERE CURSOID = ? AND DOCENTEID = ?",
+            $params
+        );
+    }
+    
+
     public function getParticipantesCurso($cursoId) {
         return $this->query(
             "SELECT COUNT(*) AS CantidadDocentes 
