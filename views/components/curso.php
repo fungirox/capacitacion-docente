@@ -163,7 +163,7 @@
                                 <?php
                                 case "oferta": ?>
                                     <a type="button" class="btn btn-outline-secondary">Descargar ficha</a>
-                                    <?php if ($disponibles > 0): ?>
+                                    <?php if ($disponibles > 0 || $isVirtual): ?>
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Inscribirse al curso</button>
                                         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">
